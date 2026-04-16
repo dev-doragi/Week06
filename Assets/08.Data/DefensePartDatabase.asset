@@ -43,16 +43,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1
+      Data: 1001
     - Name: $v
       Entry: 7
       Data: 2|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 1
+      Data: 1001
     - Name: partName
       Entry: 1
-      Data: "\uBCBD"
+      Data: "\uBC29\uC5B41"
     - Name: shape
       Entry: 7
       Data: 3|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -86,7 +86,7 @@ MonoBehaviour:
       Data: 0
     - Name: DefensePower
       Entry: 3
-      Data: 0
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -98,16 +98,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 2
+      Data: 1002
     - Name: $v
       Entry: 7
       Data: 4|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 2
+      Data: 1002
     - Name: partName
       Entry: 1
-      Data: "\uBCBD2"
+      Data: "\uBC29\uC5B42"
     - Name: shape
       Entry: 7
       Data: 5|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -141,7 +141,7 @@ MonoBehaviour:
       Data: 1
     - Name: DefensePower
       Entry: 3
-      Data: 0
+      Data: 20
     - Name: 
       Entry: 8
       Data: 
@@ -153,16 +153,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 3
+      Data: 1003
     - Name: $v
       Entry: 7
       Data: 6|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 3
+      Data: 1003
     - Name: partName
       Entry: 1
-      Data: "\uBCBD3"
+      Data: "\uBC29\uC5B43"
     - Name: shape
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -196,7 +196,7 @@ MonoBehaviour:
       Data: 2
     - Name: DefensePower
       Entry: 3
-      Data: 0
+      Data: 30
     - Name: 
       Entry: 8
       Data: 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BuildManager : MonoBehaviour
 {
@@ -27,15 +28,14 @@ public class BuildManager : MonoBehaviour
     {
         if (currentPartData == null) return;
 
-        HandleRotation();
         UpdateGhost();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             TryPlaceCurrentPart();
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
             TryRemovePart();
         }
@@ -68,18 +68,15 @@ public class BuildManager : MonoBehaviour
         ghostPart = ghostObj.AddComponent<PlacedPart>();
     }
 
-    private void HandleRotation()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            currentRotation = (currentRotation + 1) % 4;
-        }
-    }
-
     private Vector2Int GetMouseGridPosition()
     {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Mouse.current == null)
+            return Vector2Int.zero;
+
+        Vector2 mouseScreen = Mouse.current.position.ReadValue();
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
         mouseWorld.z = 0f;
+
         return gridRenderer.WorldToGrid(mouseWorld);
     }
 
