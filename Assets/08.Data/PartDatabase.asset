@@ -54,8 +54,30 @@ MonoBehaviour:
     - Name: partName
       Entry: 1
       Data: "\uACF5\uACA91"
-    - Name: shape
-      Entry: 6
+    - Name: Shape
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: SpriteName
       Entry: 1
@@ -77,15 +99,37 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 3|PartData, Assembly-CSharp
+      Data: 4|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 2
     - Name: partName
       Entry: 1
       Data: "\uACF5\uACA92"
-    - Name: shape
-      Entry: 6
+    - Name: Shape
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: SpriteName
       Entry: 1
@@ -107,15 +151,37 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 4|PartData, Assembly-CSharp
+      Data: 6|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 3
     - Name: partName
       Entry: 1
       Data: "\uACF5\uACA93"
-    - Name: shape
-      Entry: 6
+    - Name: Shape
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: SpriteName
       Entry: 1
@@ -137,15 +203,37 @@ MonoBehaviour:
       Data: 10001
     - Name: $v
       Entry: 7
-      Data: 5|PartData, Assembly-CSharp
+      Data: 8|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 10001
     - Name: partName
       Entry: 1
       Data: "\uD14C\uC2A4\uD2B8\uC6A9\uC785\uB2C8\uB2E4"
-    - Name: shape
-      Entry: 6
+    - Name: Shape
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: SpriteName
       Entry: 1

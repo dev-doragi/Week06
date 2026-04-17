@@ -46,8 +46,14 @@ public class BuildManager : MonoBehaviour
             }
         }
 
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            TryPlaceCurrentPart();
+        }
+
         if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
+            ClearSelection();
             TryRemovePart();
         }
     }
@@ -129,7 +135,6 @@ public class BuildManager : MonoBehaviour
 
         if (!board.CanPlacePartByRules(currentPartData, gridPos, currentRotation))
         {
-            ClearSelection();
             return;
         }
 
@@ -143,12 +148,10 @@ public class BuildManager : MonoBehaviour
         if (!success)
         {
             Destroy(partObj);
-            ClearSelection();
             return;
         }
 
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-        ClearSelection();
     }
 
     private void TryRemovePart()
@@ -160,6 +163,12 @@ public class BuildManager : MonoBehaviour
         PlacedPart targetPart = board.GetCell(gridPos);
         if (targetPart == null) return;
 
+        board.RemovePart(targetPart);
+        Destroy(targetPart.gameObject);
+    }
+
+    public void BrokenPart(PlacedPart targetPart)
+    {
         board.RemovePart(targetPart);
         Destroy(targetPart.gameObject);
     }
