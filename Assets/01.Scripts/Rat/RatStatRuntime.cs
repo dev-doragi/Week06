@@ -3,14 +3,14 @@ using System;
 
 public class RatStatRuntime : MonoBehaviour
 {
-    [SerializeField] private RatData _ratData;
+    [SerializeField] private PartData _partData;
 
     private float _currentHp;
 
-    public RatData RatData => _ratData;
+    public PartData PartData => _partData;
     public float CurrentHp => _currentHp;
-    public float MaxHp => _ratData != null ? _ratData.CommonStat.Hp : 0f;
-    public float DefenceRate => _ratData != null ? _ratData.CommonStat.DefenceRate : 0f;
+    public float MaxHp => _partData != null ? _partData.CommonStat.Health : 0f;
+    public float DefenseRate => _partData != null ? _partData.CommonStat.DefenseRate : 0f;
     public bool IsDead => _currentHp <= 0f;
 
     public event Action<float, float> OnHpChanged;
@@ -18,39 +18,39 @@ public class RatStatRuntime : MonoBehaviour
 
     private void Awake()
     {
-        ValidateRatData();
+        ValidatePartData();
         InitializeStat();
     }
 
-    public void SetRatData(RatData ratData)
+    public void SetPartData(PartData partData)
     {
-        if (ratData == null)
+        if (partData == null)
         {
-            Debug.LogError($"{name}: SetRatData 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: SetPartData 실패 - PartData가 Null입니다.");
             return;
         }
 
-        _ratData = ratData;
+        _partData = partData;
         InitializeStat();
     }
 
     public void InitializeStat()
     {
-        if (_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: InitializeStat 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: InitializeStat 실패 - PartData가 Null입니다.");
             return;
         }
 
-        _currentHp = _ratData.CommonStat.Hp;
+        _currentHp = _partData.CommonStat.Health;
         OnHpChanged?.Invoke(_currentHp, MaxHp);
     }
 
     public void ApplyDirectDamage(float damage)
     {
-        if (_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: ApplyDirectDamage 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: ApplyDirectDamage 실패 - PartData가 Null입니다.");
             return;
         }
 
@@ -66,22 +66,24 @@ public class RatStatRuntime : MonoBehaviour
         }
 
         _currentHp -= damage;
-        if( _currentHp < 0f)
+        if (_currentHp < 0f)
         {
             _currentHp = 0f;
         }
-        
+
         OnHpChanged?.Invoke(_currentHp, MaxHp);
 
         if (IsDead)
+        {
             OnDead?.Invoke();
+        }
     }
 
     public void RecoverHp(float amount)
     {
-        if (_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: RecoverHp 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: RecoverHp 실패 - PartData가 Null입니다.");
             return;
         }
 
@@ -97,55 +99,60 @@ public class RatStatRuntime : MonoBehaviour
         }
 
         _currentHp += amount;
-        if(_currentHp > MaxHp)
+        if (_currentHp > MaxHp)
+        {
             _currentHp = MaxHp;
+        }
 
-        OnHpChanged?.Invoke( _currentHp, MaxHp);
+        OnHpChanged?.Invoke(_currentHp, MaxHp);
     }
 
-    public bool TryGetAttackStat(out RatAttackStatData attackStat)
+    public bool TryGetAttackStat(out PartAttackStatData attackStat)
     {
         attackStat = null;
 
-        if(_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: TryGetAttackStat 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: TryGetAttackStat 실패 - PartData가 Null입니다.");
             return false;
         }
 
-        if (!_ratData.HasAttackStat)
+        if (!_partData.HasAttackStat)
         {
             return false;
         }
 
-        attackStat = _ratData.AttackStat;
+        attackStat = _partData.AttackStat;
         return attackStat != null;
     }
 
-    public bool TryGetDefenceStat(out RatDefenceStatData defenceStat)
+    public bool TryGetDefenseStat(out PartDefenseStatData defenseStat)
     {
-        defenceStat = null;
+        defenseStat = null;
 
-        if (_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: TryGetDefenceStat 실패 - RatData가 Null입니다.");
+            Debug.LogError($"{name}: TryGetDefenseStat 실패 - PartData가 Null입니다.");
             return false;
         }
 
-        if (!_ratData.HasDefenceStat)
+        if (!_partData.HasDefenseStat)
         {
             return false;
         }
 
-        defenceStat = _ratData.DefenceStat;
-        return defenceStat != null;
+        defenseStat = _partData.DefenseStat;
+        return defenseStat != null;
     }
 
-    private void ValidateRatData()
+    private void ValidatePartData()
     {
-        if (_ratData == null)
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: RatStatRuntime에 RatData가 할당되지 않았습니다.");
+            Debug.LogError($"{name}: RatStatRuntime에 PartData가 할당되지 않았습니다.");
+            return;
         }
+
+        _partData.IsValid();
     }
 }

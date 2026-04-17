@@ -164,15 +164,44 @@ public class BuildManager : MonoBehaviour
 
         PlacedPart targetPart = board.GetCell(gridPos);
         if (targetPart == null) return;
+        if (board.HasPartAbove(targetPart))
+        {
+            Debug.LogWarning("위에 파츠가 있어서 제거할 수 없습니다.");
+            return;
+        }
 
         board.RemovePart(targetPart);
         Destroy(targetPart.gameObject);
     }
 
-    public void BrokenPart(PlacedPart targetPart)
+
+    public void BrokenPart(PlacedPart brokenPart)
     {
-        board.RemovePart(targetPart);
-        Destroy(targetPart.gameObject);
+
+        if (brokenPart == null) return;
+
+        HashSet<PlacedPart> upperParts = board.GetAllUpperPartsRecursive(brokenPart);
+
+        List<PlacedPart> allToDestroy = new();
+        allToDestroy.Add(brokenPart);
+
+        foreach (var part in upperParts)
+        {
+            if (part != null)
+                allToDestroy.Add(part);
+        }
+
+        foreach (var part in allToDestroy)
+        {
+            if (part == null) continue;
+            board.RemovePart(part);
+        }
+
+        foreach (var part in allToDestroy)
+        {
+            if (part == null) continue;
+            Destroy(part.gameObject);
+        }
     }
 
     private void ClearSelection()
