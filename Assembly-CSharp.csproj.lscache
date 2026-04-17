@@ -76,7 +76,7 @@ Assets/01.Scripts/
    RatType.cs
   RatStatRuntime.cs
  Store/
-  ShopButtons.cs
+  ShopButton.cs
   StoreManager.cs
   UIManager.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
