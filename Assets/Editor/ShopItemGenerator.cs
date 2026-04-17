@@ -34,6 +34,8 @@ public class ShopItemGenerator : EditorWindow
         Debug.Log("Shop Item Generation Complete!");
     }
 
+
+
     [MenuItem("Tools/Cleanup Broken Shop Items")]
     public static void Cleanup()
     {
@@ -70,56 +72,60 @@ public class ShopItemGenerator : EditorWindow
         }
     }
 
+
+
     [MenuItem("Tools/Sync to Data Base")]
     public static void SyncDatabase()
     {
         string dbPath = "Assets/08.Data/ShopDatabase/ShopDatabase.asset";
-    ShopDataBase db = AssetDatabase.LoadAssetAtPath<ShopDataBase>(dbPath);
+        ShopDataBase db = AssetDatabase.LoadAssetAtPath<ShopDataBase>(dbPath);
 
-    if (db == null)
-    {
-        Debug.LogError("Database not found at " + dbPath);
-        return;
-    }
-
-    // 2. Clear old references to start fresh
-    db.attackItems.Clear();
-    db.buildItems.Clear();
-    db.supportItems.Clear();
-
-    // 3. Find every ShopItemData asset in the project
-    // "t:ShopItemData" tells Unity to look for that specific script type
-    string[] guids = AssetDatabase.FindAssets("t:ShopItemData");
-
-    foreach (string guid in guids)
-    {
-        string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-        ShopItemData item = AssetDatabase.LoadAssetAtPath<ShopItemData>(assetPath);
-
-        if (item != null)
+        if (db == null)
         {
-            // 4. Sort the item into the correct list based on its category
-            switch (item.category)
+            Debug.LogError("Database not found at " + dbPath);
+            return;
+        }
+
+        // 2. Clear old references to start fresh
+        db.attackItems.Clear();
+        db.buildItems.Clear();
+        db.supportItems.Clear();
+
+        // 3. Find every ShopItemData asset in the project
+        // "t:ShopItemData" tells Unity to look for that specific script type
+        string[] guids = AssetDatabase.FindAssets("t:ShopItemData");
+
+        foreach (string guid in guids)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            ShopItemData item = AssetDatabase.LoadAssetAtPath<ShopItemData>(assetPath);
+
+            if (item != null)
             {
-                case ShopItemCategory.AttackStore:
-                    db.attackItems.Add(item);
-                    break;
-                case ShopItemCategory.BuildStore:
-                    db.buildItems.Add(item);
-                    break;
-                case ShopItemCategory.SupportStore:
-                    db.supportItems.Add(item);
-                    break;
+                // 4. Sort the item into the correct list based on its category
+                switch (item.category)
+                {
+                    case ShopItemCategory.AttackStore:
+                        db.attackItems.Add(item);
+                        break;
+                    case ShopItemCategory.BuildStore:
+                        db.buildItems.Add(item);
+                        break;
+                    case ShopItemCategory.SupportStore:
+                        db.supportItems.Add(item);
+                        break;
+                }
             }
         }
+
+        // 5. IMPORTANT: Tell Unity the file has changed so it saves the data!
+        EditorUtility.SetDirty(db);
+        AssetDatabase.SaveAssets();
+        
+        Debug.Log($"Database Synced! Total items: {db.attackItems.Count + db.buildItems.Count + db.supportItems.Count}");
     }
 
-    // 5. IMPORTANT: Tell Unity the file has changed so it saves the data!
-    EditorUtility.SetDirty(db);
-    AssetDatabase.SaveAssets();
-    
-    Debug.Log($"Database Synced! Total items: {db.attackItems.Count + db.buildItems.Count + db.supportItems.Count}");
-}
+
 
     private static void CreateNewShopItem(RatData rat, string path)
     {
