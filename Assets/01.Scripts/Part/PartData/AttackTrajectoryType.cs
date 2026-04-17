@@ -2,6 +2,7 @@ using System;
 
 public enum AttackTrajectoryType
 {
-    Direct = 0,
-    Arc = 1
+    None = 0,
+    Direct = 1,
+    Arc = 2
 }
