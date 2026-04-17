@@ -3,17 +3,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class TestMouse : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class TestMouse : MonoBehaviour, IPointerClickHandler
 {
     public int key;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
         BuildManager.Instance.SelectPart(key);
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        BuildManager.Instance.TryPlaceCurrentPart();
-    }
 }
