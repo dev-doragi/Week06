@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: ShopDatabase
   m_EditorClassIdentifier: Assembly-CSharp::ShopDataBase
   attackItems:
-  - {fileID: 11400000, guid: 9db6741af22f7ea4bb0aa0706d47c1d1, type: 2}
+  - {fileID: 11400000, guid: e9fed07e71b4e1f498b7a1c51d85a46a, type: 2}
+  - {fileID: 11400000, guid: 13469a25296350c4183e44a0da017873, type: 2}
+  - {fileID: 11400000, guid: 1bcf234e78fba3c40a4e112510059ee4, type: 2}
   buildItems: []
-  supportItems: []
+  supportItems:
+  - {fileID: 11400000, guid: 874e3651c7b35804695a68e56c5097d1, type: 2}

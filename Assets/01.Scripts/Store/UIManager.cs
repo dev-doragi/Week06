@@ -1,11 +1,10 @@
 
 using UnityEngine;
 
-
+[DefaultExecutionOrder(-100)]
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance {get; private set;}
-
 
     private void Awake()
     {
@@ -24,6 +23,7 @@ public class UIManager : MonoBehaviour
     {
 
         RefreshStoreUI();
+
     }
 
 

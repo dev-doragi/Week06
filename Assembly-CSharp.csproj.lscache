@@ -64,35 +64,48 @@ Assets/01.Scripts/
   GridBoard.cs
   GridManager.cs
   GridRenderer.cs
-  PartData.cs
-  PartDataSO.cs
-  PlacedPart.cs
   Test/TestMouse.cs
  Manager/
   GameFlowManager.cs
   GameManager.cs
   PoolManager.cs
   StageManager.cs
- Placement/PlacementManager.cs
+ Part/PartData/
+  AttackTrajectoryType.cs
+  PartAttackStatData.cs
+  PartCommonStatData.cs
+  PartData.cs
+  PartDataSO.cs
+  PartDefenseStatData.cs
+  PartType.cs
+  PlacedPart.cs
+ Placement/
+  MouseAgent.cs
+  MouseMovement.cs
+  PlacementManager.cs
  Rat/
   RatAttackHandler.cs
   RatCollisionHandler.cs
   RatController.cs
   RatDamageCalculator.cs
   RatData/
-   AttackTrajectoryType.cs
    RatAttackStatData.cs
    RatCommonStatData.cs
    RatData.cs
    RatDefenceStatData.cs
+   RatTeamType.cs
    RatType.cs
   RatStatRuntime.cs
+  RatTargetFinder.cs
  Store/
   ShopButton.cs
   ShopDataBase.cs
   ShopItemData.cs
   StoreManager.cs
   UIManager.cs
+ Vehicle/
+  VehicleCache.cs
+  VehicleSaveLoader.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
