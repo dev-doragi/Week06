@@ -78,8 +78,14 @@ public class RatTargetFinder : MonoBehaviour
         return distance <= _searchRadius;
     }
 
-    private bool IsValidTarget(RatController candidate)
+    public bool IsValidTarget(RatController candidate)
     {
+        if (_ratController == null)
+        {
+            Debug.LogError($"{name}: IsValidTarget 실패 - RatController가 Null입니다.");
+            return false;
+        }
+
         if (candidate == null) return false;
 
         if (candidate == _ratController) return false;
@@ -96,6 +102,8 @@ public class RatTargetFinder : MonoBehaviour
         {
             return false;
         }
+
+        if(!IsTargetWithinSearchRadius(candidate)) return false;
 
         return true;
     }

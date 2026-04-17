@@ -16,6 +16,7 @@ public class RatController : MonoBehaviour
     public RatAttackHandler RatAttackHandler => _ratAttackHandler;
     public RatCollisionHandler RatCollisionHandler => _ratCollisionHandler;
     public RatTargetFinder RatTargetFinder => _ratTargetFinder;
+    public RatTeamType TeamType => _teamType;
 
     private void Awake()
     {
@@ -108,6 +109,39 @@ public class RatController : MonoBehaviour
         }
 
         return _ratData.CommonStat.Cost;
+    }
+
+    public RatController GetCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: GetCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return null;
+        }
+
+        return _ratAttackHandler.CurrentTarget;
+    }
+
+    public void ProcessAutoAttack()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ProcessAutoAttack 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ProcessAutoAttack();
+    }
+
+    public void ClearCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ClearCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ClearCurrentTarget();
     }
 
     public bool TryGetAttackStat(out RatAttackStatData attackStat)
