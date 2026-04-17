@@ -5,7 +5,7 @@ public class PartData
 {
     public int Key;
     public string partName;
-    public List<Vector2Int> shape;
+    public List<Vector2Int> Shape = new List<Vector2Int>();
     public string SpriteName;
     public Sprite Icon;
 }

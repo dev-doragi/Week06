@@ -89,7 +89,7 @@ public class GridBoard : MonoBehaviour
     {
         List<Vector2Int> result = new();
 
-        foreach (var cell in data.shape)
+        foreach (var cell in data.Shape)
         {
             Vector2Int rotated = RotateCell(cell, rotation);
             result.Add(origin + rotated);
@@ -179,7 +179,7 @@ public class GridBoard : MonoBehaviour
 
         int currentBlockCount = GetBlockCellCount();
         int wheelCount = GetWheelCount();
-        int newBlockCells = newPartData.shape.Count;
+        int newBlockCells = newPartData.Shape.Count;
         int maxSupport = wheelCount * supportPerWheel;
 
         return currentBlockCount + newBlockCells <= maxSupport;
