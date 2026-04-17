@@ -10,9 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
-    where TData : new()
-    where TSO : ScriptableObject
+public class BasePartSpreadsheetImporter : OdinEditorWindow
 {
     [TitleGroup("GoogleSheetSettings", "1. 구글 시트 설정")]
     [LabelText("문서 ID")]
@@ -23,7 +21,7 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
 
     [TitleGroup("SaveSettings", "2. 저장 설정")]
     [LabelText("저장될 SO")]
-    public TSO partDataSO;
+    public PartDataSO partDataSO;
 
     [FolderPath]
     [LabelText("저장 경로")]
@@ -44,6 +42,12 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
     [LabelText("이름 참조 필드명")]
     [Tooltip("Sprite 파일명을 담고 있는 string 필드 이름 (예: SpriteName)")]
     public string spriteNameFieldName = "SpriteName";
+
+    [MenuItem("Tools/Defense Part Spreadsheet Importer")]
+    private static void OpenWindow()
+    {
+        GetWindow<BasePartSpreadsheetImporter>().Show();
+    }
 
     [Button("데이터 가져오기", ButtonSizes.Large), GUIColor(0.2f, 0.8f, 0.2f)]
     public void Import()
@@ -80,19 +84,21 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
 
         string fullPath = $"{savePath}/{fileName}.asset";
 
-        TSO database = partDataSO;
+        PartDataSO database = partDataSO;
         if (database == null)
         {
-            database = AssetDatabase.LoadAssetAtPath<TSO>(fullPath);
+            database = AssetDatabase.LoadAssetAtPath<PartDataSO>(fullPath);
             if (database == null)
             {
-                database = ScriptableObject.CreateInstance<TSO>();
+                database = ScriptableObject.CreateInstance<PartDataSO>();
                 AssetDatabase.CreateAsset(database, fullPath);
             }
         }
 
-        Dictionary<int, TData> targetDic = GetOrCreateDictionary(database);
-        targetDic.Clear();
+        if (database.partDic == null)
+            database.partDic = new Dictionary<int, PartData>();
+
+        database.partDic.Clear();
 
         string[] lines = csvData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         if (lines.Length < 2)
@@ -104,7 +110,7 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
         string[] headers = SplitCsvLine(lines[0]).Select(h => h.Trim().Trim('"')).ToArray();
 
         BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-        Type entityType = typeof(TData);
+        Type entityType = typeof(PartData);
 
         FieldInfo iconField = entityType.GetField(iconFieldName, flags);
         FieldInfo spriteNameField = entityType.GetField(spriteNameFieldName, flags);
@@ -122,7 +128,7 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
             if (values.Length == 0)
                 continue;
 
-            TData entity = new TData();
+            PartData entity = new PartData();
 
             for (int j = 0; j < headers.Length && j < values.Length; j++)
             {
@@ -149,14 +155,14 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
                 continue;
             }
 
-            if (targetDic.ContainsKey(key))
+            if (database.partDic.ContainsKey(key))
             {
                 Debug.LogWarning($"[중복 ID] Key {key} 가 중복되어 기존 데이터를 덮어씁니다.");
-                targetDic[key] = entity;
+                database.partDic[key] = entity;
             }
             else
             {
-                targetDic.Add(key, entity);
+                database.partDic.Add(key, entity);
             }
         }
 
@@ -165,10 +171,10 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
         AssetDatabase.Refresh();
         EditorGUIUtility.PingObject(database);
 
-        Debug.Log($"<color=#00FF00><b>[완료]</b></color> {typeof(TData).Name} 데이터 {targetDic.Count}개 임포트 성공!");
+        Debug.Log($"<color=#00FF00><b>[완료]</b></color> {typeof(PartData).Name} 데이터 {database.partDic.Count}개 임포트 성공!");
     }
 
-    private void TryAssignSprite(TData entity, FieldInfo iconField, FieldInfo spriteNameField, int row)
+    private void TryAssignSprite(PartData entity, FieldInfo iconField, FieldInfo spriteNameField, int row)
     {
         if (iconField == null || spriteNameField == null)
             return;
@@ -268,6 +274,4 @@ public abstract class BasePartSpreadsheetImporter<TData, TSO> : OdinEditorWindow
 
         return value;
     }
-
-    protected abstract Dictionary<int, TData> GetOrCreateDictionary(TSO database);
 }

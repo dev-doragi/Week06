@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PartData
+public class PartData
 {
     public int Key;
     public string partName;
