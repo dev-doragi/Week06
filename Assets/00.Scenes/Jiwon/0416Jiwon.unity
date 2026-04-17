@@ -148,8 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e6001aadd359242b22ae95799ac6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  _attackPartSO: {fileID: 11400000, guid: 3952501c6498bc44f9578c0e2c0d3849, type: 2}
-  _defensePartSO: {fileID: 11400000, guid: f23a2510279530b43a4e756e13aa5530, type: 2}
+  _partSO: {fileID: 11400000, guid: 3fa8247dc8af3cb40a1915e50a2163ee, type: 2}
 --- !u!4 &217831827
 Transform:
   m_ObjectHideFlags: 0
@@ -483,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1001
+  key: 1
 --- !u!114 &1136244615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1002
+  key: 2
 --- !u!114 &1201239843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1003
+  key: 3
 --- !u!114 &1321970074
 MonoBehaviour:
   m_ObjectHideFlags: 0

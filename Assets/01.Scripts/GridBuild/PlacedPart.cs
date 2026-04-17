@@ -5,12 +5,17 @@ using UnityEngine;
 
 public class PlacedPart : SerializedMonoBehaviour
 {
+
     [SerializeField] public PartData data;
     public Vector2Int origin;
     public int rotation;
     public List<Vector2Int> occupiedCells = new();
 
-    private List<SpriteRenderer> cellRenderers = new();
+    [SerializeField] private float currentHp;
+
+    private readonly List<SpriteRenderer> cellRenderers = new();
+
+    public float CurrentHp => currentHp;
 
     public void Initialize(PartData data, Vector2Int origin, int rotation, List<Vector2Int> occupiedCells)
     {
@@ -18,6 +23,8 @@ public class PlacedPart : SerializedMonoBehaviour
         this.origin = origin;
         this.rotation = rotation;
         this.occupiedCells = new List<Vector2Int>(occupiedCells);
+
+        //currentHp = data.Health; Need Health Property
     }
 
     public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, Color color)
@@ -34,6 +41,7 @@ public class PlacedPart : SerializedMonoBehaviour
             SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
             BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
             boxCol.size = new Vector2(1, 1);
+
             sr.sprite = data.Icon;
             sr.color = color;
 
@@ -63,14 +71,13 @@ public class PlacedPart : SerializedMonoBehaviour
         cellRenderers.Clear();
     }
 
-    /* 파츠 파괴 함수
-    public void DicreaseHp(float damage)
+    public void DecreaseHp(float damage)
     {
-        data.health -= damage;
-        if(data.health < 0)
+        currentHp -= damage;
+
+        if (currentHp <= 0f)
         {
             BuildManager.Instance.BrokenPart(this);
         }
     }
-    */
 }
