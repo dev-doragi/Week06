@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RatController : MonoBehaviour
 {
-    [SerializeField] private RatData _ratData;
+    [SerializeField] private PartData _partData;
     [SerializeField] private RatTeamType _teamType;
 
     private RatStatRuntime _ratStatRuntime;
@@ -10,8 +10,8 @@ public class RatController : MonoBehaviour
     private RatCollisionHandler _ratCollisionHandler;
     private RatTargetFinder _ratTargetFinder;
 
-    public RatData RatData => _ratData;
-    public RatType RatType => _ratData != null ? _ratData.RatType : RatType.White;
+    public PartData PartData => _partData;
+    public PartType PartType => _partData != null ? _partData.PartType : PartType.None;
     public RatStatRuntime RatStatRuntime => _ratStatRuntime;
     public RatAttackHandler RatAttackHandler => _ratAttackHandler;
     public RatCollisionHandler RatCollisionHandler => _ratCollisionHandler;
@@ -30,7 +30,7 @@ public class RatController : MonoBehaviour
         _ratCollisionHandler = GetComponent<RatCollisionHandler>();
         _ratTargetFinder = GetComponent<RatTargetFinder>();
 
-        if (_ratData == null)
+        if (_partData == null)
         {
             Debug.LogError($"{name}: RatController에 RatData가 할당되지 않았습니다.");
             return;
@@ -41,7 +41,7 @@ public class RatController : MonoBehaviour
             Debug.LogError($"{name}: TeamType이 None으로 설정되어 있습니다.");
         }
 
-        _ratStatRuntime.SetRatData(_ratData);
+        _ratStatRuntime.SetRatData(_partData);
     }
 
     private void OnEnable()
@@ -82,35 +82,72 @@ public class RatController : MonoBehaviour
         return _ratStatRuntime.MaxHp;
     }
 
-    public float GetDefenceRate()
+    public float GetDefenseRate()
     {
         if (_ratStatRuntime == null)
         {
-            Debug.LogError($"{name}: GetDefenceRate 실패 - RatStatRuntime이 Null입니다.");
+            Debug.LogError($"{name}: GetDefenseRate 실패 - RatStatRuntime이 Null입니다.");
             return 0f;
         }
 
-        return _ratStatRuntime.DefenceRate;
+        return _ratStatRuntime.DefenseRate;
     }
 
     public int GetCost()
     {
-        if (_ratData == null)
+        if (_partData == null)
         {
             Debug.LogError($"{name}: GetCost 실패 - RatData가 Null입니다.");
             return 0;
         }
 
-        if (_ratData.CommonStat == null)
+        if (_partData.CommonStat == null)
         {
             Debug.LogError($"{name}: GetCost 실패 - CommonStat이 Null입니다.");
             return 0;
         }
 
-        return _ratData.CommonStat.Cost;
+        return _partData.CommonStat.Cost;
     }
 
+<<<<<<< Updated upstream
     public bool TryGetAttackStat(out RatAttackStatData attackStat)
+=======
+    public RatController GetCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: GetCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return null;
+        }
+
+        return _ratAttackHandler.CurrentTarget;
+    }
+
+    public void ProcessAutoAttack()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ProcessAutoAttack 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ProcessAutoAttack();
+    }
+
+    public void ClearCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ClearCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ClearCurrentTarget();
+    }
+
+    public bool TryGetAttackStat(out PartAttackStatData attackStat)
+>>>>>>> Stashed changes
     {
         attackStat = null;
 
@@ -123,17 +160,17 @@ public class RatController : MonoBehaviour
         return _ratStatRuntime.TryGetAttackStat(out attackStat);
     }
 
-    public bool TryGetDefenceStat(out RatDefenceStatData defenceStat)
+    public bool TryGetDefenseStat(out PartDefenseStatData defenseStat)
     {
-        defenceStat = null;
+        defenseStat = null;
 
         if (_ratStatRuntime == null)
         {
-            Debug.LogError($"{name}: TryGetDefenceStat 실패 - RatStatRuntime이 Null입니다.");
+            Debug.LogError($"{name}: TryGetDefenseStat 실패 - RatStatRuntime이 Null입니다.");
             return false;
         }
 
-        return _ratStatRuntime.TryGetDefenceStat(out defenceStat);
+        return _ratStatRuntime.TryGetDefenseStat(out defenseStat);
     }
 
     public void ApplyDirectDamage(float damage)
