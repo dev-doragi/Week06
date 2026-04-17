@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class DefensePartDataSpreadsheetImporter : BasePartSpreadsheetImporter<DefensePartData, DefensePartDataSO>
 {
+    public DefensePartDataSpreadsheetImporter()
+    {
+        sheetId = "1-r0-DPrqGOdSrRVU7BfvweNBzFZPsd9hThlE_w9dXEg";
+    }
+
     [MenuItem("Tools/Defense Part Spreadsheet Importer")]
     private static void OpenWindow()
     {

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class AttackPartSpreadsheetImporter : BasePartSpreadsheetImporter<AttackPartData, AttackPartDataSO>
 {
+    public AttackPartSpreadsheetImporter()
+    {
+        sheetId = "1hKl1IEjN-yBBtVp9oKZpYj0QEwS-MdO5pVNEdupAWCo";
+    }
     [MenuItem("Tools/Attack Part Spreadsheet Importer")]
     private static void OpenWindow()
     {

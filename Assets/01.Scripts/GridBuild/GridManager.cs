@@ -37,7 +37,6 @@ public class GridManager : MonoBehaviour
             {
                 if (partDic.ContainsKey(pair.Key))
                 {
-                    Debug.LogWarning($"[GridManager] 중복 Key 발견: {pair.Key} (Attack)");
                     continue;
                 }
 
@@ -53,7 +52,6 @@ public class GridManager : MonoBehaviour
             {
                 if (partDic.ContainsKey(pair.Key))
                 {
-                    Debug.LogWarning($"[GridManager] 중복 Key 발견: {pair.Key} (Defense)");
                     continue;
                 }
 

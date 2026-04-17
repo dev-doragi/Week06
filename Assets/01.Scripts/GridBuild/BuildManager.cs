@@ -1,38 +1,49 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class BuildManager : MonoBehaviour
 {
-    [Header("References")]
+    public static BuildManager Instance;
+
     [SerializeField] private GridBoard board;
     [SerializeField] private GridRenderer gridRenderer;
     [SerializeField] private Transform placedPartsRoot;
     [SerializeField] private Transform ghostRoot;
 
-    [Header("Current Selection")]
-    [SerializeField] private int selectedPartKey;
-
     private PartData currentPartData;
     private int currentRotation;
-
     private PlacedPart ghostPart;
+
+    private bool haveMouse;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {
-        SelectPart(selectedPartKey);
-        CreateGhost();
+        SpawnStartWheels();
     }
 
     private void Update()
     {
-        if (currentPartData == null) return;
-
-        UpdateGhost();
-
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        if (currentPartData != null && haveMouse)
         {
-            TryPlaceCurrentPart();
+            UpdateGhost();
+
+            if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+            {
+                currentRotation = (currentRotation + 1) % 4;
+            }
         }
 
         if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
@@ -45,15 +56,26 @@ public class BuildManager : MonoBehaviour
     {
         if (!GridManager.instance.partDic.TryGetValue(key, out currentPartData))
         {
-            Debug.LogWarning($"[BuildManager] key {key} 에 해당하는 파츠가 없습니다.");
             currentPartData = null;
+            haveMouse = false;
+
+            if (ghostPart != null)
+            {
+                Destroy(ghostPart.gameObject);
+                ghostPart = null;
+            }
+
             return;
         }
 
+        haveMouse = true;
         currentRotation = 0;
 
         if (ghostPart != null)
+        {
             Destroy(ghostPart.gameObject);
+            ghostPart = null;
+        }
 
         CreateGhost();
     }
@@ -82,22 +104,34 @@ public class BuildManager : MonoBehaviour
 
     private void UpdateGhost()
     {
+        if (ghostPart == null)
+            CreateGhost();
+
+        if (ghostPart == null || currentPartData == null)
+            return;
+
         Vector2Int gridPos = GetMouseGridPosition();
         List<Vector2Int> targetCells = board.GetRotatedCells(currentPartData, gridPos, currentRotation);
 
         ghostPart.Initialize(currentPartData, gridPos, currentRotation, targetCells);
         ghostPart.BuildVisual(gridRenderer, ghostPart.transform, new Color(1f, 1f, 1f, 0.45f));
 
-        bool canPlace = board.CanPlacePart(currentPartData, gridPos, currentRotation);
+        bool canPlace = board.CanPlacePartByRules(currentPartData, gridPos, currentRotation);
         ghostPart.SetColor(canPlace ? new Color(0f, 1f, 0f, 0.45f) : new Color(1f, 0f, 0f, 0.45f));
     }
 
-    private void TryPlaceCurrentPart()
+    public void TryPlaceCurrentPart()
     {
+        if (currentPartData == null)
+            return;
+
         Vector2Int gridPos = GetMouseGridPosition();
 
-        if (!board.CanPlacePart(currentPartData, gridPos, currentRotation))
+        if (!board.CanPlacePartByRules(currentPartData, gridPos, currentRotation))
+        {
+            ClearSelection();
             return;
+        }
 
         GameObject partObj = new GameObject($"Placed_{currentPartData.partName}");
         partObj.transform.SetParent(placedPartsRoot);
@@ -109,10 +143,12 @@ public class BuildManager : MonoBehaviour
         if (!success)
         {
             Destroy(partObj);
+            ClearSelection();
             return;
         }
 
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+        ClearSelection();
     }
 
     private void TryRemovePart()
@@ -126,5 +162,53 @@ public class BuildManager : MonoBehaviour
 
         board.RemovePart(targetPart);
         Destroy(targetPart.gameObject);
+    }
+
+    private void ClearSelection()
+    {
+        haveMouse = false;
+        currentPartData = null;
+        currentRotation = 0;
+
+        if (ghostPart != null)
+        {
+            Destroy(ghostPart.gameObject);
+            ghostPart = null;
+        }
+    }
+
+    private void SpawnStartWheels()
+    {
+        if (!GridManager.instance.partDic.TryGetValue(GridBoard.WHEEL_KEY, out PartData wheelData))
+        {
+            Debug.LogWarning("[BuildManager] Key 10001 바퀴 데이터가 없습니다.");
+            return;
+        }
+
+        int startX = Mathf.Max(0, (board.width / 2) - 1);
+
+        for (int i = 0; i < board.startWheelCount; i++)
+        {
+            Vector2Int pos = new Vector2Int(startX + i, 0);
+
+            if (!board.CanPlacePartByRules(wheelData, pos, 0))
+                continue;
+
+            GameObject partObj = new GameObject($"StartWheel_{i}");
+            partObj.transform.SetParent(placedPartsRoot);
+
+            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
+
+            bool success = board.PlacePart(wheelData, pos, 0, placedPart);
+
+            if (success)
+            {
+                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+            }
+            else
+            {
+                Destroy(partObj);
+            }
+        }
     }
 }

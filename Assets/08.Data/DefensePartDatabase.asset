@@ -16,6 +16,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 2ff430c91a8438847ad249c33aa7eb73, type: 3}
     - {fileID: 21300000, guid: cdd33ff01eb0524468f81335b8bacc46, type: 3}
     - {fileID: 21300000, guid: c9b44f13f61abdc498ef4160a34b6779, type: 3}
     - {fileID: 21300000, guid: 950d400edf793ac49ab949968377687a, type: 3}
@@ -37,22 +38,22 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1001
+      Data: 10001
     - Name: $v
       Entry: 7
       Data: 2|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 1001
+      Data: 10001
     - Name: partName
       Entry: 1
-      Data: "\uBC29\uC5B41"
+      Data: "\uBC14\uD034"
     - Name: shape
       Entry: 7
       Data: 3|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -80,13 +81,13 @@ MonoBehaviour:
       Data: 
     - Name: SpriteName
       Entry: 1
-      Data: Blue
+      Data: Red
     - Name: Icon
       Entry: 10
       Data: 0
     - Name: DefensePower
       Entry: 3
-      Data: 10
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -98,16 +99,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1002
+      Data: 1001
     - Name: $v
       Entry: 7
       Data: 4|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 1002
+      Data: 1001
     - Name: partName
       Entry: 1
-      Data: "\uBC29\uC5B42"
+      Data: "\uBC29\uC5B41"
     - Name: shape
       Entry: 7
       Data: 5|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -135,13 +136,13 @@ MonoBehaviour:
       Data: 
     - Name: SpriteName
       Entry: 1
-      Data: Green
+      Data: Blue
     - Name: Icon
       Entry: 10
       Data: 1
     - Name: DefensePower
       Entry: 3
-      Data: 20
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -153,16 +154,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1003
+      Data: 1002
     - Name: $v
       Entry: 7
       Data: 6|DefensePartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 1003
+      Data: 1002
     - Name: partName
       Entry: 1
-      Data: "\uBC29\uC5B43"
+      Data: "\uBC29\uC5B42"
     - Name: shape
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -190,10 +191,65 @@ MonoBehaviour:
       Data: 
     - Name: SpriteName
       Entry: 1
-      Data: Pink
+      Data: Green
     - Name: Icon
       Entry: 10
       Data: 2
+    - Name: DefensePower
+      Entry: 3
+      Data: 20
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1003
+    - Name: $v
+      Entry: 7
+      Data: 8|DefensePartData, Assembly-CSharp
+    - Name: Key
+      Entry: 3
+      Data: 1003
+    - Name: partName
+      Entry: 1
+      Data: "\uBC29\uC5B43"
+    - Name: shape
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: SpriteName
+      Entry: 1
+      Data: Pink
+    - Name: Icon
+      Entry: 10
+      Data: 3
     - Name: DefensePower
       Entry: 3
       Data: 30
