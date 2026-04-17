@@ -1,0 +1,152 @@
+using UnityEngine;
+
+public static class RatDamageCalculator
+{
+    public static float CalculateEffectiveDefenceRate(float defenceRate, float penetrationRate)
+    {
+        if (defenceRate < 0f || defenceRate > 1f)
+        {
+            Debug.LogError($"CalculateEffectiveDefenseRate 실패 - defenseRate는 0~1 사이여야 합니다. 입력값: {defenceRate}");
+            return 0f;
+        }
+
+        if (penetrationRate < 0f || penetrationRate > 1f)
+        {
+            Debug.LogError($"CalculateEffectiveDefenseRate 실패 - penetrationRate는 0~1 사이여야 합니다. 입력값: {penetrationRate}");
+            return 0f;
+        }
+
+        float effectiveDefenceRate = defenceRate * (1f - penetrationRate);
+        return Mathf.Clamp01(effectiveDefenceRate);
+    }
+
+    public static float CalculateAttackDamage(float attackDamage, float defenceRate, float penetrationRate)
+    {
+        if (attackDamage < 0f)
+        {
+            Debug.LogError($"CalculateAttackDamage 실패 - attackDamage는 0 이상이어야 합니다. 입력값: {attackDamage}");
+            return 0f;
+        }
+
+        float effectiveDefenceRate = CalculateEffectiveDefenceRate(defenceRate, penetrationRate);
+        float finalDamage = attackDamage * (1f - effectiveDefenceRate);
+
+        return Mathf.Max(0f, finalDamage);
+    }
+
+    public static float CalculateAttackDamage(RatController attacker, RatController target)
+    {
+        if (attacker == null)
+        {
+            Debug.LogError("CalculateAttackDamage 실패 - attacker가 Null입니다.");
+            return 0f;
+        }
+
+        if (target == null)
+        {
+            Debug.LogError("CalculateAttackDamage 실패 - target이 Null입니다.");
+            return 0f;
+        }
+
+        if (!attacker.TryGetAttackStat(out var attackStat))
+        {
+            Debug.LogError($"{attacker.name}: 공격 스탯이 없어 일반 공격 피해를 계산할 수 없습니다.");
+            return 0f;
+        }
+
+        float attackDamage = attackStat.AttackDamage;
+        float penetrationRate = attackStat.PenetrationRate;
+        float targetDefenceRate = target.GetDefenceRate();
+
+        return CalculateAttackDamage(attackDamage, targetDefenceRate, penetrationRate);
+    }
+
+    public static float CalculateCollisionDamage(float attackerCollisionPower, float targetCollisionPower)
+    {
+        if (attackerCollisionPower < 0f)
+        {
+            Debug.LogError($"CalculateCollisionDamage 실패 - attackerCollisionPower는 0 이상이어야 합니다. 입력값: {attackerCollisionPower}");
+            return 0f;
+        }
+
+        if (targetCollisionPower < 0f)
+        {
+            Debug.LogError($"CalculateCollisionDamage 실패 - targetCollisionPower는 0 이상이어야 합니다. 입력값: {targetCollisionPower}");
+            return 0f;
+        }
+
+        if(attackerCollisionPower <= targetCollisionPower)
+        {
+            return 0f;
+        }
+
+        return attackerCollisionPower - targetCollisionPower;
+    }
+
+    public static float CalculateCollisionDamage(RatController attacker, RatController target)
+    {
+        if (attacker == null)
+        {
+            Debug.LogError("CalculateCollisionDamage 실패 - attacker가 Null입니다.");
+            return 0f;
+        }
+
+        if (target == null)
+        {
+            Debug.LogError("CalculateCollisionDamage 실패 - target이 Null입니다.");
+            return 0f;
+        }
+
+        if (!attacker.TryGetDefenceStat(out var attackerDefenceStat))
+        {
+            Debug.LogError($"{attacker.name}: 충돌 스탯이 없어 충돌 피해를 계산할 수 없습니다.");
+            return 0f;
+        }
+
+        float attackerCollisionPower = attackerDefenceStat.CollisionPower;
+        float targetCollisionPower = 0f;
+
+        if(target.TryGetDefenceStat(out var targetDefenceStat))
+        {
+            targetCollisionPower = targetDefenceStat.CollisionPower;
+        }
+
+        return CalculateCollisionDamage(attackerCollisionPower, targetCollisionPower);
+    }
+
+    public static void ApplyAttackDamage(RatController attacker, RatController target)
+    {
+        if (attacker == null)
+        {
+            Debug.LogError("ApplyAttackDamage 실패 - attacker가 Null입니다.");
+            return;
+        }
+
+        if (target == null)
+        {
+            Debug.LogError("ApplyAttackDamage 실패 - target이 Null입니다.");
+            return;
+        }
+
+        float damage = CalculateAttackDamage(attacker, target);
+        target.ApplyDirectDamage(damage);
+    }
+
+    public static void ApplyCollisionDamage(RatController attacker, RatController target)
+    {
+        if (attacker == null)
+        {
+            Debug.LogError("ApplyCollisionDamage 실패 - attacker가 Null입니다.");
+            return;
+        }
+
+        if (target == null)
+        {
+            Debug.LogError("ApplyCollisionDamage 실패 - target이 Null입니다.");
+            return;
+        }
+
+        float damage = CalculateCollisionDamage(attacker, target);
+        target.ApplyDirectDamage(damage);
+    }
+}
