@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870e0f9ed7cf8c94a9cd81fffe3a4e31, type: 3}
+  m_Name: StageData_1
+  m_EditorClassIdentifier: Assembly-CSharp::StageDataSO
+  StageLayoutPrefab: {fileID: -2608601988575246210, guid: 7067c0de1107b37408455c4d53c9fc3a, type: 3}
+  EnemySiegePrefab: {fileID: 1364392894365391579, guid: 14a3fca4cdfd1f64dace094e9f251f0c, type: 3}
+  PoolSetupList: []
+  StageIndex: 0
+  SpawnInterval: 0
