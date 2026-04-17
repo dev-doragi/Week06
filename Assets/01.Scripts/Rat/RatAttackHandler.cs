@@ -72,14 +72,14 @@ public class RatAttackHandler : MonoBehaviour
             return;
         }
 
-        MaintainOrArquireTarget();
+        MaintainOrAcquireTarget();
 
         if (_currentTarget == null) return;
 
         if (!CanAttack) return;
 
         if (!TryAttack(_currentTarget))
-            InValidateTargetIfNeeded(_currentTarget);
+            InvalidateTargetIfNeeded(_currentTarget);
     }
     public bool TryAttackNearestEnemy()
     {
@@ -238,7 +238,7 @@ public class RatAttackHandler : MonoBehaviour
         return attackStat.AttackRangeRadius;
     }
 
-    private void InvlidateTargetIfNeeded(RatController target)
+    private void InvalidateTargetIfNeeded(RatController target)
     {
         if(target == null)
         {
