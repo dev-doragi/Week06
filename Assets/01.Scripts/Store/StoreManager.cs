@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 스토어 타입
-public enum StoreState
+public enum ShopItemCategory
 {
     AttackStore = 0,
     BuildStore,
@@ -14,7 +14,7 @@ public class StoreManager : Singleton<StoreManager>
 {
     [Header ("Rat Datas")]
     // 모든 쥐 데이터를 여기에 저장
-    [SerializeField] private List<RatData> _ratDataContainer;
+    [SerializeField] private ShopDataBase _database;
     [SerializeField] private GameObject _buttonPrefab;
 
     // 각 타입에 따른 스토어
@@ -30,7 +30,7 @@ public class StoreManager : Singleton<StoreManager>
 
     // 현제 열린 스토어 상태
     [Header("Current Store State")]
-    [SerializeField] private StoreState _currentStore;
+    [SerializeField] private ShopItemCategory _currentStore;
 
 
     [Header("Temp Reference")]
@@ -56,27 +56,23 @@ public class StoreManager : Singleton<StoreManager>
     #region 구매 버튼
     private void GenerateBuyButtons()
     {
-        foreach (RatData data in _ratDataContainer)
-        {
-            // 1. Determine which parent this data belongs to
-            Transform targetParent = data.RatType switch
-            {
-                RatType.Attack => _attackStore.transform,
-                RatType.Defence => _buildStore.transform,
-                RatType.Wheel => _buildStore.transform,
-                RatType.White => _buildStore.transform,
-                //RatType.SupportStore => _supportStore,
-                _ => _attackStore.transform
-            };
+        // For each list in the database, spawn buttons in the correct store page
+        foreach (ShopItemData item in _database.attackItems) 
+            CreateButton(item, _attackStore.transform);
 
-            // 2. Spawn and Parent it
-            GameObject newBtn = Instantiate(_buttonPrefab, targetParent);
-            
-            // 3. Inject the data
-            if (newBtn.TryGetComponent(out ShopButton script))
-            {
-                script.Setup(data);
-            }
+        foreach (ShopItemData item in _database.buildItems) 
+            CreateButton(item, _buildStore.transform);
+    }
+
+    private void CreateButton(ShopItemData data, Transform targetPage)
+    {
+        // 1. Spawn the UI Button Prefab as a child of the specific Store Page
+        GameObject newButton = Instantiate(_buttonPrefab, targetPage);
+        
+        // 2. Pass the ShopItemData into the button's script
+        if (newButton.TryGetComponent(out ShopButton script))
+        {
+            script.Setup(data.ratData); // This fills the name, price, and icon
         }
     }
 
@@ -102,33 +98,33 @@ public class StoreManager : Singleton<StoreManager>
     // 구메창 각 상태에 따라 불러올때 사용
     public void AttackUnitStoreButton()
     {
-        _currentStore = StoreState.AttackStore;
+        _currentStore = ShopItemCategory.AttackStore;
         RefreshStoreUI();
     }
 
     public void BuildUnitStoreButton() // Renamed from Build for consistency
     {
-        _currentStore = StoreState.BuildStore;
+        _currentStore = ShopItemCategory.BuildStore;
         RefreshStoreUI();
     }
 
     public void SupportUnitStoreButton()
     {
-        _currentStore = StoreState.SupportStore;
+        _currentStore = ShopItemCategory.SupportStore;
         RefreshStoreUI();
     }
 
     // 사용중인 것 제외하고 다른 상점창 닫음
-    private void SwitchStore(StoreState targetStore)
+    private void SwitchStore(ShopItemCategory targetStore)
     {
         if (_attackStore != null)
-        _attackStore.SetActive(targetStore == StoreState.AttackStore);
+        _attackStore.SetActive(targetStore == ShopItemCategory.AttackStore);
 
         if (_buildStore != null)
-        _buildStore.SetActive(targetStore == StoreState.BuildStore);
+        _buildStore.SetActive(targetStore == ShopItemCategory.BuildStore);
 
         if (_supportStore != null)
-        _supportStore.SetActive(targetStore == StoreState.SupportStore);
+        _supportStore.SetActive(targetStore == ShopItemCategory.SupportStore);
     }
     #endregion
 
