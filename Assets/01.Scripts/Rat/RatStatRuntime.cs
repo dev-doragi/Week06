@@ -109,90 +109,42 @@ public class RatStatRuntime : MonoBehaviour
 
     public bool IsUnit()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: IsUnit 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.IsUnit;
+        return _partData != null && _partData.IsUnit;
     }
 
     public bool IsBuilding()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: IsBuilding 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.IsBuilding;
+        return _partData != null && _partData.IsBuilding;
     }
 
     public bool IsAttackUnit()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: IsAttackUnit 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.IsAttackUnit;
+        return _partData != null && _partData.IsAttackUnit;
     }
 
     public bool IsDefenseUnit()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: IsDefenseUnit 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.IsDefenseUnit;
+        return _partData != null && _partData.IsDefenseUnit;
     }
 
     public bool IsSupportUnit()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: IsSupportUnit 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.IsSupportUnit;
+        return _partData != null && _partData.IsSupportUnit;
     }
 
     public bool CanUseAttack()
     {
-        if(_partData == null)
-        {
-            Debug.LogError($"{name}: CanUseAttack 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.CanUseAttack;
+        return IsAttackUnit();
     }
 
     public bool CanUseCollision()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: CanUseCollision 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.CanUseCollision;
+        return IsDefenseUnit();
     }
 
     public bool CanUseSupport()
     {
-        if (_partData == null)
-        {
-            Debug.LogError($"{name}: CanUseSupport 실패 - PartData가 Null입니다.");
-            return false;
-        }
-
-        return _partData.CanUseSupport;
+        return IsSupportUnit();
     }
 
     public bool TryGetAttackStat(out PartAttackStatData attackStat)
@@ -205,13 +157,19 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.HasAttackStat)
+        if (!_partData.IsAttackUnit)
         {
             return false;
         }
 
         attackStat = _partData.AttackStat;
-        return attackStat != null;
+        if (attackStat == null)
+        {
+            Debug.LogError($"{name}: Attack 유닛인데 AttackStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
     }
 
     public bool TryGetDefenseStat(out PartDefenseStatData defenseStat)
@@ -224,13 +182,19 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.HasDefenseStat)
+        if (!_partData.IsDefenseUnit)
         {
             return false;
         }
 
         defenseStat = _partData.DefenseStat;
-        return defenseStat != null;
+        if (defenseStat == null)
+        {
+            Debug.LogError($"{name}: Defense 유닛인데 DefenseStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
     }
 
     public bool TryGetSupportStat(out PartSupportStatData supportStat)
@@ -243,13 +207,19 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.CanUseSupport)
+        if (!_partData.IsSupportUnit)
         {
             return false;
         }
 
         supportStat = _partData.SupportStat;
-        return supportStat != null;
+        if (supportStat == null)
+        {
+            Debug.LogError($"{name}: Support 유닛인데 SupportStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
     }
 
     public float GetEffectiveDefenseRate(RatStatModifierRuntime modifierRuntime)

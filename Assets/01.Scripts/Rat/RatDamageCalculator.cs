@@ -48,9 +48,15 @@ public static class RatDamageCalculator
             return 0f;
         }
 
+        if (!attacker.IsAttackUnit())
+        {
+            Debug.LogError($"{attacker.name}: Attack 유닛이 아닌데 공격 피해를 계산하려고 했습니다.");
+            return 0f;
+        }
+
         if (!attacker.TryGetAttackStat(out var attackStat))
         {
-            Debug.LogError($"{attacker.name}: 공격 스탯이 없어 일반 공격 피해를 계산할 수 없습니다.");
+            Debug.LogError($"{attacker.name}: Attack 유닛인데 AttackStat이 없습니다.");
             return 0f;
         }
 
@@ -100,16 +106,22 @@ public static class RatDamageCalculator
             return 0f;
         }
 
+        if (!attacker.IsDefenseUnit())
+        {
+            Debug.LogError($"{attacker.name}: Defense 유닛이 아닌데 충돌 피해를 계산하려고 했습니다.");
+            return 0f;
+        }
+
         if (!attacker.TryGetDefenseStat(out var attackerDefenseStat))
         {
-            Debug.LogError($"{attacker.name}: 충돌 스탯이 없어 충돌 피해를 계산할 수 없습니다.");
+            Debug.LogError($"{attacker.name}: Defense 유닛인데 DefenseStat이 없습니다.");
             return 0f;
         }
 
         float attackerCollisionPower = attackerDefenseStat.CollisionPower;
         float targetCollisionPower = 0f;
 
-        if (target.TryGetDefenseStat(out var targetDefenseStat))
+        if (target.IsDefenseUnit() && target.TryGetDefenseStat(out var targetDefenseStat))
         {
             targetCollisionPower = targetDefenseStat.CollisionPower;
         }

@@ -18,6 +18,20 @@ public class RatSupportHandler : MonoBehaviour
         }
     }
 
+    public void ProcessSupport()
+    {
+        if (_ratController == null)
+        {
+            Debug.LogError($"{name}: ProcessSupport 실패 - RatController가 Null입니다.");
+            return;
+        }
+
+        if (!CanProvideSupport())
+        {
+            return;
+        }
+    }
+
     public bool CanProvideSupport()
     {
         if (_ratController == null)
@@ -31,12 +45,7 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsUnit())
-        {
-            return false;
-        }
-
-        if (!_ratController.CanUseSupport())
+        if (!_ratController.IsSupportUnit())
         {
             return false;
         }
@@ -49,6 +58,12 @@ public class RatSupportHandler : MonoBehaviour
 
         if (_ratController.RatStatRuntime.IsDead)
         {
+            return false;
+        }
+
+        if (!_ratController.TryGetSupportStat(out _))
+        {
+            Debug.LogError($"{name}: Support 유닛인데 SupportStat을 가져오지 못했습니다.");
             return false;
         }
 
@@ -107,6 +122,11 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
+        if (!(target.IsAttackUnit() || target.IsDefenseUnit()))
+        {
+            return false;
+        }
+
         if (target.RatStatRuntime == null)
         {
             Debug.LogError($"{target.name}: RatStatRuntime이 없어 지원 대상이 될 수 없습니다.");
@@ -123,8 +143,22 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        return distance <= supportStat.SupportRangeRadius;
+        IReadOnlyList<Vector2Int> sourceCells = _ratController.GetOccupiedCells();
+        IReadOnlyList<Vector2Int> targetCells = target.GetOccupiedCells();
+
+        if (sourceCells == null)
+        {
+            Debug.LogError($"{name}: CanSupportTarget 실패 - sourceCells가 Null입니다.");
+            return false;
+        }
+
+        if (targetCells == null)
+        {
+            Debug.LogError($"{target.name}: CanSupportTarget 실패 - targetCells가 Null입니다.");
+            return false;
+        }
+
+        return GridRangeUtility.IsWithinCellRadius(sourceCells, targetCells, supportStat.SupportRangeRadius);
     }
 
     public IReadOnlyList<PartSupportEffectData> GetApplicableEffects(RatController target)
@@ -182,7 +216,7 @@ public class RatSupportHandler : MonoBehaviour
         switch (effect.TargetRoleType)
         {
             case SupportTargetRoleType.All:
-                return target.IsUnit();
+                return target.IsAttackUnit() || target.IsDefenseUnit();
 
             case SupportTargetRoleType.Attack:
                 return target.IsAttackUnit();

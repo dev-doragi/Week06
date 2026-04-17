@@ -22,18 +22,14 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
             }
 
-            if (!_ratController.IsUnit())
-            {
-                return false;
-            }
-
-            if (!_ratController.CanUseAttack())
+            if (!_ratController.IsAttackUnit())
             {
                 return false;
             }
 
             if (!_ratController.TryGetAttackStat(out var attackStat))
             {
+                Debug.LogError($"{name}: Attack 유닛인데 AttackStat을 가져오지 못했습니다.");
                 return false;
             }
 
@@ -81,12 +77,7 @@ public class RatAttackHandler : MonoBehaviour
             return;
         }
 
-        if (!_ratController.IsUnit())
-        {
-            return;
-        }
-
-        if (!_ratController.CanUseAttack())
+        if (!_ratController.IsAttackUnit())
         {
             return;
         }
@@ -117,9 +108,7 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsUnit()) return false;
-
-        if (!_ratController.CanUseAttack())
+        if (!_ratController.IsAttackUnit())
         {
             return false;
         }
@@ -148,9 +137,7 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsUnit()) return false;
-
-        if (!_ratController.CanUseAttack())
+        if (!_ratController.IsAttackUnit())
         {
             return false;
         }
@@ -162,7 +149,7 @@ public class RatAttackHandler : MonoBehaviour
 
         if (!_ratController.TryGetAttackStat(out var attackStat))
         {
-            Debug.LogError($"{name}: 공격형 스탯이 없어 공격할 수 없습니다.");
+            Debug.LogError($"{name}: Attack 유닛인데 AttackStat을 가져오지 못했습니다.");
             return false;
         }
 
@@ -212,12 +199,7 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsUnit())
-        {
-            return false;
-        }
-
-        if (!_ratController.CanUseAttack())
+        if (!_ratController.IsAttackUnit())
         {
             return false;
         }
@@ -229,7 +211,7 @@ public class RatAttackHandler : MonoBehaviour
 
         if (!_ratController.TryGetAttackStat(out var attackStat))
         {
-            Debug.LogError($"{name}: HasValidCurrentTarget 실패 - 공격 가능한 스탯이 없습니다.");
+            Debug.LogError($"{name}: Attack 유닛인데 AttackStat을 가져오지 못했습니다.");
             return false;
         }
 
@@ -293,14 +275,14 @@ public class RatAttackHandler : MonoBehaviour
             return 0;
         }
 
-        if (!_ratController.CanUseAttack())
+        if (!_ratController.IsAttackUnit())
         {
             return 0;
         }
 
         if (!_ratController.TryGetAttackStat(out var attackStat))
         {
-            Debug.LogError($"{name}: GetAttackRangeRadius 실패 - 공격형 스탯이 없습니다.");
+            Debug.LogError($"{name}: Attack 유닛인데 AttackStat을 가져오지 못했습니다.");
             return 0;
         }
 

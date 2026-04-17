@@ -101,38 +101,14 @@ public class PartData
     // ------------------------------------------------------------
     // 실제 기능 판정
     // ------------------------------------------------------------
-    public bool CanUseAttack =>
-        IsAttackUnit &&
-        AttackDamage > 0f &&
-        AttackSpeed > 0f &&
-        AttackDistance > 0f &&
-        TrajectoryType != AttackTrajectoryType.None;
+    public bool CanUseAttack => IsAttackUnit;
+    public bool CanUseCollision => IsDefenseUnit;
+    public bool CanUseSupport => IsSupportUnit;
 
-    public bool CanUseCollision =>
-        IsDefenseUnit &&
-        CollisionPower > 0f;
-
-    public bool CanUseSupport =>
-        IsSupportUnit &&
-        SupportRangeRadius > 0 &&
-        !string.IsNullOrWhiteSpace(SupportEffectsRaw) &&
-        ParseSupportEffects(SupportEffectsRaw).Count > 0;
-
-    public bool IsArcAttack =>
-        CanUseAttack &&
-        TrajectoryType == AttackTrajectoryType.Arc;
-
-    public bool IsDirectAttack =>
-        CanUseAttack &&
-        TrajectoryType == AttackTrajectoryType.Direct;
-
-    public bool IsAreaAttack =>
-        CanUseAttack &&
-        AttackRangeRadius > 0;
-
-    public bool IsSingleTargetAttack =>
-        CanUseAttack &&
-        AttackRangeRadius <= 0;
+    public bool IsArcAttack => IsAttackUnit && TrajectoryType == AttackTrajectoryType.Arc;
+    public bool IsDirectAttack => IsAttackUnit && TrajectoryType == AttackTrajectoryType.Direct;
+    public bool IsAreaAttack => IsAttackUnit && AttackRangeRadius > 0;
+    public bool IsSingleTargetAttack => IsAttackUnit && AttackRangeRadius <= 0;
 
     // ------------------------------------------------------------
     // 기존 호환성용
@@ -161,17 +137,6 @@ public class PartData
             return false;
         }
 
-        if (IsUnit && UnitRoleType == UnitRoleType.None)
-        {
-            Debug.LogError($"{PartName}: Unit인데 UnitRoleType이 None입니다.");
-            return false;
-        }
-
-        if (IsBuilding && UnitRoleType != UnitRoleType.None)
-        {
-            Debug.LogWarning($"{PartName}: Building인데 UnitRoleType이 None이 아닙니다.");
-        }
-
         if (Shape == null || Shape.Count == 0)
         {
             Debug.LogError($"{PartName}: Shape가 비어 있습니다.");
@@ -196,83 +161,222 @@ public class PartData
             return false;
         }
 
+        if (IsUnit && UnitRoleType == UnitRoleType.None)
+        {
+            Debug.LogError($"{PartName}: Unit인데 UnitRoleType이 None입니다.");
+            return false;
+        }
+
+        if (IsBuilding && UnitRoleType != UnitRoleType.None)
+        {
+            Debug.LogError($"{PartName}: Building인데 UnitRoleType이 None이 아닙니다.");
+            return false;
+        }
+
         if (IsAttackUnit)
         {
-            if (AttackDamage < 0f)
+            if (!ValidateAttackUnit())
             {
-                Debug.LogError($"{PartName}: AttackDamage는 0 이상이어야 합니다. 입력값: {AttackDamage}");
-                return false;
-            }
-
-            if (AttackSpeed < 0f)
-            {
-                Debug.LogError($"{PartName}: AttackSpeed는 0 이상이어야 합니다. 입력값: {AttackSpeed}");
-                return false;
-            }
-
-            if (AttackRangeRadius < 0)
-            {
-                Debug.LogError($"{PartName}: AttackRangeRadius는 0 이상이어야 합니다. 입력값: {AttackRangeRadius}");
-                return false;
-            }
-
-            if (AttackDistance < 0f)
-            {
-                Debug.LogError($"{PartName}: AttackDistance는 0 이상이어야 합니다. 입력값: {AttackDistance}");
-                return false;
-            }
-
-            if (PenetrationRate < 0f || PenetrationRate > 1f)
-            {
-                Debug.LogError($"{PartName}: PenetrationRate는 0~1 사이여야 합니다. 입력값: {PenetrationRate}");
                 return false;
             }
         }
-
-        if (IsDefenseUnit && CollisionPower < 0f)
+        else if (IsDefenseUnit)
         {
-            Debug.LogError($"{PartName}: CollisionPower는 0 이상이어야 합니다. 입력값: {CollisionPower}");
-            return false;
+            if (!ValidateDefenseUnit())
+            {
+                return false;
+            }
         }
-
-        if (IsSupportUnit && SupportRangeRadius < 0)
+        else if (IsSupportUnit)
         {
-            Debug.LogError($"{PartName}: SupportRangeRadius는 0 이상이어야 합니다. 입력값: {SupportRangeRadius}");
-            return false;
+            if (!ValidateSupportUnit())
+            {
+                return false;
+            }
+        }
+        else if (IsBuilding)
+        {
+            if (!ValidateBuilding())
+            {
+                return false;
+            }
         }
 
-        ValidateBehaviorCombination();
         return true;
     }
 
-    private void ValidateBehaviorCombination()
+    private bool ValidateAttackUnit()
     {
-        if (IsAttackUnit && !CanUseAttack)
+        if (AttackDamage <= 0f)
         {
-            Debug.LogWarning($"{PartName}: Attack 유닛이지만 실제 공격 가능한 스탯 조합이 아닙니다.");
+            Debug.LogError($"{PartName}: Attack 유닛은 AttackDamage가 0보다 커야 합니다.");
+            return false;
         }
 
-        if (IsDefenseUnit && !CanUseCollision)
+        if (AttackSpeed <= 0f)
         {
-            Debug.LogWarning($"{PartName}: Defense 유닛이지만 실제 충돌 가능한 스탯 조합이 아닙니다.");
+            Debug.LogError($"{PartName}: Attack 유닛은 AttackSpeed가 0보다 커야 합니다.");
+            return false;
         }
 
-        if (IsSupportUnit && !CanUseSupport)
+        if (AttackRangeRadius < 0)
         {
-            Debug.LogWarning($"{PartName}: Support 유닛이지만 실제 지원 가능한 스탯 조합이 아닙니다.");
+            Debug.LogError($"{PartName}: Attack 유닛의 AttackRangeRadius는 0 이상이어야 합니다.");
+            return false;
         }
 
-        if (IsBuilding && (AttackDamage > 0f || CollisionPower > 0f || !string.IsNullOrWhiteSpace(SupportEffectsRaw)))
+        if (AttackDistance <= 0f)
         {
-            Debug.LogWarning($"{PartName}: Building인데 전용 유닛 스탯 값이 설정되어 있습니다.");
+            Debug.LogError($"{PartName}: Attack 유닛은 AttackDistance가 0보다 커야 합니다.");
+            return false;
         }
+
+        if (TrajectoryType == AttackTrajectoryType.None)
+        {
+            Debug.LogError($"{PartName}: Attack 유닛은 TrajectoryType이 None일 수 없습니다.");
+            return false;
+        }
+
+        if (PenetrationRate < 0f || PenetrationRate > 1f)
+        {
+            Debug.LogError($"{PartName}: Attack 유닛의 PenetrationRate는 0~1 사이여야 합니다.");
+            return false;
+        }
+
+        if (CollisionPower != 0f)
+        {
+            Debug.LogError($"{PartName}: Attack 유닛은 CollisionPower를 가질 수 없습니다.");
+            return false;
+        }
+
+        if (SupportRangeRadius != 0)
+        {
+            Debug.LogError($"{PartName}: Attack 유닛은 SupportRangeRadius를 가질 수 없습니다.");
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(SupportEffectsRaw))
+        {
+            Debug.LogError($"{PartName}: Attack 유닛은 SupportEffectsRaw를 가질 수 없습니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidateDefenseUnit()
+    {
+        if (CollisionPower <= 0f)
+        {
+            Debug.LogError($"{PartName}: Defense 유닛은 CollisionPower가 0보다 커야 합니다.");
+            return false;
+        }
+
+        if (AttackDamage != 0f ||
+            AttackSpeed != 0f ||
+            AttackRangeRadius != 0 ||
+            AttackDistance != 0f ||
+            TrajectoryType != AttackTrajectoryType.None ||
+            PenetrationRate != 0f)
+        {
+            Debug.LogError($"{PartName}: Defense 유닛은 공격 스탯을 가질 수 없습니다.");
+            return false;
+        }
+
+        if (SupportRangeRadius != 0)
+        {
+            Debug.LogError($"{PartName}: Defense 유닛은 SupportRangeRadius를 가질 수 없습니다.");
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(SupportEffectsRaw))
+        {
+            Debug.LogError($"{PartName}: Defense 유닛은 SupportEffectsRaw를 가질 수 없습니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidateSupportUnit()
+    {
+        if (SupportRangeRadius <= 0)
+        {
+            Debug.LogError($"{PartName}: Support 유닛은 SupportRangeRadius가 0보다 커야 합니다.");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(SupportEffectsRaw))
+        {
+            Debug.LogError($"{PartName}: Support 유닛은 SupportEffectsRaw가 비어 있을 수 없습니다.");
+            return false;
+        }
+
+        List<PartSupportEffectData> effects = ParseSupportEffects(SupportEffectsRaw);
+        if (effects.Count == 0)
+        {
+            Debug.LogError($"{PartName}: Support 유닛은 유효한 지원 효과를 최소 1개 이상 가져야 합니다.");
+            return false;
+        }
+
+        if (AttackDamage != 0f ||
+            AttackSpeed != 0f ||
+            AttackRangeRadius != 0 ||
+            AttackDistance != 0f ||
+            TrajectoryType != AttackTrajectoryType.None ||
+            PenetrationRate != 0f)
+        {
+            Debug.LogError($"{PartName}: Support 유닛은 공격 스탯을 가질 수 없습니다.");
+            return false;
+        }
+
+        if (CollisionPower != 0f)
+        {
+            Debug.LogError($"{PartName}: Support 유닛은 CollisionPower를 가질 수 없습니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidateBuilding()
+    {
+        if (AttackDamage != 0f ||
+            AttackSpeed != 0f ||
+            AttackRangeRadius != 0 ||
+            AttackDistance != 0f ||
+            TrajectoryType != AttackTrajectoryType.None ||
+            PenetrationRate != 0f)
+        {
+            Debug.LogError($"{PartName}: Building은 공격 스탯을 가질 수 없습니다.");
+            return false;
+        }
+
+        if (CollisionPower != 0f)
+        {
+            Debug.LogError($"{PartName}: Building은 CollisionPower를 가질 수 없습니다.");
+            return false;
+        }
+
+        if (SupportRangeRadius != 0)
+        {
+            Debug.LogError($"{PartName}: Building은 SupportRangeRadius를 가질 수 없습니다.");
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(SupportEffectsRaw))
+        {
+            Debug.LogError($"{PartName}: Building은 SupportEffectsRaw를 가질 수 없습니다.");
+            return false;
+        }
+
+        return true;
     }
 
     private List<PartSupportEffectData> ParseSupportEffects(string raw)
     {
         List<PartSupportEffectData> effects = new List<PartSupportEffectData>();
 
-        // 빈 문자열이면 빈 리스트 반환
         if (string.IsNullOrWhiteSpace(raw))
         {
             return effects;
@@ -297,19 +401,15 @@ public class PartData
 
             try
             {
-                // 대상 역할 파싱
                 SupportTargetRoleType targetRoleType =
                     (SupportTargetRoleType)Enum.Parse(typeof(SupportTargetRoleType), parts[0], true);
 
-                // 대상 스탯 파싱
                 SupportStatType targetStatType =
                     (SupportStatType)Enum.Parse(typeof(SupportStatType), parts[1], true);
 
-                // 증가 방식 파싱
                 ModifierType modifierType =
                     (ModifierType)Enum.Parse(typeof(ModifierType), parts[2], true);
 
-                // 증가 수치 파싱
                 float value = float.Parse(parts[3], CultureInfo.InvariantCulture);
 
                 effects.Add(new PartSupportEffectData(
