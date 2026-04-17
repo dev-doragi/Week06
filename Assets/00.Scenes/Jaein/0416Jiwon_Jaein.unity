@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1001
+  key: 1
 --- !u!114 &1136244615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1002
+  key: 2
 --- !u!114 &1201239843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 1003
+  key: 3
 --- !u!114 &1321970074
 MonoBehaviour:
   m_ObjectHideFlags: 0

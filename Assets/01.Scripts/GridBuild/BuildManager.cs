@@ -31,6 +31,8 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
+        if (VehicleCache.HasSavedData) return; // Jaein 추가
+
         SpawnStartWheels();
     }
 
