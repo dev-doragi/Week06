@@ -37,6 +37,7 @@ public class RatAttackHandler : MonoBehaviour
         if (_ratController == null)
         {
             Debug.LogError($"{name}: RatAttackHandler에 RatController가 없습니다.");
+            return;
         }
 
         _ratTargetFinder = GetComponent<RatTargetFinder>();
@@ -48,7 +49,10 @@ public class RatAttackHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!_useAutoAttack) return;
+        if (!_useAutoAttack)
+        {
+            return;
+        }
 
         ProcessAutoAttack();
     }
@@ -74,13 +78,22 @@ public class RatAttackHandler : MonoBehaviour
 
         MaintainOrAcquireTarget();
 
-        if (_currentTarget == null) return;
+        if (_currentTarget == null)
+        {
+            return;
+        }
 
-        if (!CanAttack) return;
+        if (!CanAttack)
+        {
+            return;
+        }
 
         if (!TryAttack(_currentTarget))
+        {
             InvalidateTargetIfNeeded(_currentTarget);
+        }
     }
+
     public bool TryAttackNearestEnemy()
     {
         if (_ratTargetFinder == null)
@@ -90,7 +103,10 @@ public class RatAttackHandler : MonoBehaviour
         }
 
         RatController target = _ratTargetFinder.FindNearestEnemy();
-        if (target == null) return false;
+        if (target == null)
+        {
+            return false;
+        }
 
         _currentTarget = target;
         return TryAttack(target);
@@ -110,7 +126,10 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsEnemy(target)) return false;
+        if (!_ratController.IsEnemy(target))
+        {
+            return false;
+        }
 
         if (!_ratController.TryGetAttackStat(out var attackStat))
         {
@@ -129,12 +148,12 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (!CanAttack)
+        if (!_ratTargetFinder.IsValidTarget(target))
         {
             return false;
         }
 
-        if (_ratTargetFinder != null && !_ratTargetFinder.IsTargetWithinSearchRadius(target))
+        if (!CanAttack)
         {
             return false;
         }
@@ -153,7 +172,10 @@ public class RatAttackHandler : MonoBehaviour
 
     public bool HasValidCurrentTarget()
     {
-        if (_currentTarget == null) return false;
+        if (_currentTarget == null)
+        {
+            return false;
+        }
 
         if (_ratTargetFinder == null)
         {
@@ -182,7 +204,10 @@ public class RatAttackHandler : MonoBehaviour
 
     public void MaintainOrAcquireTarget()
     {
-        if (HasValidCurrentTarget()) return;
+        if (HasValidCurrentTarget())
+        {
+            return;
+        }
 
         _currentTarget = AcquireNewTarget();
     }
@@ -221,7 +246,7 @@ public class RatAttackHandler : MonoBehaviour
         return distance <= attackDistance;
     }
 
-    public float GetAttackRangeRadius()
+    public int GetAttackRangeRadius()
     {
         if (_ratController == null)
         {
@@ -240,16 +265,21 @@ public class RatAttackHandler : MonoBehaviour
 
     private void InvalidateTargetIfNeeded(RatController target)
     {
-        if(target == null)
+        if (target == null)
         {
             ClearCurrentTarget();
             return;
         }
 
-        if (_currentTarget != target) return;
+        if (_currentTarget != target)
+        {
+            return;
+        }
 
         if (!HasValidCurrentTarget())
+        {
             ClearCurrentTarget();
+        }
     }
 
     private float GetAttackInterval(float attackSpeed)

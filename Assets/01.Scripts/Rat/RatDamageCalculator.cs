@@ -2,11 +2,11 @@ using UnityEngine;
 
 public static class RatDamageCalculator
 {
-    public static float CalculateEffectiveDefenceRate(float defenceRate, float penetrationRate)
+    public static float CalculateEffectiveDefenseRate(float defenseRate, float penetrationRate)
     {
-        if (defenceRate < 0f || defenceRate > 1f)
+        if (defenseRate < 0f || defenseRate > 1f)
         {
-            Debug.LogError($"CalculateEffectiveDefenseRate 실패 - defenseRate는 0~1 사이여야 합니다. 입력값: {defenceRate}");
+            Debug.LogError($"CalculateEffectiveDefenseRate 실패 - defenseRate는 0~1 사이여야 합니다. 입력값: {defenseRate}");
             return 0f;
         }
 
@@ -16,11 +16,11 @@ public static class RatDamageCalculator
             return 0f;
         }
 
-        float effectiveDefenceRate = defenceRate * (1f - penetrationRate);
-        return Mathf.Clamp01(effectiveDefenceRate);
+        float effectiveDefenseRate = defenseRate * (1f - penetrationRate);
+        return Mathf.Clamp01(effectiveDefenseRate);
     }
 
-    public static float CalculateAttackDamage(float attackDamage, float defenceRate, float penetrationRate)
+    public static float CalculateAttackDamage(float attackDamage, float defenseRate, float penetrationRate)
     {
         if (attackDamage < 0f)
         {
@@ -28,8 +28,8 @@ public static class RatDamageCalculator
             return 0f;
         }
 
-        float effectiveDefenceRate = CalculateEffectiveDefenceRate(defenceRate, penetrationRate);
-        float finalDamage = attackDamage * (1f - effectiveDefenceRate);
+        float effectiveDefenseRate = CalculateEffectiveDefenseRate(defenseRate, penetrationRate);
+        float finalDamage = attackDamage * (1f - effectiveDefenseRate);
 
         return Mathf.Max(0f, finalDamage);
     }
@@ -56,9 +56,9 @@ public static class RatDamageCalculator
 
         float attackDamage = attackStat.AttackDamage;
         float penetrationRate = attackStat.PenetrationRate;
-        float targetDefenceRate = target.GetDefenceRate();
+        float targetDefenseRate = target.GetDefenseRate();
 
-        return CalculateAttackDamage(attackDamage, targetDefenceRate, penetrationRate);
+        return CalculateAttackDamage(attackDamage, targetDefenseRate, penetrationRate);
     }
 
     public static float CalculateCollisionDamage(float attackerCollisionPower, float targetCollisionPower)
@@ -75,7 +75,7 @@ public static class RatDamageCalculator
             return 0f;
         }
 
-        if(attackerCollisionPower <= targetCollisionPower)
+        if (attackerCollisionPower <= targetCollisionPower)
         {
             return 0f;
         }
@@ -97,18 +97,18 @@ public static class RatDamageCalculator
             return 0f;
         }
 
-        if (!attacker.TryGetDefenceStat(out var attackerDefenceStat))
+        if (!attacker.TryGetDefenseStat(out var attackerDefenseStat))
         {
             Debug.LogError($"{attacker.name}: 충돌 스탯이 없어 충돌 피해를 계산할 수 없습니다.");
             return 0f;
         }
 
-        float attackerCollisionPower = attackerDefenceStat.CollisionPower;
+        float attackerCollisionPower = attackerDefenseStat.CollisionPower;
         float targetCollisionPower = 0f;
 
-        if(target.TryGetDefenceStat(out var targetDefenceStat))
+        if (target.TryGetDefenseStat(out var targetDefenseStat))
         {
-            targetCollisionPower = targetDefenceStat.CollisionPower;
+            targetCollisionPower = targetDefenseStat.CollisionPower;
         }
 
         return CalculateCollisionDamage(attackerCollisionPower, targetCollisionPower);

@@ -34,17 +34,22 @@ public class RatTargetFinder : MonoBehaviour
         RatController nearestTarget = null;
         float nearestDistance = float.MaxValue;
 
-        for(int i = 0; i < allRats.Length; i++)
+        for (int i = 0; i < allRats.Length; i++)
         {
             RatController candidate = allRats[i];
 
-            if (!IsValidTarget(candidate)) continue;
+            if (!IsValidTarget(candidate))
+            {
+                continue;
+            }
 
             float distance = Vector2.Distance(transform.position, candidate.transform.position);
+            if (distance > _searchRadius)
+            {
+                continue;
+            }
 
-            if (distance > _searchRadius) continue;
-
-            if(distance < nearestDistance)
+            if (distance < nearestDistance)
             {
                 nearestDistance = distance;
                 nearestTarget = candidate;
@@ -86,11 +91,20 @@ public class RatTargetFinder : MonoBehaviour
             return false;
         }
 
-        if (candidate == null) return false;
+        if (candidate == null)
+        {
+            return false;
+        }
 
-        if (candidate == _ratController) return false;
+        if (candidate == _ratController)
+        {
+            return false;
+        }
 
-        if(!_ratController.IsEnemy(candidate)) return false;
+        if (!_ratController.IsEnemy(candidate))
+        {
+            return false;
+        }
 
         if (candidate.RatStatRuntime == null)
         {
@@ -103,7 +117,10 @@ public class RatTargetFinder : MonoBehaviour
             return false;
         }
 
-        if(!IsTargetWithinSearchRadius(candidate)) return false;
+        if (!IsTargetWithinSearchRadius(candidate))
+        {
+            return false;
+        }
 
         return true;
     }
