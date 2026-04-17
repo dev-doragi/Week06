@@ -53,7 +53,7 @@ public class VehicleSaveLoader : MonoBehaviour
         {
             if (!GridManager.instance.partDic.TryGetValue(savedData.PartKey, out PartData data)) continue;
 
-            GameObject partObj = new GameObject($"Placed_{data.partName}");
+            GameObject partObj = new GameObject($"Placed_{data.PartName}");
             partObj.transform.SetParent(_placedPartsRoot);
             PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
 
