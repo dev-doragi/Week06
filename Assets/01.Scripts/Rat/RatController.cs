@@ -3,16 +3,20 @@ using UnityEngine;
 public class RatController : MonoBehaviour
 {
     [SerializeField] private RatData _ratData;
+    [SerializeField] private RatTeamType _teamType;
 
     private RatStatRuntime _ratStatRuntime;
     private RatAttackHandler _ratAttackHandler;
     private RatCollisionHandler _ratCollisionHandler;
+    private RatTargetFinder _ratTargetFinder;
 
     public RatData RatData => _ratData;
     public RatType RatType => _ratData != null ? _ratData.RatType : RatType.White;
     public RatStatRuntime RatStatRuntime => _ratStatRuntime;
     public RatAttackHandler RatAttackHandler => _ratAttackHandler;
     public RatCollisionHandler RatCollisionHandler => _ratCollisionHandler;
+    public RatTargetFinder RatTargetFinder => _ratTargetFinder;
+    public RatTeamType TeamType => _teamType;
 
     private void Awake()
     {
@@ -25,11 +29,17 @@ public class RatController : MonoBehaviour
 
         _ratAttackHandler = GetComponent<RatAttackHandler>();
         _ratCollisionHandler = GetComponent<RatCollisionHandler>();
+        _ratTargetFinder = GetComponent<RatTargetFinder>();
 
         if (_ratData == null)
         {
             Debug.LogError($"{name}: RatController에 RatData가 할당되지 않았습니다.");
             return;
+        }
+
+        if (_teamType == RatTeamType.None)
+        {
+            Debug.LogError($"{name}: TeamType이 None으로 설정되어 있습니다.");
         }
 
         _ratStatRuntime.SetRatData(_ratData);
@@ -84,6 +94,56 @@ public class RatController : MonoBehaviour
         return _ratStatRuntime.DefenceRate;
     }
 
+    public int GetCost()
+    {
+        if (_ratData == null)
+        {
+            Debug.LogError($"{name}: GetCost 실패 - RatData가 Null입니다.");
+            return 0;
+        }
+
+        if (_ratData.CommonStat == null)
+        {
+            Debug.LogError($"{name}: GetCost 실패 - CommonStat이 Null입니다.");
+            return 0;
+        }
+
+        return _ratData.CommonStat.Cost;
+    }
+
+    public RatController GetCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: GetCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return null;
+        }
+
+        return _ratAttackHandler.CurrentTarget;
+    }
+
+    public void ProcessAutoAttack()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ProcessAutoAttack 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ProcessAutoAttack();
+    }
+
+    public void ClearCurrentTarget()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: ClearCurrentTarget 실패 - RatAttackHandler가 없습니다.");
+            return;
+        }
+
+        _ratAttackHandler.ClearCurrentTarget();
+    }
+
     public bool TryGetAttackStat(out RatAttackStatData attackStat)
     {
         attackStat = null;
@@ -132,6 +192,23 @@ public class RatController : MonoBehaviour
         _ratStatRuntime.RecoverHp(amount);
     }
 
+    public bool IsEnemy(RatController other)
+    {
+        if (other == null)
+        {
+            Debug.LogError($"{name}: IsEnemy 실패 - other가 Null입니다.");
+            return false;
+        }
+
+        if (_teamType == RatTeamType.None || other.TeamType == RatTeamType.None)
+        {
+            Debug.LogError($"{name}: IsEnemy 실패 - TeamType이 None인 대상이 있습니다.");
+            return false;
+        }
+
+        return _teamType != other.TeamType;
+    }
+
     public bool TryAttack(RatController target)
     {
         if (_ratAttackHandler == null)
@@ -141,6 +218,17 @@ public class RatController : MonoBehaviour
         }
 
         return _ratAttackHandler.TryAttack(target);
+    }
+
+    public bool TryAttackNearestEnemy()
+    {
+        if (_ratAttackHandler == null)
+        {
+            Debug.LogError($"{name}: TryAttackNearestEnemy 실패 - RatAttackHandler가 없습니다.");
+            return false;
+        }
+
+        return _ratAttackHandler.TryAttackNearestEnemy();
     }
 
     public bool TryCollide(RatController target)
