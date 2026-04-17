@@ -27,6 +27,11 @@ public class RatCollisionHandler : MonoBehaviour
             return false;
         }
 
+        if (!_ratController.IsUnit())
+        {
+            return false;
+        }
+
         if (!_ratController.CanUseCollision())
         {
             return false;

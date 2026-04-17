@@ -24,7 +24,7 @@ public class PlacedPart : SerializedMonoBehaviour
         this.rotation = rotation;
         this.occupiedCells = new List<Vector2Int>(occupiedCells);
 
-        currentHp = data.health;
+        currentHp = data.Hp;
     }
 
     public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, Color color)

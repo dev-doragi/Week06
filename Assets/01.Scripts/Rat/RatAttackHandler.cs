@@ -22,6 +22,11 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
             }
 
+            if (!_ratController.IsUnit())
+            {
+                return false;
+            }
+
             if (!_ratController.CanUseAttack())
             {
                 return false;
@@ -76,7 +81,12 @@ public class RatAttackHandler : MonoBehaviour
             return;
         }
 
-        if (!_ratController.TryGetAttackStat(out _))
+        if (!_ratController.IsUnit())
+        {
+            return;
+        }
+
+        if (!_ratController.CanUseAttack())
         {
             return;
         }
@@ -107,6 +117,8 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
+        if (!_ratController.IsUnit()) return false;
+
         if (!_ratController.CanUseAttack())
         {
             return false;
@@ -135,6 +147,8 @@ public class RatAttackHandler : MonoBehaviour
             Debug.LogError($"{name}: TryAttack 실패 - target이 Null입니다.");
             return false;
         }
+
+        if (!_ratController.IsUnit()) return false;
 
         if (!_ratController.CanUseAttack())
         {
@@ -198,6 +212,11 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
+        if (!_ratController.IsUnit())
+        {
+            return false;
+        }
+
         if (!_ratController.CanUseAttack())
         {
             return false;
@@ -210,7 +229,7 @@ public class RatAttackHandler : MonoBehaviour
 
         if (!_ratController.TryGetAttackStat(out var attackStat))
         {
-            Debug.LogError($"{name}: HasValidCurrentTarget 실패 - 공격형 스탯이 없습니다.");
+            Debug.LogError($"{name}: HasValidCurrentTarget 실패 - 공격 가능한 스탯이 없습니다.");
             return false;
         }
 
@@ -309,12 +328,27 @@ public class RatAttackHandler : MonoBehaviour
 
     private float GetAttackInterval(float attackSpeed)
     {
-        if (attackSpeed <= 0f)
+        if (_ratController == null)
         {
-            Debug.LogError($"{name}: GetAttackInterval 실패 - attackSpeed는 0보다 커야 합니다. 입력값: {attackSpeed}");
+            Debug.LogError($"{name}: GetAttackInterval 실패 - RatController가 Null입니다.");
             return float.MaxValue;
         }
 
-        return 1f / attackSpeed;
+        RatStatModifierRuntime modifierRuntime = _ratController.GetStatModifierRuntime();
+
+        float finalAttackSpeed = attackSpeed;
+        if (modifierRuntime != null)
+        {
+            finalAttackSpeed += modifierRuntime.AttackSpeedFlatBonus;
+            finalAttackSpeed += attackSpeed * modifierRuntime.AttackSpeedPercentBonus;
+        }
+
+        if (finalAttackSpeed <= 0f)
+        {
+            Debug.LogError($"{name}: GetAttackInterval 실패 - 최종 attackSpeed는 0보다 커야 합니다. 입력값: {finalAttackSpeed}");
+            return float.MaxValue;
+        }
+
+        return 1f / finalAttackSpeed;
     }
 }

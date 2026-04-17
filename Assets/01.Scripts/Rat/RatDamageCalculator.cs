@@ -54,9 +54,12 @@ public static class RatDamageCalculator
             return 0f;
         }
 
-        float attackDamage = attackStat.AttackDamage;
-        float penetrationRate = attackStat.PenetrationRate;
-        float targetDefenseRate = target.GetDefenseRate();
+        RatStatModifierRuntime attackerModifier = attacker.GetStatModifierRuntime();
+        RatStatModifierRuntime targetModifier = target.GetStatModifierRuntime();
+
+        float attackDamage = GetEffectiveAttackDamage(attackStat, attackerModifier);
+        float penetrationRate = GetEffectivePenetrationRate(attackStat, attackerModifier);
+        float targetDefenseRate = target.RatStatRuntime.GetEffectiveDefenseRate(targetModifier);
 
         return CalculateAttackDamage(attackDamage, targetDefenseRate, penetrationRate);
     }
@@ -148,5 +151,37 @@ public static class RatDamageCalculator
 
         float damage = CalculateCollisionDamage(attacker, target);
         target.ApplyDirectDamage(damage);
+    }
+
+    private static float GetEffectiveAttackDamage(PartAttackStatData attackStat, RatStatModifierRuntime modifierRuntime)
+    {
+        float baseValue = attackStat.AttackDamage;
+
+        if (modifierRuntime == null)
+        {
+            return baseValue;
+        }
+
+        float finalValue = baseValue;
+        finalValue += modifierRuntime.AttackDamageFlatBonus;
+        finalValue += baseValue * modifierRuntime.AttackDamagePercentBonus;
+
+        return Mathf.Max(0f, finalValue);
+    }
+
+    private static float GetEffectivePenetrationRate(PartAttackStatData attackStat, RatStatModifierRuntime modifierRuntime)
+    {
+        float baseValue = attackStat.PenetrationRate;
+
+        if (modifierRuntime == null)
+        {
+            return Mathf.Clamp01(baseValue);
+        }
+
+        float finalValue = baseValue;
+        finalValue += modifierRuntime.PenetrationRateFlatBonus;
+        finalValue += baseValue * modifierRuntime.PenetrationRatePercentBonus;
+
+        return Mathf.Clamp01(finalValue);
     }
 }
