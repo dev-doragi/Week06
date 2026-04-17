@@ -24,7 +24,7 @@ public class PlacedPart : SerializedMonoBehaviour
         this.rotation = rotation;
         this.occupiedCells = new List<Vector2Int>(occupiedCells);
 
-        //currentHp = data.Health; Need Health Property
+        currentHp = data.health;
     }
 
     public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, Color color)
@@ -39,8 +39,7 @@ public class PlacedPart : SerializedMonoBehaviour
             cellObj.transform.position = gridRenderer.GridToWorld(cell);
 
             SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
-            BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
-            boxCol.size = new Vector2(1, 1);
+
 
             sr.sprite = data.Icon;
             sr.color = color;
@@ -50,6 +49,8 @@ public class PlacedPart : SerializedMonoBehaviour
 
             cellRenderers.Add(sr);
         }
+        BoxCollider2D boxCol = gameObject.AddComponent<BoxCollider2D>();
+        boxCol.size = new Vector2(1, 1);
     }
 
     public void SetColor(Color color)
@@ -79,5 +80,11 @@ public class PlacedPart : SerializedMonoBehaviour
         {
             BuildManager.Instance.BrokenPart(this);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //여기서 무기 충돌 판정
+        //DecreaseHp(float damage)
     }
 }

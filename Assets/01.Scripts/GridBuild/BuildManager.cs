@@ -166,7 +166,7 @@ public class BuildManager : MonoBehaviour
         if (targetPart == null) return;
         if (board.HasPartAbove(targetPart))
         {
-            Debug.Log("위에 파츠가 있어서 제거할 수 없습니다.");
+            Debug.LogWarning("위에 파츠가 있어서 제거할 수 없습니다.");
             return;
         }
 
