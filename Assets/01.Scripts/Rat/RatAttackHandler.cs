@@ -22,6 +22,11 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
             }
 
+            if (!_ratController.CanUseAttack())
+            {
+                return false;
+            }
+
             if (!_ratController.TryGetAttackStat(out var attackStat))
             {
                 return false;
@@ -102,6 +107,11 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
+        if (!_ratController.CanUseAttack())
+        {
+            return false;
+        }
+
         RatController target = _ratTargetFinder.FindNearestEnemy();
         if (target == null)
         {
@@ -123,6 +133,11 @@ public class RatAttackHandler : MonoBehaviour
         if (target == null)
         {
             Debug.LogError($"{name}: TryAttack 실패 - target이 Null입니다.");
+            return false;
+        }
+
+        if (!_ratController.CanUseAttack())
+        {
             return false;
         }
 
@@ -180,6 +195,11 @@ public class RatAttackHandler : MonoBehaviour
         if (_ratTargetFinder == null)
         {
             Debug.LogError($"{name}: HasValidCurrentTarget 실패 - RatTargetFinder가 Null입니다.");
+            return false;
+        }
+
+        if (!_ratController.CanUseAttack())
+        {
             return false;
         }
 
@@ -251,6 +271,11 @@ public class RatAttackHandler : MonoBehaviour
         if (_ratController == null)
         {
             Debug.LogError($"{name}: GetAttackRangeRadius 실패 - RatController가 Null입니다.");
+            return 0;
+        }
+
+        if (!_ratController.CanUseAttack())
+        {
             return 0;
         }
 

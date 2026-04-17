@@ -107,6 +107,28 @@ public class RatStatRuntime : MonoBehaviour
         OnHpChanged?.Invoke(_currentHp, MaxHp);
     }
 
+    public bool CanUseAttack()
+    {
+        if(_partData == null)
+        {
+            Debug.LogError($"{name}: CanUseAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.CanUseAttack;
+    }
+
+    public bool CanUseCollision()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: CanUseCollision 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.CanUseCollision;
+    }
+
     public bool TryGetAttackStat(out PartAttackStatData attackStat)
     {
         attackStat = null;

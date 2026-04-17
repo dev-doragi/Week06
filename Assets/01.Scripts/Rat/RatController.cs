@@ -111,6 +111,61 @@ public class RatController : MonoBehaviour
         return _partData.CommonStat.Cost;
     }
 
+    public bool CanUseAttack()
+    {
+        if (_ratStatRuntime == null)
+        {
+            Debug.LogError($"{name}: CanUseAttack 실패 - RatStatRuntime이 Null입니다.");
+            return false;
+        }
+
+        return _ratStatRuntime.CanUseAttack();
+    }
+
+    public bool CanUseCollision()
+    {
+        if (_ratStatRuntime == null)
+        {
+            Debug.LogError($"{name}: CanUseCollision 실패 - RatStatRuntime이 Null입니다.");
+            return false;
+        }
+
+        return _ratStatRuntime.CanUseCollision();
+    }
+
+    public bool IsArcAttack()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: IsArcAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.IsArcAttack;
+    }
+
+    public bool IsDirectAttack()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: IsDirectAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.IsDirectAttack;
+    }
+
+    public bool IsAreaAttack()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: IsAreaAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.IsAreaAttack;
+    }
+
     public RatController GetCurrentTarget()
     {
         if (_ratAttackHandler == null)

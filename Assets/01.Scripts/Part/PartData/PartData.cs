@@ -63,8 +63,46 @@ public class PartData
         }
     }
 
-    public bool HasAttackStat => PartType == PartType.Attack;
-    public bool HasDefenseStat => PartType == PartType.Defense;
+    // ------------------------------------------------------------------
+    // 상위 분류
+    // ------------------------------------------------------------------
+    public bool IsWhiteType => PartType == PartType.White;
+    public bool IsAttackType => PartType == PartType.Attack;
+    public bool IsDefenseType => PartType == PartType.Defense;
+    public bool IsWheelType => PartType == PartType.Wheel;
+
+    // ------------------------------------------------------------------
+    // 하위 기능 판정
+    // 실제 전투/행동 로직은 PartType만이 아니라 이 값을 기준으로 판단한다.
+    // ------------------------------------------------------------------
+    public bool CanUseAttack =>
+        IsAttackType &&
+        AttackDamage > 0f &&
+        AttackSpeed > 0f &&
+        AttackDistance > 0f &&
+        TrajectoryType != AttackTrajectoryType.None;
+    public bool CanUseCollision =>
+        IsDefenseType &&
+        CollisionPower > 0f;
+    public bool IsArcAttack =>
+        IsDefenseType &&
+        CollisionPower > 0f;
+    public bool IsDirectAttack =>
+        CanUseAttack &&
+        TrajectoryType == AttackTrajectoryType.Direct;
+    public bool IsAreaAttack =>
+        CanUseAttack &&
+        AttackRangeRadius > 0;
+    public bool IsSingleTargetAttack =>
+        CanUseAttack &&
+        AttackRangeRadius <= 0;
+
+    // ------------------------------------------------------------------
+    // 기존 호환용
+    // 이후 단계에서 전투 코드가 이 값을 사용할 수 있다.
+    // ------------------------------------------------------------------
+    public bool HasAttackStat => IsAttackType;
+    public bool HasDefenseStat => IsDefenseType;
 
     public bool IsValid()
     {
@@ -110,7 +148,7 @@ public class PartData
             return false;
         }
 
-        if (HasAttackStat)
+        if (IsAttackType)
         {
             if (AttackDamage < 0f)
             {
@@ -143,7 +181,7 @@ public class PartData
             }
         }
 
-        if (HasDefenseStat)
+        if (IsDefenseType)
         {
             if (CollisionPower < 0f)
             {
@@ -152,6 +190,36 @@ public class PartData
             }
         }
 
+        ValidateBehaviorCombination();
+
         return true;
+    }
+
+    private void ValidateBehaviorCombination()
+    {
+        if (IsAttackType && !CanUseAttack)
+        {
+            Debug.LogWarning($"{PartName}: Attack 타입이지만 실제 공격 가능한 스탯 조합이 아닙니다.");
+        }
+
+        if (IsDefenseType && !CanUseCollision)
+        {
+            Debug.LogWarning($"{PartName}: Defense 타입이지만 실제 충돌 가능한 스탯 조합이 아닙니다.");
+        }
+
+        if (!IsAttackType && AttackDamage > 0f)
+        {
+            Debug.LogWarning($"{PartName}: Attack 타입이 아닌데 AttackDamage가 설정되어 있습니다.");
+        }
+
+        if (!IsAttackType && TrajectoryType != AttackTrajectoryType.None)
+        {
+            Debug.LogWarning($"{PartName}: Attack 타입이 아닌데 TrajectoryType이 None이 아닙니다.");
+        }
+
+        if (!IsDefenseType && CollisionPower > 0f)
+        {
+            Debug.LogWarning($"{PartName}: Defense 타입이 아닌데 CollisionPower가 설정되어 있습니다.");
+        }
     }
 }
