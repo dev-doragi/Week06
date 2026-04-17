@@ -1,10 +1,11 @@
 ﻿using NUnit.Framework;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacedPart : MonoBehaviour
+public class PlacedPart : SerializedMonoBehaviour
 {
-    public PartData data;
+    [SerializeField] public PartData data;
     public Vector2Int origin;
     public int rotation;
     public List<Vector2Int> occupiedCells = new();
@@ -31,6 +32,8 @@ public class PlacedPart : MonoBehaviour
             cellObj.transform.position = gridRenderer.GridToWorld(cell);
 
             SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
+            BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
+            boxCol.size = new Vector2(1, 1);
             sr.sprite = data.Icon;
             sr.color = color;
 
@@ -59,4 +62,15 @@ public class PlacedPart : MonoBehaviour
 
         cellRenderers.Clear();
     }
+
+    /* 파츠 파괴 함수
+    public void DicreaseHp(float damage)
+    {
+        data.health -= damage;
+        if(data.health < 0)
+        {
+            BuildManager.Instance.BrokenPart(this);
+        }
+    }
+    */
 }

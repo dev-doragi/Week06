@@ -59,9 +59,21 @@ Assets/01.Scripts/
   EventBus.cs
   ManagerRegistry.cs
   Singleton.cs
+ GridBuild/
+  BuildManager.cs
+  GridBoard.cs
+  GridManager.cs
+  GridRenderer.cs
+  PartData.cs
+  PartDataSO.cs
+  PlacedPart.cs
+  Test/TestMouse.cs
  Manager/
+  GameFlowManager.cs
   GameManager.cs
+  PoolManager.cs
   StageManager.cs
+ Placement/PlacementManager.cs
  Rat/
   RatAttackHandler.cs
   RatCollisionHandler.cs
@@ -76,7 +88,9 @@ Assets/01.Scripts/
    RatType.cs
   RatStatRuntime.cs
  Store/
-  ShopButtons.cs
+  ShopButton.cs
+  ShopDataBase.cs
+  ShopItemData.cs
   StoreManager.cs
   UIManager.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
