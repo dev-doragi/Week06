@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using UnityEngine;
 
 // 스토어 타입
@@ -37,10 +36,6 @@ public class StoreManager : Singleton<StoreManager>
     [SerializeField] private GameObject _tempObject;
 
 
-    // 임시 코스트, 아마 게임 매니저가 가질듯
-    private int tempCost = 15;
-
-    public int TempCost => tempCost;
 
     protected override void Init()
     {
@@ -80,14 +75,16 @@ public class StoreManager : Singleton<StoreManager>
     public void BuyUnit(RatData data)
     {
         // Spawning logic...
-        if (tempCost < data.CommonStat.Cost)
+        int cost = data.CommonStat.Cost;
+        if (PlacementManager.Instance.CurrentMouse < cost)
         {
             Debug.Log("[Store Manager] : Not Enough of mouses left!");
             return;
         }
         
+        PlacementManager.Instance.SubtractMouseCount(cost);
         // 현재는 임시 데이터 사용중, 후에 데이터 또는 리스트에서 불러와질 예정
-        Instantiate(_tempObject, _spawnPoint.position, Quaternion.identity, _spawnPoint.transform);
+        Debug.Log("Player just bought a mouse");
     }
     #endregion
 

@@ -482,14 +482,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 628091300}
-  - {fileID: 593617260}
   - {fileID: 181743291}
   m_Father: {fileID: 2035920258}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -1.5621}
+  m_SizeDelta: {x: 100, y: 334.313}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &420586308
 GameObject:
@@ -691,11 +690,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1280190435}
-  m_Father: {fileID: 221377172}
+  m_Father: {fileID: 628091300}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 49.999973, y: 194.08263}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 65.5449, y: 56.1568}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &593617261
@@ -821,7 +820,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 593617260}
   m_Father: {fileID: 221377172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -866,6 +866,7 @@ GameObject:
   - component: {fileID: 694050707}
   - component: {fileID: 694050709}
   - component: {fileID: 694050708}
+  - component: {fileID: 694050710}
   m_Layer: 5
   m_Name: Lobby
   m_TagString: Untagged
@@ -930,6 +931,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694050706}
   m_CullTransparentMesh: 1
+--- !u!114 &694050710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694050706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902a0c4a9a3ab0545818e9368875ead8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlacementManager
+  _isDontDestroyOnLoad: 0
 --- !u!1 &717005512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,9 +2348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ae9d281a90c3d4688a5b176a2d1c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoreManager
-  _isDontDestroyOnLoad: 1
-  _ratDataContainer:
-  - {fileID: 11400000, guid: 4a5d4132ea142014a98855051949e168, type: 2}
+  _isDontDestroyOnLoad: 0
+  _database: {fileID: 11400000, guid: 4468569168910a94bbde2ca4788b1ffb, type: 2}
   _buttonPrefab: {fileID: 8372869544996038778, guid: 903bea5d3ac826940a6760c03ead218a, type: 3}
   _attackStore: {fileID: 628091299}
   _buildStore: {fileID: 181743290}

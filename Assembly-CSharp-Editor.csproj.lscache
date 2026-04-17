@@ -52,7 +52,9 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
-Assets/Editor/ShopItemGenerator.cs
+Assets/Editor/
+ BasePartSpreadsheetImporter.cs
+ ShopItemGenerator.cs
 Temp/obj/Assembly-CSharp-Editor/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
