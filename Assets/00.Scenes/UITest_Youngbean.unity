@@ -420,7 +420,7 @@ RectTransform:
   m_Children:
   - {fileID: 1077383310}
   - {fileID: 1897806599}
-  m_Father: {fileID: 2035920258}
+  m_Father: {fileID: 221377172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -453,6 +453,43 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &221377171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221377172}
+  m_Layer: 5
+  m_Name: PageContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &221377172
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221377171}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 628091300}
+  - {fileID: 181743291}
+  m_Father: {fileID: 2035920258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &321538826
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +502,7 @@ GameObject:
   - component: {fileID: 321538830}
   - component: {fileID: 321538829}
   - component: {fileID: 321538828}
+  - component: {fileID: 321538831}
   m_Layer: 0
   m_Name: Agent (1)
   m_TagString: Untagged
@@ -574,6 +612,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321538826}
   m_CullTransparentMesh: 1
+--- !u!114 &321538831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321538826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2121aa0e77e7f354cb249d0772f440d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopButtons
+  _perfab: {fileID: 0}
 --- !u!1 &460157579
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +688,7 @@ RectTransform:
   m_Children:
   - {fileID: 2011820155}
   - {fileID: 321538827}
-  m_Father: {fileID: 2035920258}
+  m_Father: {fileID: 221377172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -703,9 +754,9 @@ RectTransform:
   m_Father: {fileID: 959732879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.27600002}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
-  m_SizeDelta: {x: 0, y: 0.000015259}
+  m_AnchorMax: {x: 0.8871881, y: 0.27600002}
+  m_AnchoredPosition: {x: 0.1612854, y: 0.000061035156}
+  m_SizeDelta: {x: 0.32260132, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &694050708
 MonoBehaviour:
@@ -998,6 +1049,7 @@ MonoBehaviour:
   _buildStore: {fileID: 181743290}
   _supportStore: {fileID: 0}
   _currentStore: 0
+  _spawnPoint: {fileID: 0}
 --- !u!1 &1077383309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1062,7 @@ GameObject:
   - component: {fileID: 1077383313}
   - component: {fileID: 1077383312}
   - component: {fileID: 1077383311}
+  - component: {fileID: 1077383314}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -1119,6 +1172,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077383309}
   m_CullTransparentMesh: 1
+--- !u!114 &1077383314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077383309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2121aa0e77e7f354cb249d0772f440d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopButtons
+  _perfab: {fileID: 0}
 --- !u!1 &1345146753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1962,7 @@ GameObject:
   - component: {fileID: 1897806599}
   - component: {fileID: 1897806602}
   - component: {fileID: 1897806601}
+  - component: {fileID: 1897806603}
   - component: {fileID: 1897806600}
   m_Layer: 0
   m_Name: Agent (1)
@@ -2006,6 +2073,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897806598}
   m_CullTransparentMesh: 1
+--- !u!114 &1897806603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897806598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2121aa0e77e7f354cb249d0772f440d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopButtons
+  _perfab: {fileID: 0}
 --- !u!1 &1901844301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1901844302}
   m_Layer: 5
-  m_Name: StoreButton
+  m_Name: TabButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2148,6 +2228,7 @@ GameObject:
   - component: {fileID: 2011820158}
   - component: {fileID: 2011820157}
   - component: {fileID: 2011820156}
+  - component: {fileID: 2011820159}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -2257,6 +2338,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011820154}
   m_CullTransparentMesh: 1
+--- !u!114 &2011820159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011820154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2121aa0e77e7f354cb249d0772f440d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopButtons
+  _perfab: {fileID: 0}
 --- !u!1 &2035920257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,8 +2382,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1901844302}
-  - {fileID: 628091300}
-  - {fileID: 181743291}
+  - {fileID: 221377172}
   m_Father: {fileID: 959732879}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.27600002}

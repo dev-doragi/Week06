@@ -18,3 +18,4 @@ MonoBehaviour:
   _commonStat:
     _hp: 0
     _defenceRate: 0
+    _cost: 0

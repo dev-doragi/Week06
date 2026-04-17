@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class ShopButtons : MonoBehaviour
 {
-    [SerializeField] GameObject _perfab;
+    public RatData _ratData;
 
     private TMPro.TextMeshProUGUI _priceText;
     private UnityEngine.UI.Button _myButton;
@@ -14,8 +15,13 @@ public class ShopButtons : MonoBehaviour
         _priceText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
         _myButton = GetComponent<UnityEngine.UI.Button>();
         
-        // You can even add the listener in code so you don't have to 
-        // click the "+" in the Inspector 100 times.
+        if (_ratData != null)
+        {
+            // 2. Setting the text correctly
+            // Use the .text property, and convert numbers to strings with .ToString()
+            _priceText.text = $"{_ratData.name} : {_ratData.CommonStat.Cost}";
+        }
+
         _myButton.onClick.AddListener(HandlePurchase);
     }
 
@@ -23,12 +29,12 @@ public class ShopButtons : MonoBehaviour
     {
         Debug.Log("Button clicked! Checking money...");
 
-        if (_perfab == null)
+        if (_ratData == null)
         {
             Debug.LogWarning("[ShopButtons] : Perfab is Missing!");
             return;
         }
 
-        Instantiate(_perfab);
+        StoreManager.Instance.BuyUnit(_ratData);
     }
 }

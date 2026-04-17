@@ -52,13 +52,33 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
-Assets/01.Scripts/Frame/
- Debugger.cs
- Singleton.cs
- TextUtil.cs
-Assets/01.Scripts/Store/
- ShopButtons.cs
- UIManager.cs
+Assets/01.Scripts/
+ Events/GameEvents.cs
+ Frame/
+  BaseStage.cs
+  EventBus.cs
+  ManagerRegistry.cs
+  Singleton.cs
+ Manager/
+  GameManager.cs
+  StageManager.cs
+ Rat/
+  RatAttackHandler.cs
+  RatCollisionHandler.cs
+  RatController.cs
+  RatDamageCalculator.cs
+  RatData/
+   AttackTrajectoryType.cs
+   RatAttackStatData.cs
+   RatCommonStatData.cs
+   RatData.cs
+   RatDefenceStatData.cs
+   RatType.cs
+  RatStatRuntime.cs
+ Store/
+  ShopButtons.cs
+  StoreManager.cs
+  UIManager.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]
