@@ -31,6 +31,8 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
+        if (VehicleCache.HasSavedData) return; // Jaein 추가
+
         SpawnStartWheels();
     }
 
@@ -138,7 +140,7 @@ public class BuildManager : MonoBehaviour
             return;
         }
 
-        GameObject partObj = new GameObject($"Placed_{currentPartData.partName}");
+        GameObject partObj = new GameObject($"Placed_{currentPartData.PartName}");
         partObj.transform.SetParent(placedPartsRoot);
 
         PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
