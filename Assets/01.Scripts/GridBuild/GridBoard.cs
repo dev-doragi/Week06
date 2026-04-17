@@ -294,4 +294,72 @@ public class GridBoard : MonoBehaviour
                 ClearCell(cell);
         }
     }
+
+
+    public bool HasPartAbove(PlacedPart part)
+    {
+        if (part == null) return false;
+
+        foreach (var cell in part.occupiedCells)
+        {
+            Vector2Int up = cell + Vector2Int.up;
+
+            if (!IsInside(up))
+                continue;
+
+            PlacedPart upperPart = GetCell(up);
+
+            if (upperPart != null && upperPart != part)
+                return true;
+        }
+
+        return false;
+    }
+
+    public HashSet<PlacedPart> GetDirectUpperParts(PlacedPart part)
+    {
+        HashSet<PlacedPart> result = new();
+
+        if (part == null) return result;
+
+        foreach (var cell in part.occupiedCells)
+        {
+            Vector2Int up = cell + Vector2Int.up;
+
+            if (!IsInside(up))
+                continue;
+
+            PlacedPart upperPart = GetCell(up);
+
+            if (upperPart != null && upperPart != part)
+                result.Add(upperPart);
+        }
+
+        return result;
+    }
+
+    public HashSet<PlacedPart> GetAllUpperPartsRecursive(PlacedPart rootPart)
+    {
+        HashSet<PlacedPart> result = new();
+        if (rootPart == null) return result;
+
+        Queue<PlacedPart> queue = new();
+        queue.Enqueue(rootPart);
+
+        while (queue.Count > 0)
+        {
+            PlacedPart current = queue.Dequeue();
+            HashSet<PlacedPart> uppers = GetDirectUpperParts(current);
+
+            foreach (var upper in uppers)
+            {
+                if (result.Add(upper))
+                {
+                    queue.Enqueue(upper);
+                }
+            }
+        }
+
+        return result;
+    }
 }

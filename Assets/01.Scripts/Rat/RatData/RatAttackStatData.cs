@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 
+[Serializable]
 public class RatAttackStatData
 {
     [SerializeField] private float _attackDamage;
