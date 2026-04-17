@@ -5,11 +5,14 @@ using UnityEngine.Pool;
 [DefaultExecutionOrder(-97)]
 public class PoolManager : Singleton<PoolManager>
 {
-    // 프리팹 이름(또는 ID)을 키로 사용하여 ObjectPool을 관리하는 딕셔너리
     private readonly Dictionary<string, IObjectPool<GameObject>> _pools = new();
 
     [Header("Pool Setup")]
-    [SerializeField] private Transform _poolRoot; // 씬 하이어라키를 깔끔하게 관리하기 위한 부모 객체
+    [SerializeField] private Transform _poolRoot;
+
+    [Header("Global Pool Setup")]
+    [Tooltip("게임 내내 쓰일 공통 투사체와 이펙트를 여기에 한 번만 등록하세요")]
+    [SerializeField] private List<PoolSetupData> _globalPools = new List<PoolSetupData>();
 
     protected override void Init()
     {
@@ -19,11 +22,16 @@ public class PoolManager : Singleton<PoolManager>
             DontDestroyOnLoad(rootObj);
             _poolRoot = rootObj.transform;
         }
+
+        foreach (var setup in _globalPools)
+        {
+            if (setup.Prefab != null)
+            {
+                CreatePool(setup.Prefab, setup.InitialSize, setup.MaxSize);
+            }
+        }
     }
 
-    /// <summary>
-    /// 스테이지 셋업 시 호출하여 필요한 오브젝트를 미리 풀에 생성합니다. (Prewarm)
-    /// </summary>
     public void CreatePool(GameObject prefab, int initialSize, int maxSize = 100)
     {
         if (prefab == null)
@@ -93,14 +101,11 @@ public class PoolManager : Singleton<PoolManager>
         obj.transform.SetParent(_poolRoot);
     }
 
-    /// <summary>
-    /// 스테이지가 끝났을 때 현재 풀링된 객체들을 모두 파괴하고 메모리를 확보합니다.
-    /// </summary>
     public void ClearAllPools()
     {
         foreach (var pool in _pools.Values)
         {
-            pool.Clear(); // Unity의 ObjectPool.Clear()는 내부 객체들을 Destroy 합니다.
+            pool.Clear(); // 내부 객체 Destroy
         }
         _pools.Clear();
     }

@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageDataSO
   StageLayoutPrefab: {fileID: -2608601988575246210, guid: 7067c0de1107b37408455c4d53c9fc3a, type: 3}
   EnemySiegePrefab: {fileID: 1364392894365391579, guid: 14a3fca4cdfd1f64dace094e9f251f0c, type: 3}
-  PoolSetupList: []
   StageIndex: 0
   SpawnInterval: 0
