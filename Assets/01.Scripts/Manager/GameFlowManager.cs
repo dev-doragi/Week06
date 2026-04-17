@@ -25,9 +25,6 @@ public class GameFlowManager : Singleton<GameFlowManager>
     {
         if (!ManagerRegistry.TryGet(out _stageManager))
             Debug.LogError("[GameFlowManager] StageManager를 Registry에서 찾을 수 없습니다.");
-
-        if (!ManagerRegistry.TryGet(out _eventBus))
-            Debug.LogError("[GameFlowManager] EventBus를 Registry에서 찾을 수 없습니다.");
     }
 
     private void OnEnable()
