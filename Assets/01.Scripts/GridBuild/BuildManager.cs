@@ -31,7 +31,7 @@ public class BuildManager : MonoBehaviour
 
     private void Start()
     {
-        if (VehicleCache.HasSavedData) return; // Jaein 추가
+        if (VehicleCache.HasSavedData) return;
 
         SpawnStartWheels();
     }
@@ -164,43 +164,47 @@ public class BuildManager : MonoBehaviour
 
         PlacedPart targetPart = board.GetCell(gridPos);
         if (targetPart == null) return;
+
         if (board.HasPartAbove(targetPart))
         {
             Debug.LogWarning("위에 파츠가 있어서 제거할 수 없습니다.");
             return;
         }
 
-        board.RemovePart(targetPart);
-        Destroy(targetPart.gameObject);
+        RemovePartAndCollapse(targetPart);
     }
-
 
     public void BrokenPart(PlacedPart brokenPart)
     {
-
         if (brokenPart == null) return;
 
-        HashSet<PlacedPart> upperParts = board.GetAllUpperPartsRecursive(brokenPart);
+        RemovePartAndCollapse(brokenPart);
+    }
 
-        List<PlacedPart> allToDestroy = new();
-        allToDestroy.Add(brokenPart);
+    private void RemovePartAndCollapse(PlacedPart targetPart)
+    {
+        if (targetPart == null) return;
 
-        foreach (var part in upperParts)
-        {
-            if (part != null)
-                allToDestroy.Add(part);
-        }
+        // 1. 먼저 대상 파츠 제거
+        board.RemovePart(targetPart);
+        targetPart.DestroyAnim();
 
-        foreach (var part in allToDestroy)
-        {
-            if (part == null) continue;
-            board.RemovePart(part);
-        }
+        // 2. 바퀴와 연결 안 된 모든 파츠 찾기
+        List<PlacedPart> disconnectedParts = board.GetDisconnectedParts();
 
-        foreach (var part in allToDestroy)
+        // 3. 연결 안 된 파츠들 전부 제거
+        foreach (var part in disconnectedParts)
         {
             if (part == null) continue;
-            Destroy(part.gameObject);
+
+            part.DestroyAnim();
+        }
+
+        foreach (var part in disconnectedParts)
+        {
+            if (part == null) continue;
+
+            part.DestroyAnim();
         }
     }
 
