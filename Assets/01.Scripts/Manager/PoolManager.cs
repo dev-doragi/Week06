@@ -52,7 +52,18 @@ public class PoolManager : Singleton<PoolManager>
 
         _pools.Add(key, pool);
 
-        // TODO: initialSize만큼 미리 생성해두는 Prewarm 로직 추가 가능
+        if (initialSize > 0)
+        {
+            GameObject[] prewarmObjects = new GameObject[initialSize];
+            for (int i = 0; i < initialSize; i++)
+            {
+                prewarmObjects[i] = pool.Get();
+            }
+            for (int i = 0; i < initialSize; i++)
+            {
+                pool.Release(prewarmObjects[i]);
+            }
+        }
     }
 
     public GameObject Spawn(string prefabName, Vector3 position, Quaternion rotation)
