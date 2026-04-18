@@ -16,4 +16,6 @@ MonoBehaviour:
   Waves:
   - EnemySiegePrefab: {fileID: 1364392894365391579, guid: 14a3fca4cdfd1f64dace094e9f251f0c, type: 3}
     SpawnInterval: 3
+  - EnemySiegePrefab: {fileID: 0}
+    SpawnInterval: 0
   StageIndex: 0

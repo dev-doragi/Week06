@@ -57,7 +57,7 @@ public struct StageCleanedUpEvent { public int StageIndex; }
 /// [발행 위치] GameManager.ChangeState()
 /// [구독자] SoundManager (로비 BGM), UI (화면 전환)
 /// </summary>
-public struct StateChangedEvent { public GameState NewState; }
+public struct GameStateChangedEvent { public GameState NewState; }
 
 /// <summary>
 /// 인게임 세부 상태 변경 시 발행 (Prepare, WavePlaying, WaveCleared, StageCleared, StageFailed)
