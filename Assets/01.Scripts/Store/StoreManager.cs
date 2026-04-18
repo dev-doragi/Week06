@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -28,15 +29,6 @@ public class StoreManager : Singleton<StoreManager>
     [SerializeField] private GameObject _supportStore;
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Scrollbar _scollbar;
-
-    [Header("Tab Button Colors")]
-    [SerializeField] private Button _attackTabButton;
-    [SerializeField] private Button _defenceTabButton;
-    [SerializeField] private Button _buildTabButton;
-    [SerializeField] private Button _supportTabButton;
-
-    [SerializeField] private Color _selectedColor = Color.white;
-    [SerializeField] private Color _deselectedColor = new Color(0.6f, 0.6f, 0.6f, 1f);
 
 
     // 구매후 나오는 쥐 위치
@@ -117,30 +109,13 @@ public class StoreManager : Singleton<StoreManager>
     // 구매 버튼 클리시 해당 코드 실행
     public void SelectUnit(ShopItemData data)
     {
-        Debug.Log(data.partKey);
+        //Debug.Log(data.partKey);
+        PlacementManager.Instance.SubtractMouseCount(data.cost);
         BuildManager.Instance.SelectPart(data.partKey);
     }
     #endregion
 
-    private void UpdateTabColors(ShopItemCategory selected)
-    {
-        UpdateSingleTab(_attackTabButton,  selected == ShopItemCategory.AttackStore);
-        UpdateSingleTab(_defenceTabButton, selected == ShopItemCategory.DefnseStore);
-        UpdateSingleTab(_buildTabButton,   selected == ShopItemCategory.BuildStore);
-        UpdateSingleTab(_supportTabButton, selected == ShopItemCategory.SupportStore);
-    }
 
-    private void UpdateSingleTab(Button button, bool isSelected)
-    {
-        if (button == null) return;
-
-        // Set the base color
-        ColorBlock colors = button.colors;
-        colors.normalColor      = isSelected ? _selectedColor : _deselectedColor;
-        colors.selectedColor    = isSelected ? _selectedColor : _deselectedColor; // prevents reset on click-away
-        colors.highlightedColor = Color.Lerp(colors.normalColor, Color.white, 0.2f); // slight hover brighten
-        button.colors = colors;
-    }
 
 
     #region 구매 스토어 창 버튼
@@ -169,11 +144,7 @@ public class StoreManager : Singleton<StoreManager>
         RefreshStoreUI();
     }
 
-    private void RefreshStoreUI()
-    {
-        SwitchStore(_currentStore);
-        UpdateTabColors(_currentStore);
-    }
+
 
 
     // 사용중인 것 제외하고 다른 상점창 닫음
@@ -223,4 +194,9 @@ public class StoreManager : Singleton<StoreManager>
         }
     }
     #endregion
+
+    private void RefreshStoreUI()
+    {
+        SwitchStore(_currentStore);
+    }
 }
