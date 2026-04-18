@@ -7,7 +7,7 @@ public class PartRuntimeSpawner : MonoBehaviour
     public GameObject SpawnRuntime(
         PartData partData,
         PlacedPart placedPart,
-        RatTeamType teamType,
+        TeamType teamType,
         GridBoard board)
     {
         if (_partPrefabCatalog == null)

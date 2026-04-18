@@ -15,7 +15,7 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Sprite highlightSprite;
 
     [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
-    [SerializeField] private RatTeamType _teamType = RatTeamType.Player;
+    [SerializeField] private TeamType _teamType = TeamType.Player;
 
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
     [SerializeField] private bool _spawnRuntimePrefab = true;

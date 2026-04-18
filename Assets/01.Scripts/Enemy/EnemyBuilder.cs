@@ -3,7 +3,7 @@
 public class EnemyBuilder : MonoBehaviour
 {
     [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
-    [SerializeField] private RatTeamType _teamType = RatTeamType.Enemy;
+    [SerializeField] private TeamType _teamType = TeamType.Enemy;
 
     [SerializeField] private GridBoard board;
     [SerializeField] private GridRenderer gridRenderer;
