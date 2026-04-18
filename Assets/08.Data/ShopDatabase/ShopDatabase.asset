@@ -16,6 +16,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9fed07e71b4e1f498b7a1c51d85a46a, type: 2}
   - {fileID: 11400000, guid: 13469a25296350c4183e44a0da017873, type: 2}
   - {fileID: 11400000, guid: 1bcf234e78fba3c40a4e112510059ee4, type: 2}
-  buildItems: []
-  supportItems:
-  - {fileID: 11400000, guid: 874e3651c7b35804695a68e56c5097d1, type: 2}
+  - {fileID: 11400000, guid: aced02b75811ec64f9807b464c760af6, type: 2}
+  defenseItems: []
+  buildItems:
+  - {fileID: 11400000, guid: adbc58ac59402764a8e444030eafeb8e, type: 2}
+  - {fileID: 11400000, guid: aa1527cb47828244ca722c437d24fc5f, type: 2}
+  - {fileID: 11400000, guid: 685a62ad32c10114d91e6df4298c35d2, type: 2}
+  - {fileID: 11400000, guid: 60baf90ae8a5e5d49922a3bd7b024563, type: 2}
+  supportItems: []

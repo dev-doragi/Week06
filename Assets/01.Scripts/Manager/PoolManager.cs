@@ -9,6 +9,7 @@ public class PoolManager : Singleton<PoolManager>
 
     [Header("Pool Setup")]
     [SerializeField] private Transform _poolRoot;
+    [SerializeField] private RectTransform _uiPoolRoot;
 
     [Header("Global Pool Setup")]
     [Tooltip("게임 내내 쓰일 공통 투사체와 이펙트를 여기에 한 번만 등록하세요")]
@@ -21,6 +22,14 @@ public class PoolManager : Singleton<PoolManager>
             GameObject rootObj = new GameObject("PoolRoot");
             DontDestroyOnLoad(rootObj);
             _poolRoot = rootObj.transform;
+        }
+
+        if (_uiPoolRoot == null)
+        {
+            GameObject uiRootObj = new GameObject("UI_PoolRoot", typeof(Canvas), typeof(RectTransform));
+            uiRootObj.GetComponent<Canvas>().enabled = false; // 렌더링 방지
+            DontDestroyOnLoad(uiRootObj);
+            _uiPoolRoot = uiRootObj.GetComponent<RectTransform>();
         }
 
         foreach (var setup in _globalPools)
@@ -41,12 +50,17 @@ public class PoolManager : Singleton<PoolManager>
         }
 
         string key = prefab.name;
-        if (_pools.ContainsKey(key)) return; // 이미 존재하는 풀이면 스킵
+        if (_pools.ContainsKey(key)) return;
+
+        // 1. UI 여부 판별 및 타겟 루트 결정
+        bool isUI = prefab.GetComponent<RectTransform>() != null;
+        Transform targetRoot = isUI ? _uiPoolRoot : _poolRoot;
 
         IObjectPool<GameObject> pool = new ObjectPool<GameObject>(
             createFunc: () =>
             {
-                GameObject obj = Instantiate(prefab, _poolRoot);
+                // [수정] _poolRoot가 아니라 계산된 targetRoot를 사용해야 함
+                GameObject obj = Instantiate(prefab, targetRoot);
                 obj.name = prefab.name;
                 return obj;
             },
@@ -60,17 +74,12 @@ public class PoolManager : Singleton<PoolManager>
 
         _pools.Add(key, pool);
 
+        // Prewarm (동일)
         if (initialSize > 0)
         {
             GameObject[] prewarmObjects = new GameObject[initialSize];
-            for (int i = 0; i < initialSize; i++)
-            {
-                prewarmObjects[i] = pool.Get();
-            }
-            for (int i = 0; i < initialSize; i++)
-            {
-                pool.Release(prewarmObjects[i]);
-            }
+            for (int i = 0; i < initialSize; i++) prewarmObjects[i] = pool.Get();
+            for (int i = 0; i < initialSize; i++) pool.Release(prewarmObjects[i]);
         }
     }
 
@@ -98,7 +107,9 @@ public class PoolManager : Singleton<PoolManager>
         }
 
         pool.Release(obj);
-        obj.transform.SetParent(_poolRoot);
+
+        bool isUI = obj.GetComponent<RectTransform>() != null;
+        obj.transform.SetParent(isUI ? _uiPoolRoot : _poolRoot);
     }
 
     public void ClearAllPools()

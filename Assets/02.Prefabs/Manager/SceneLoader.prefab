@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5751609369156623689
+--- !u!1 &4650081202945900397
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4034118272206485099}
-  - component: {fileID: 2722075122325555394}
+  - component: {fileID: 2265297470353019938}
+  - component: {fileID: 1527159094488526342}
   m_Layer: 0
-  m_Name: PoolManager
+  m_Name: SceneLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4034118272206485099
+--- !u!4 &2265297470353019938
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5751609369156623689}
+  m_GameObject: {fileID: 4650081202945900397}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,25 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2722075122325555394
+--- !u!114 &1527159094488526342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5751609369156623689}
+  m_GameObject: {fileID: 4650081202945900397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dede2658869275a4fafae9bb5612d7d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c20fafa538569f46979de2a80871ee6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
-  _isDontDestroyOnLoad: 0
-  _poolRoot: {fileID: 4034118272206485099}
-  _uiPoolRoot: {fileID: 0}
-  _globalPools:
-  - Prefab: {fileID: 683115500821441532, guid: 88cd124393c49f44f9b22146d9cf199b, type: 3}
-    InitialSize: 30
-    MaxSize: 30
-  - Prefab: {fileID: 3100642160546611706, guid: 96f392c40ae379648be56a14ee8311f9, type: 3}
-    InitialSize: 30
-    MaxSize: 100
+  m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  _isDontDestroyOnLoad: 1
+  _lobbySceneName: 01.LobbyScene
+  _stageSelectSceneName: 03.StageSelectScene
+  _inGameSceneName: 04.InGameScene

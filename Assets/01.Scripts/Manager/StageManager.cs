@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StageManager : Singleton<StageManager>
 {
@@ -10,15 +11,13 @@ public class StageManager : Singleton<StageManager>
     private StageLayout _currentLayout;
 
     public int CurrentStageIndex { get; private set; } = 0;
-    public int CurrentWaveIndex { get; private set; } = 0; // 추가: 현재 웨이브 인덱스
+    public int CurrentWaveIndex { get; private set; } = 0;
+
+    // [추가] 현재 진행 상태 저장
+    public InGameState CurrentState { get; private set; } = InGameState.None;
 
     public StageDataSO CurrentStageData => _stageDatas[CurrentStageIndex];
     public StageLayout CurrentLayout => _currentLayout;
-
-    public static event Action<int> OnStageLoaded;
-    public static event Action<int, int> OnWaveStarted; // 스테이지 인덱스, 웨이브 인덱스
-    public static event Action<int> OnStageCleared;
-    public static event Action<int> OnStageCleanedUp;
 
     protected override void Init()
     {
@@ -30,9 +29,16 @@ public class StageManager : Singleton<StageManager>
 
     private void Start()
     {
-        // 디버깅용
         LoadStage(0);
-        PlayWave(); // PlayStage -> PlayWave로 변경
+    }
+
+    /// <summary>
+    /// [GameFlowManager에서 호출] 현재 스테이지의 상태 업데이트
+    /// </summary>
+    public void UpdateState(InGameState newState)
+    {
+        CurrentState = newState;
+        Debug.Log($"[StageManager] 상태 업데이트: {newState} (Stage {CurrentStageIndex}, Wave {CurrentWaveIndex})");
     }
 
     public void LoadNextStage()
@@ -61,7 +67,9 @@ public class StageManager : Singleton<StageManager>
         ClearCurrentStage();
 
         CurrentStageIndex = stageIndex;
-        CurrentWaveIndex = 0; // 스테이지 로드 시 웨이브 초기화
+        CurrentWaveIndex = 0;
+        CurrentState = InGameState.None;
+
         StageDataSO nextData = _stageDatas[CurrentStageIndex];
 
         if (nextData.StageLayoutPrefab != null)
@@ -69,10 +77,9 @@ public class StageManager : Singleton<StageManager>
             _currentLayout = Instantiate(nextData.StageLayoutPrefab, _stageParent);
         }
 
-        OnStageLoaded?.Invoke(CurrentStageIndex);
         EventBus.Instance.Publish(new StageLoadedEvent { StageIndex = CurrentStageIndex });
 
-        Debug.Log($"[StageManager] Stage {stageIndex} 로드 완료.");
+        Debug.Log($"[StageManager] Stage {stageIndex} 로드 완료 (총 {CurrentStageData.Waves.Count}개 웨이브).");
     }
 
     /// <summary>
@@ -80,9 +87,9 @@ public class StageManager : Singleton<StageManager>
     /// </summary>
     public void PlayWave()
     {
-        OnWaveStarted?.Invoke(CurrentStageIndex, CurrentWaveIndex);
         EventBus.Instance.Publish(new WaveStartedEvent { StageIndex = CurrentStageIndex, WaveIndex = CurrentWaveIndex });
-        Debug.Log($"[StageManager] Stage {CurrentStageIndex} - Wave {CurrentWaveIndex} Start");
+
+        Debug.Log($"[StageManager] Stage {CurrentStageIndex} - Wave {CurrentWaveIndex}/{CurrentStageData.Waves.Count - 1} 시작");
     }
 
     /// <summary>
@@ -91,12 +98,13 @@ public class StageManager : Singleton<StageManager>
     public void GoToNextWave()
     {
         CurrentWaveIndex++;
+        Debug.Log($"[StageManager] 다음 웨이브로 이동: Wave {CurrentWaveIndex}/{CurrentStageData.Waves.Count - 1}");
     }
 
     public void NotifyStageCleared()
     {
-        OnStageCleared?.Invoke(CurrentStageIndex);
         EventBus.Instance.Publish(new StageClearedEvent { StageIndex = CurrentStageIndex });
+        Debug.Log($"[StageManager] Stage {CurrentStageIndex} 클리어 알림 발송");
     }
 
     public void ClearCurrentStage()
@@ -107,7 +115,9 @@ public class StageManager : Singleton<StageManager>
             _currentLayout = null;
         }
 
-        OnStageCleanedUp?.Invoke(CurrentStageIndex);
         EventBus.Instance.Publish(new StageCleanedUpEvent { StageIndex = CurrentStageIndex });
+
+        CurrentState = InGameState.None;
+        Debug.Log($"[StageManager] Stage {CurrentStageIndex} 정리 완료");
     }
 }
