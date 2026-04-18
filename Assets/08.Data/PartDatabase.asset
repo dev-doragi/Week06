@@ -433,7 +433,7 @@ MonoBehaviour:
       Data: 3
     - Name: TrajectoryType
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: PenetrationRate
       Entry: 4
       Data: 0

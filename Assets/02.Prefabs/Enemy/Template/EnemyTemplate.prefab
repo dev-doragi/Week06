@@ -79,6 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc0485149669a44bab2ccd0f883d8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBuilder
+  _partRuntimeSpawner: {fileID: 7050967181387664273, guid: 84dbd82f8c2e40d4a95d77881879ab97, type: 3}
+  _teamType: 2
   board: {fileID: 1373237326967404772}
   gridRenderer: {fileID: 4072886057407895755}
   placedPartsRoot: {fileID: 1977613973595570379}
@@ -114,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridRenderer
   board: {fileID: 1373237326967404772}
-  cellSize: 0.5
+  cellSize: 1
   originPos: {fileID: 4424045994550478800}
 --- !u!50 &-6050234101099838560
 Rigidbody2D:

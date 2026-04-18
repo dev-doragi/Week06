@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8428694453489555983
+--- !u!1001 &7581932020403072767
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 1514026403414102153, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: blueprint
       value: 
-      objectReference: {fileID: 11400000, guid: 57b6abaa9d1056e469f87576c7506b02, type: 2}
+      objectReference: {fileID: 11400000, guid: d0b022c4e8beb0649b672e2802b6521c, type: 2}
     - target: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_Name
-      value: NewEnemyBlueprint
+      value: Enemy1Test
       objectReference: {fileID: 0}
     - target: {fileID: 4424045994550478800, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_LocalPosition.x
