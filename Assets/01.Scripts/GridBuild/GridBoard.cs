@@ -4,6 +4,7 @@ using UnityEngine;
 public class GridBoard : MonoBehaviour
 {
     public const int WHEEL_KEY = 10001;
+    public const int CORE_KEY = 10002;
 
     [Header("Grid Size")]
     public int width = 7;
@@ -22,228 +23,8 @@ public class GridBoard : MonoBehaviour
     {
         cells = new PlacedPart[width, height];
     }
-
-    // 전달된 좌표가 보드 범위 안에 있는지 확인하는 함수
-    public bool IsInside(Vector2Int pos)
-    {
-        return pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height;
-    }
-
-    // 전달된 좌표에 이미 파츠가 배치되어 있는지 확인하는 함수
-    public bool IsOccupied(Vector2Int pos)
-    {
-        if (!IsInside(pos)) return false;
-        return cells[pos.x, pos.y] != null;
-    }
-
-    // 전달된 좌표에 있는 파츠를 반환하는 함수
-    public PlacedPart GetCell(Vector2Int pos)
-    {
-        if (!IsInside(pos)) return null;
-        return cells[pos.x, pos.y];
-    }
-
-    // 전달된 좌표에 특정 파츠를 등록하는 함수
-    public void SetCell(Vector2Int pos, PlacedPart part)
-    {
-        if (!IsInside(pos)) return;
-        cells[pos.x, pos.y] = part;
-    }
-
-    // 전달된 좌표의 파츠 정보를 비우는 함수
-    public void ClearCell(Vector2Int pos)
-    {
-        if (!IsInside(pos)) return;
-        cells[pos.x, pos.y] = null;
-    }
-
-    // 전달된 데이터가 바퀴 파츠인지 확인하는 함수
-    public bool IsWheelPart(PartData data)
-    {
-        return data != null && data.Key == WHEEL_KEY;
-    }
-
-    // 전달된 데이터가 공격형 파츠인지 확인하는 함수
-    public bool IsAttackPart(PartData data)
-    {
-        return data != null && data.PartType == PartType.Attack;
-    }
-
-    // 전달된 좌표에 있는 파츠가 바퀴인지 확인하는 함수
-    public bool IsWheelCell(Vector2Int pos)
-    {
-        if (!IsInside(pos)) return false;
-
-        PlacedPart part = GetCell(pos);
-        return part != null && part.data != null && part.data.Key == WHEEL_KEY;
-    }
-
-    // 전달된 좌표에 있는 파츠가 일반 블럭인지 확인하는 함수
-    public bool IsBlockCell(Vector2Int pos)
-    {
-        if (!IsInside(pos)) return false;
-
-        PlacedPart part = GetCell(pos);
-        return part != null && part.data != null && part.data.Key != WHEEL_KEY;
-    }
-
-    // 상대 좌표를 회전값에 맞게 회전시키는 함수
-    public Vector2Int RotateCell(Vector2Int cell, int rotation)
-    {
-        rotation = ((rotation % 4) + 4) % 4;
-
-        return rotation switch
-        {
-            0 => cell,
-            1 => new Vector2Int(-cell.y, cell.x),
-            2 => new Vector2Int(-cell.x, -cell.y),
-            3 => new Vector2Int(cell.y, -cell.x),
-            _ => cell
-        };
-    }
-
-    // 파츠의 모든 셀 좌표를 회전과 원점 기준으로 계산해서 반환하는 함수
-    public List<Vector2Int> GetRotatedCells(PartData data, Vector2Int origin, int rotation)
-    {
-        List<Vector2Int> result = new();
-
-        foreach (var cell in data.Shape)
-        {
-            Vector2Int rotated = RotateCell(cell, rotation);
-            result.Add(origin + rotated);
-        }
-
-        return result;
-    }
-
-    // 현재 보드에 배치된 바퀴 파츠 개수를 반환하는 함수
-    public int GetWheelCount()
-    {
-        HashSet<PlacedPart> uniqueParts = new();
-
-        for (int x = 0; x < width; x++)
-        {
-            PlacedPart part = GetCell(new Vector2Int(x, 0));
-            if (part != null && part.data != null && part.data.Key == WHEEL_KEY)
-                uniqueParts.Add(part);
-        }
-
-        return uniqueParts.Count;
-    }
-
-    // 현재 보드에 배치된 일반 블럭 셀의 총 개수를 반환하는 함수
-    public int GetBlockCellCount()
-    {
-        int count = 0;
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 1; y <= maxBlockHeight && y < height; y++)
-            {
-                PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
-                    count++;
-            }
-        }
-
-        return count;
-    }
-
-    // 보드에 일반 블럭이 하나라도 존재하는지 확인하는 함수
-    public bool HasAnyBlock()
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 1; y <= maxBlockHeight && y < height; y++)
-            {
-                PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    // 전달된 좌표가 상하좌우 중 하나라도 기존 구조물과 연결되는지 확인하는 함수
-    public bool HasAdjacentStructure(Vector2Int pos)
-    {
-        Vector2Int[] dirs =
-        {
-            Vector2Int.up,
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.right
-        };
-
-        foreach (var dir in dirs)
-        {
-            Vector2Int next = pos + dir;
-            if (!IsInside(next)) continue;
-
-            if (GetCell(next) != null)
-                return true;
-        }
-
-        return false;
-    }
-
-    // 전달된 좌표 바로 아래에 바퀴가 있는지 확인하는 함수
-    public bool HasWheelDirectlyBelow(Vector2Int pos)
-    {
-        Vector2Int below = pos + Vector2Int.down;
-
-        if (!IsInside(below)) return false;
-
-        return IsWheelCell(below);
-    }
-
-    // 전달된 좌표 바로 아래에 어떤 파츠든 존재하는지 확인하는 함수
-    public bool HasPartDirectlyBelow(Vector2Int pos)
-    {
-        Vector2Int below = pos + Vector2Int.down;
-
-        if (!IsInside(below)) return false;
-
-        return GetCell(below) != null;
-    }
-
-    // 전달된 좌표의 상하좌우에 공격형 파츠가 있는지 확인하는 함수
-    public bool HasAdjacentAttackPart(Vector2Int pos)
-    {
-        Vector2Int[] dirs =
-        {
-            Vector2Int.up,
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.right
-        };
-
-        foreach (var dir in dirs)
-        {
-            Vector2Int next = pos + dir;
-            if (!IsInside(next)) continue;
-
-            PlacedPart adjacentPart = GetCell(next);
-            if (adjacentPart != null && adjacentPart.data != null && IsAttackPart(adjacentPart.data))
-                return true;
-        }
-
-        return false;
-    }
-
-    // 바퀴 수 대비 일반 블럭을 더 설치할 수 있는지 확인하는 함수
-    public bool CanSupportMoreBlocks(PartData newPartData)
-    {
-        if (IsWheelPart(newPartData))
-            return true;
-
-        int currentBlockCount = GetBlockCellCount();
-        int wheelCount = GetWheelCount();
-        int newBlockCells = newPartData.Shape.Count;
-        int maxSupport = wheelCount * supportPerWheel;
-
-        return currentBlockCount + newBlockCells <= maxSupport;
-    }
+    
+    #region BatchRule
 
     // 규칙을 포함해서 현재 파츠를 배치할 수 있는지 최종 판정하는 함수
     public bool CanPlacePartByRules(PartData data, Vector2Int origin, int rotation)
@@ -267,6 +48,54 @@ public class GridBoard : MonoBehaviour
         return CanPlaceBlock(targets, data);
     }
 
+    // 파츠의 모든 셀 좌표를 회전과 원점 기준으로 계산해서 반환하는 함수
+    public List<Vector2Int> GetRotatedCells(PartData data, Vector2Int origin, int rotation)
+    {
+        List<Vector2Int> result = new();
+
+        foreach (var cell in data.Shape)
+        {
+            Vector2Int rotated = RotateCell(cell, rotation);
+            result.Add(origin + rotated);
+        }
+
+        return result;
+    }
+
+    // 상대 좌표를 회전값에 맞게 회전시키는 함수
+    public Vector2Int RotateCell(Vector2Int cell, int rotation)
+    {
+        rotation = ((rotation % 4) + 4) % 4;
+
+        return rotation switch
+        {
+            0 => cell,
+            1 => new Vector2Int(-cell.y, cell.x),
+            2 => new Vector2Int(-cell.x, -cell.y),
+            3 => new Vector2Int(cell.y, -cell.x),
+            _ => cell
+        };
+    }
+
+    // 전달된 좌표가 보드 범위 안에 있는지 확인하는 함수
+    public bool IsInside(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < width && pos.y >= 0 && pos.y < height;
+    }
+
+    // 전달된 좌표에 이미 파츠가 배치되어 있는지 확인하는 함수
+    public bool IsOccupied(Vector2Int pos)
+    {
+        if (!IsInside(pos)) return false;
+        return cells[pos.x, pos.y] != null;
+    }
+
+    // 전달된 데이터가 바퀴 파츠인지 확인하는 함수
+    public bool IsWheelPart(PartData data)
+    {
+        return data != null && data.Key == WHEEL_KEY;
+    }
+
     // 바퀴 파츠가 현재 위치에 규칙상 배치 가능한지 확인하는 함수
     private bool CanPlaceWheel(List<Vector2Int> targets)
     {
@@ -281,6 +110,21 @@ public class GridBoard : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    // 현재 보드에 배치된 바퀴 파츠 개수를 반환하는 함수
+    public int GetWheelCount()
+    {
+        HashSet<PlacedPart> uniqueParts = new();
+
+        for (int x = 0; x < width; x++)
+        {
+            PlacedPart part = GetCell(new Vector2Int(x, 0));
+            if (part != null && part.data != null && part.data.Key == WHEEL_KEY)
+                uniqueParts.Add(part);
+        }
+
+        return uniqueParts.Count;
     }
 
     // 일반 블럭 파츠가 현재 위치에 규칙상 배치 가능한지 확인하는 함수
@@ -363,115 +207,170 @@ public class GridBoard : MonoBehaviour
         return true;
     }
 
-    // 단순 범위와 겹침만 검사해서 배치 가능 여부를 확인하는 함수
-    public bool CanPlacePart(PartData data, Vector2Int origin, int rotation)
+    // 전달된 좌표 바로 아래에 바퀴가 있는지 확인하는 함수
+    public bool HasWheelDirectlyBelow(Vector2Int pos)
     {
-        foreach (var target in GetRotatedCells(data, origin, rotation))
-        {
-            if (!IsInside(target))
-                return false;
+        Vector2Int below = pos + Vector2Int.down;
 
-            if (IsOccupied(target))
-                return false;
-        }
+        if (!IsInside(below)) return false;
 
-        return true;
+        return IsWheelCell(below);
     }
 
-    // 파츠를 실제 보드 셀에 등록하는 함수
-    public bool PlacePart(PartData data, Vector2Int origin, int rotation, PlacedPart placedPart)
+    // 전달된 좌표에 있는 파츠가 바퀴인지 확인하는 함수
+    public bool IsWheelCell(Vector2Int pos)
     {
-        if (!CanPlacePartByRules(data, origin, rotation))
-            return false;
+        if (!IsInside(pos)) return false;
 
-        List<Vector2Int> targets = GetRotatedCells(data, origin, rotation);
-
-        placedPart.Initialize(data, origin, rotation, targets);
-
-        foreach (var cell in targets)
-        {
-            SetCell(cell, placedPart);
-        }
-
-        return true;
+        PlacedPart part = GetCell(pos);
+        return part != null && part.data != null && part.data.Key == WHEEL_KEY;
     }
-
-    // 전달된 파츠가 차지하고 있는 모든 셀을 보드에서 제거하는 함수
-    public void RemovePart(PlacedPart part)
+    // 바퀴 수 대비 일반 블럭을 더 설치할 수 있는지 확인하는 함수
+    public bool CanSupportMoreBlocks(PartData newPartData)
     {
-        if (part == null) return;
+        if (IsWheelPart(newPartData))
+            return true;
 
-        foreach (var cell in part.occupiedCells)
-        {
-            if (GetCell(cell) == part)
-                ClearCell(cell);
-        }
+        int currentBlockCount = GetBlockCellCount();
+        int wheelCount = GetWheelCount();
+        int newBlockCells = newPartData.Shape.Count;
+        int maxSupport = wheelCount * supportPerWheel;
+
+        return currentBlockCount + newBlockCells <= maxSupport;
     }
-
-    // 특정 파츠 위에 다른 파츠가 하나라도 있는지 확인하는 함수
-    public bool HasPartAbove(PlacedPart part)
+    
+    // 보드에 일반 블럭이 하나라도 존재하는지 확인하는 함수
+    public bool HasAnyBlock()
     {
-        if (part == null) return false;
-
-        foreach (var cell in part.occupiedCells)
+        for (int x = 0; x < width; x++)
         {
-            Vector2Int up = cell + Vector2Int.up;
+            for (int y = 1; y <= maxBlockHeight && y < height; y++)
+            {
+                PlacedPart part = GetCell(new Vector2Int(x, y));
+                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    // 전달된 좌표 바로 아래에 어떤 파츠든 존재하는지 확인하는 함수
+    public bool HasPartDirectlyBelow(Vector2Int pos)
+    {
+        Vector2Int below = pos + Vector2Int.down;
 
-            if (!IsInside(up))
-                continue;
+        if (!IsInside(below)) return false;
 
-            PlacedPart upperPart = GetCell(up);
+        return GetCell(below) != null;
+    }
+    
+    // 전달된 좌표의 상하좌우에 공격형 파츠가 있는지 확인하는 함수
+    public bool HasAdjacentAttackPart(Vector2Int pos)
+    {
+        Vector2Int[] dirs =
+        {
+            Vector2Int.up,
+            Vector2Int.down,
+            Vector2Int.left,
+            Vector2Int.right
+        };
 
-            if (upperPart != null && upperPart != part)
+        foreach (var dir in dirs)
+        {
+            Vector2Int next = pos + dir;
+            if (!IsInside(next)) continue;
+
+            PlacedPart adjacentPart = GetCell(next);
+            if (adjacentPart != null && adjacentPart.data != null && IsAttackPart(adjacentPart.data))
                 return true;
         }
 
         return false;
     }
 
-    // 특정 파츠 바로 위에 직접 붙어 있는 파츠들을 반환하는 함수
-    public HashSet<PlacedPart> GetDirectUpperParts(PlacedPart part)
+    // 전달된 좌표가 상하좌우 중 하나라도 기존 구조물과 연결되는지 확인하는 함수
+    public bool HasAdjacentStructure(Vector2Int pos)
     {
-        HashSet<PlacedPart> result = new();
-
-        if (part == null) return result;
-
-        foreach (var cell in part.occupiedCells)
+        Vector2Int[] dirs =
         {
-            Vector2Int up = cell + Vector2Int.up;
+            Vector2Int.up,
+            Vector2Int.down,
+            Vector2Int.left,
+            Vector2Int.right
+        };
 
-            if (!IsInside(up))
-                continue;
+        foreach (var dir in dirs)
+        {
+            Vector2Int next = pos + dir;
+            if (!IsInside(next)) continue;
 
-            PlacedPart upperPart = GetCell(up);
-
-            if (upperPart != null && upperPart != part)
-                result.Add(upperPart);
+            if (GetCell(next) != null)
+                return true;
         }
 
-        return result;
+        return false;
+    }
+    
+    // 전달된 데이터가 공격형 파츠인지 확인하는 함수
+    public bool IsAttackPart(PartData data)
+    {
+        return data != null && data.PartType == PartType.Attack;
+    }
+    
+    // 현재 보드에 배치된 일반 블럭 셀의 총 개수를 반환하는 함수
+    public int GetBlockCellCount()
+    {
+        int count = 0;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 1; y <= maxBlockHeight && y < height; y++)
+            {
+                PlacedPart part = GetCell(new Vector2Int(x, y));
+                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
+                    count++;
+            }
+        }
+
+        return count;
+    }
+    
+    #endregion
+
+
+    #region RemovePart
+
+    // 바퀴와 연결되지 않은 파츠들만 찾아서 반환하는 함수
+    public List<PlacedPart> GetDisconnectedParts()
+    {
+        HashSet<PlacedPart> allParts = GetAllParts();
+        HashSet<PlacedPart> connectedParts = GetPartsConnectedToWheels();
+
+        List<PlacedPart> disconnected = new();
+
+        foreach (var part in allParts)
+        {
+            if (part == null) continue;
+
+            if (!connectedParts.Contains(part))
+                disconnected.Add(part);
+        }
+
+        return disconnected;
     }
 
-    // 특정 파츠 위로 연쇄적으로 연결된 모든 파츠를 반환하는 함수
-    public HashSet<PlacedPart> GetAllUpperPartsRecursive(PlacedPart rootPart)
+    // 현재 보드에 존재하는 모든 고유 파츠를 수집해서 반환하는 함수
+    public HashSet<PlacedPart> GetAllParts()
     {
         HashSet<PlacedPart> result = new();
-        if (rootPart == null) return result;
 
-        Queue<PlacedPart> queue = new();
-        queue.Enqueue(rootPart);
-
-        while (queue.Count > 0)
+        for (int x = 0; x < width; x++)
         {
-            PlacedPart current = queue.Dequeue();
-            HashSet<PlacedPart> uppers = GetDirectUpperParts(current);
-
-            foreach (var upper in uppers)
+            for (int y = 0; y < height; y++)
             {
-                if (result.Add(upper))
-                {
-                    queue.Enqueue(upper);
-                }
+                PlacedPart part = GetCell(new Vector2Int(x, y));
+                if (part != null)
+                    result.Add(part);
             }
         }
 
@@ -541,41 +440,82 @@ public class GridBoard : MonoBehaviour
 
         return result;
     }
+    #endregion
 
-    // 현재 보드에 존재하는 모든 고유 파츠를 수집해서 반환하는 함수
-    public HashSet<PlacedPart> GetAllParts()
+
+    #region External References
+    // 파츠를 실제 보드 셀에 등록하는 함수
+    public bool PlacePart(PartData data, Vector2Int origin, int rotation, PlacedPart placedPart)
     {
-        HashSet<PlacedPart> result = new();
+        if (!CanPlacePartByRules(data, origin, rotation))
+            return false;
 
-        for (int x = 0; x < width; x++)
+        List<Vector2Int> targets = GetRotatedCells(data, origin, rotation);
+
+        placedPart.Initialize(data, origin, rotation, targets);
+
+        foreach (var cell in targets)
         {
-            for (int y = 0; y < height; y++)
-            {
-                PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null)
-                    result.Add(part);
-            }
+            SetCell(cell, placedPart);
         }
 
-        return result;
+        return true;
     }
 
-    // 바퀴와 연결되지 않은 파츠들만 찾아서 반환하는 함수
-    public List<PlacedPart> GetDisconnectedParts()
+    // 전달된 좌표에 특정 파츠를 등록하는 함수
+    public void SetCell(Vector2Int pos, PlacedPart part)
     {
-        HashSet<PlacedPart> allParts = GetAllParts();
-        HashSet<PlacedPart> connectedParts = GetPartsConnectedToWheels();
+        if (!IsInside(pos)) return;
+        cells[pos.x, pos.y] = part;
+    }
 
-        List<PlacedPart> disconnected = new();
+    // 전달된 파츠가 차지하고 있는 모든 셀을 보드에서 제거하는 함수
+    public void RemovePart(PlacedPart part)
+    {
+        if (part == null) return;
 
-        foreach (var part in allParts)
+        foreach (var cell in part.occupiedCells)
         {
-            if (part == null) continue;
+            if (GetCell(cell) == part)
+                ClearCell(cell);
+        }
+    }
 
-            if (!connectedParts.Contains(part))
-                disconnected.Add(part);
+    // 특정 파츠 위에 다른 파츠가 하나라도 있는지 확인하는 함수
+    public bool HasPartAbove(PlacedPart part)
+    {
+        if (part == null) return false;
+
+        foreach (var cell in part.occupiedCells)
+        {
+            Vector2Int up = cell + Vector2Int.up;
+
+            if (!IsInside(up))
+                continue;
+
+            PlacedPart upperPart = GetCell(up);
+
+            if (upperPart != null && upperPart != part)
+                return true;
         }
 
-        return disconnected;
+        return false;
     }
+
+    // 전달된 좌표의 파츠 정보를 비우는 함수
+    public void ClearCell(Vector2Int pos)
+    {
+        if (!IsInside(pos)) return;
+        cells[pos.x, pos.y] = null;
+    }
+    #endregion
+
+
+    // 전달된 좌표에 있는 파츠를 반환하는 함수
+    public PlacedPart GetCell(Vector2Int pos)
+    {
+        if (!IsInside(pos)) return null;
+        return cells[pos.x, pos.y];
+    }
+
 }

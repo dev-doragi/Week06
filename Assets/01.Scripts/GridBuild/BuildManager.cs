@@ -11,6 +11,10 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private GridRenderer gridRenderer;
     [SerializeField] private Transform placedPartsRoot;
     [SerializeField] private Transform ghostRoot;
+    [SerializeField] private Transform placeableHighlightRoot;
+    [SerializeField] private Sprite highlightSprite;
+
+    private readonly List<GameObject> placeableHighlights = new();
 
     private PartData currentPartData;
     private int currentRotation;
@@ -33,7 +37,7 @@ public class BuildManager : MonoBehaviour
     {
         if (VehicleCache.HasSavedData) return;
 
-        SpawnStartWheels();
+        SpawnBase();
     }
 
     private void Update()
@@ -72,7 +76,7 @@ public class BuildManager : MonoBehaviour
                 Destroy(ghostPart.gameObject);
                 ghostPart = null;
             }
-
+            ClearPlaceableHighlights();
             return;
         }
 
@@ -86,6 +90,7 @@ public class BuildManager : MonoBehaviour
         }
 
         CreateGhost();
+        ShowPlaceableCells();
     }
 
     private void CreateGhost()
@@ -154,6 +159,7 @@ public class BuildManager : MonoBehaviour
         }
 
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+        ShowPlaceableCells();
     }
 
     private void TryRemovePart()
@@ -213,7 +219,7 @@ public class BuildManager : MonoBehaviour
         haveMouse = false;
         currentPartData = null;
         currentRotation = 0;
-
+        ClearPlaceableHighlights();
         if (ghostPart != null)
         {
             Destroy(ghostPart.gameObject);
@@ -221,16 +227,15 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    private void SpawnStartWheels()
+    private void SpawnBase()
     {
         if (!GridManager.instance.partDic.TryGetValue(GridBoard.WHEEL_KEY, out PartData wheelData))
         {
             Debug.LogWarning("[BuildManager] Key 10001 바퀴 데이터가 없습니다.");
             return;
         }
-
+        
         int startX = Mathf.Max(0, (board.width / 2) - 1);
-
         for (int i = 0; i < board.startWheelCount; i++)
         {
             Vector2Int pos = new Vector2Int(startX + i, 0);
@@ -254,5 +259,79 @@ public class BuildManager : MonoBehaviour
                 Destroy(partObj);
             }
         }
+
+        if (GridManager.instance.partDic.TryGetValue(GridBoard.CORE_KEY, out PartData coreData))
+        {
+            Vector2Int pos = new Vector2Int(startX, 1);
+
+            if (!board.CanPlacePartByRules(coreData, pos, 0))
+                return;
+
+            GameObject partObj = new GameObject($"Core");
+            partObj.transform.SetParent(placedPartsRoot);
+
+            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
+
+            bool success = board.PlacePart(coreData, pos, 0, placedPart);
+
+            if (success)
+            {
+                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+            }
+            else
+            {
+                Destroy(partObj);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[BuildManager] Key 10002 코어 데이터가 없습니다.");
+            return;
+        }
+
+    }
+
+    private void ShowPlaceableCells()
+    {
+        ClearPlaceableHighlights();
+
+        if (currentPartData == null || placeableHighlightRoot == null || highlightSprite == null)
+            return;
+
+        for (int x = 0; x < board.width; x++)
+        {
+            for (int y = 0; y < board.height; y++)
+            {
+                Vector2Int origin = new Vector2Int(x, y);
+
+                if (!board.CanPlacePartByRules(currentPartData, origin, currentRotation))
+                    continue;
+
+                GameObject cellObj = new GameObject($"PlaceableOrigin_{x}_{y}");
+                cellObj.transform.SetParent(placeableHighlightRoot);
+
+                cellObj.transform.position = gridRenderer.GridToWorld(origin);
+                cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
+
+                SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
+                sr.sprite = highlightSprite;
+                sr.color = new Color(0f, 0.8f, 1f, 0.25f);
+                sr.sortingOrder = -1;
+
+                placeableHighlights.Add(cellObj);
+            }
+        }
+    }
+
+    // Grid 미리 표시 해제 함수
+    private void ClearPlaceableHighlights()
+    {
+        for (int i = 0; i < placeableHighlights.Count; i++)
+        {
+            if (placeableHighlights[i] != null)
+                Destroy(placeableHighlights[i]);
+        }
+
+        placeableHighlights.Clear();
     }
 }
