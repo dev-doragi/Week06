@@ -27,9 +27,14 @@ public class RatCollisionHandler : MonoBehaviour
             return false;
         }
 
+        if (!_ratController.IsDefenseUnit())
+        {
+            return false;
+        }
+
         if (!_ratController.TryGetDefenseStat(out _))
         {
-            Debug.LogError($"{name}: 충돌 스탯이 없어 충돌 공격을 수행할 수 없습니다.");
+            Debug.LogError($"{name}: Defense 유닛인데 DefenseStat을 가져오지 못했습니다.");
             return false;
         }
 

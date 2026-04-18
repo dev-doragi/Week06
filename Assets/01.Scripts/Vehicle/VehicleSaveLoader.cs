@@ -117,6 +117,11 @@ public class VehicleSaveLoader : MonoBehaviour
 #if UNITY_EDITOR
         if (Keyboard.current == null) return;
 
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            StageManager.Instance.LoadNextStage(); 
+        }
+
         // 테스트용 단축키 (8:저장, 9:로드)
         if (Keyboard.current.digit8Key.wasPressedThisFrame)
         {
@@ -128,6 +133,28 @@ public class VehicleSaveLoader : MonoBehaviour
         {
             Debug.Log("[Test] Manual Load");
             LoadSavedVehicle(0);
+        }
+        if (Keyboard.current.digit0Key.wasPressedThisFrame)
+        {
+            Debug.Log("<color=yellow>[Test] 스테이지 전환 시뮬레이션 시작</color>");
+
+            if (StageManager.Instance != null)
+            {
+                // 1. 현재 스테이지 인덱스 기억
+                int currentIndex = StageManager.Instance.CurrentStageIndex;
+
+                // 2. 현재 스테이지 제거 (이 내부에서 OnStageCleared가 호출되어 자동 저장됨)
+                StageManager.Instance.ClearCurrentStage();
+
+                // 3. 동일한 스테이지 다시 로드 (이 내부에서 OnStageLoaded가 호출되어 자동 복구됨)
+                StageManager.Instance.LoadStage(currentIndex);
+
+                Debug.Log("<color=cyan>[Test] 스테이지 전환 및 병기 복구 완료</color>");
+            }
+            else
+            {
+                Debug.LogError("StageManager 인스턴스를 찾을 수 없습니다.");
+            }
         }
 #endif
     }
