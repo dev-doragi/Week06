@@ -15,7 +15,6 @@ public class PlacedPart : SerializedMonoBehaviour
     [SerializeField] private float currentHp;
 
     private readonly List<SpriteRenderer> cellRenderers = new();
-    private Rigidbody2D rigid;
     private List<BoxCollider2D> cellCols = new();
     [Header("Added For Grid/Owner Structure")]
     [SerializeField] private int _partKey;
@@ -174,9 +173,8 @@ public class PlacedPart : SerializedMonoBehaviour
         foreach (var cell in occupiedCells)
         {
             GameObject cellObj = new GameObject($"Cell_{cell.x}_{cell.y}");
-            cellObj.transform.SetParent(visualParent != null ? visualParent : transform);
-
-            cellObj.transform.position = gridRenderer.GridToWorld(cell);
+            cellObj.transform.SetParent(visualParent != null ? visualParent : transform, false);
+            cellObj.transform.localPosition = gridRenderer.GridToLocal(cell);
             SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
             BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
             boxCol.size = new Vector2(1, 1);
@@ -184,15 +182,10 @@ public class PlacedPart : SerializedMonoBehaviour
             sr.color = color;
 
             float scale = gridRenderer.cellSize;
-            cellObj.transform.localScale = new Vector3(scale, scale, 1f);
+            cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
 
             cellRenderers.Add(sr);
             cellCols.Add(boxCol);
-        }
-        if (gameObject.GetComponent<Rigidbody2D>() == null)
-        {
-            rigid = gameObject.AddComponent<Rigidbody2D>();
-            rigid.bodyType = RigidbodyType2D.Static;
         }
     }
 
@@ -248,6 +241,8 @@ public class PlacedPart : SerializedMonoBehaviour
 
     IEnumerator DropAnim()
     {
+
+        Rigidbody2D rigid = gameObject.AddComponent<Rigidbody2D>();
         rigid.bodyType = RigidbodyType2D.Dynamic;
         Vector2 ExplosionVector = new Vector2(Random.Range(-.7f, .7f), 1);
         foreach (var col in cellCols)

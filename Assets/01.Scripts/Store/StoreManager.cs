@@ -117,7 +117,9 @@ public class StoreManager : Singleton<StoreManager>
     // 구매 버튼 클리시 해당 코드 실행
     public void SelectUnit(ShopItemData data)
     {
-        Debug.Log(data.partKey);
+        PlacementManager.Instance.SubtractMouseCount(data.cost);
+
+        Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
         BuildManager.Instance.SelectPart(data.partKey);
     }
     #endregion
@@ -224,3 +226,4 @@ public class StoreManager : Singleton<StoreManager>
     }
     #endregion
 }
+
