@@ -162,7 +162,7 @@ MonoBehaviour:
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: 0
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -256,7 +256,7 @@ MonoBehaviour:
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: 0
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -350,7 +350,7 @@ MonoBehaviour:
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: 0
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -444,7 +444,7 @@ MonoBehaviour:
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: 0
+      Data: 
     - Name: 
       Entry: 8
       Data: 
