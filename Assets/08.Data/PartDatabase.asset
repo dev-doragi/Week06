@@ -55,9 +55,12 @@ MonoBehaviour:
     - Name: PartName
       Entry: 1
       Data: "\uACF5\uACA91"
-    - Name: PartType
+    - Name: PartCategory
       Entry: 3
-      Data: 0
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
     - Name: Shape
       Entry: 7
       Data: 3|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -119,9 +122,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: health
+    - Name: Hp
       Entry: 4
-      Data: 0
+      Data: 100
     - Name: DefenseRate
       Entry: 4
       Data: 10
@@ -155,6 +158,12 @@ MonoBehaviour:
     - Name: CollisionPower
       Entry: 4
       Data: 0
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -176,9 +185,12 @@ MonoBehaviour:
     - Name: PartName
       Entry: 1
       Data: "\uACF5\uACA92"
-    - Name: PartType
+    - Name: PartCategory
       Entry: 3
-      Data: 0
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
     - Name: Shape
       Entry: 7
       Data: 5|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -204,9 +216,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: health
+    - Name: Hp
       Entry: 4
-      Data: 0
+      Data: 120
     - Name: DefenseRate
       Entry: 4
       Data: 20
@@ -240,6 +252,12 @@ MonoBehaviour:
     - Name: CollisionPower
       Entry: 4
       Data: 0
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -261,9 +279,12 @@ MonoBehaviour:
     - Name: PartName
       Entry: 1
       Data: "\uACF5\uACA93"
-    - Name: PartType
+    - Name: PartCategory
       Entry: 3
-      Data: 0
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
     - Name: Shape
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
@@ -289,9 +310,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: health
+    - Name: Hp
       Entry: 4
-      Data: 0
+      Data: 130
     - Name: DefenseRate
       Entry: 4
       Data: 30
@@ -325,6 +346,12 @@ MonoBehaviour:
     - Name: CollisionPower
       Entry: 4
       Data: 0
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -346,7 +373,10 @@ MonoBehaviour:
     - Name: PartName
       Entry: 1
       Data: "\uD14C\uC2A4\uD2B8\uBC14\uD034\uC785\uB2C8\uB2E4"
-    - Name: PartType
+    - Name: PartCategory
+      Entry: 3
+      Data: 2
+    - Name: UnitRoleType
       Entry: 3
       Data: 0
     - Name: Shape
@@ -374,9 +404,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: health
+    - Name: Hp
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: DefenseRate
       Entry: 4
       Data: 0
@@ -410,6 +440,12 @@ MonoBehaviour:
     - Name: CollisionPower
       Entry: 4
       Data: 0
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -431,7 +467,10 @@ MonoBehaviour:
     - Name: PartName
       Entry: 1
       Data: "\uD14C\uC2A4\uD2B8\uCF54\uC5B4\uC785\uB2C8\uB2E4."
-    - Name: PartType
+    - Name: PartCategory
+      Entry: 3
+      Data: 2
+    - Name: UnitRoleType
       Entry: 3
       Data: 0
     - Name: Shape
@@ -471,9 +510,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: health
+    - Name: Hp
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: DefenseRate
       Entry: 4
       Data: 0
@@ -507,6 +546,12 @@ MonoBehaviour:
     - Name: CollisionPower
       Entry: 4
       Data: 0
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 

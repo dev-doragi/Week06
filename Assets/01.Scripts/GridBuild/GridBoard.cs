@@ -314,7 +314,7 @@ public class GridBoard : MonoBehaviour
     // 전달된 데이터가 공격형 파츠인지 확인하는 함수
     public bool IsAttackPart(PartData data)
     {
-        return data != null && data.PartType == PartType.Attack;
+        return data != null && data.UnitRoleType == UnitRoleType.Attack;
     }
     
     // 현재 보드에 배치된 일반 블럭 셀의 총 개수를 반환하는 함수
