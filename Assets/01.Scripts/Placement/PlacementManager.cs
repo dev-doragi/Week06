@@ -38,6 +38,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void AddMouseCount(int amount)
     {
+        Debug.Log(amount);
         _currentMouseCount += amount;
         SpawnMouseAtPoint(amount);
         UpdateDisplay();
