@@ -16,6 +16,7 @@ MonoBehaviour:
     keys:
     - 8c9cfa26abfee488c85f1582747f6a02
     - 98078056f355460449407d33c32d27bd
+    - cd6e33790873a1a4eba6822ebb5c6de1
     values:
     - goDatas_byGlobalId:
         keys: []
@@ -26,6 +27,44 @@ MonoBehaviour:
         values:
         - colorIndex: 0
           iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-1450223633-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-1225145020-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-2075420623-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-1620324619-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-2126242431-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-1630014136-0
+        - globalObjectIdString: GlobalObjectId_V1-2-cd6e33790873a1a4eba6822ebb5c6de1-618273796-0
+        values:
+        - colorIndex: 2
+          iconNameOrGuid: Camera Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Camera Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 3
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: MeshCollider Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 4
+          iconNameOrGuid: BoxCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
   bookmarks: []
