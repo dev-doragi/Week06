@@ -3,12 +3,12 @@ using UnityEngine;
 [System.Serializable]
 public class MouseUIMovement
 {
-    [SerializeField] private Vector2 moveSpeedRange = new Vector2(1.1f, 2.4f);
+    [SerializeField] private Vector2 moveSpeedRange = new Vector2(0.6f, 1.6f);
     [SerializeField] private Vector2 idleDelayRange = new Vector2(0.25f, 1.2f);
-    [SerializeField] private float wiggleAmount = 0.06f;
-    [SerializeField] private float wiggleSpeed = 11f;
+    [SerializeField] private float wiggleAmount = 0.09f;
+    [SerializeField] private float wiggleSpeed = 20f;
     [SerializeField] private float bounceAmount = 0.08f;
-    [SerializeField] private float bounceSpeed = 10f;
+    [SerializeField] private float bounceSpeed = 16f;
     [SerializeField] private float stretchAmount = 0.08f;
     [SerializeField] private float idleBreathAmount = 0.025f;
     [SerializeField] private float idleBreathSpeed = 3.2f;
