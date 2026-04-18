@@ -30,7 +30,6 @@ public class SoundManager : Singleton<SoundManager>
         // EventBus를 통한 상태 변경 수신
         EventBus.Instance.Subscribe<GameStateChangedEvent>(OnGameStateChanged);
         EventBus.Instance.Subscribe<InGameStateChangedEvent>(OnInGameStateChanged);
-
         EventBus.Instance.Subscribe<PlaySFXEvent>(OnPlaySFX);
     }
 
@@ -40,6 +39,7 @@ public class SoundManager : Singleton<SoundManager>
         {
             EventBus.Instance.Unsubscribe<GameStateChangedEvent>(OnGameStateChanged);
             EventBus.Instance.Unsubscribe<InGameStateChangedEvent>(OnInGameStateChanged);
+            EventBus.Instance.Unsubscribe<PlaySFXEvent>(OnPlaySFX);
         }
     }
 

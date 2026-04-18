@@ -9,6 +9,7 @@ public class PoolManager : Singleton<PoolManager>
 
     [Header("Pool Setup")]
     [SerializeField] private Transform _poolRoot;
+    [SerializeField] private RectTransform _uiPoolRoot;
 
     [Header("Global Pool Setup")]
     [Tooltip("게임 내내 쓰일 공통 투사체와 이펙트를 여기에 한 번만 등록하세요")]
@@ -21,6 +22,14 @@ public class PoolManager : Singleton<PoolManager>
             GameObject rootObj = new GameObject("PoolRoot");
             DontDestroyOnLoad(rootObj);
             _poolRoot = rootObj.transform;
+        }
+
+        if (_uiPoolRoot == null)
+        {
+            GameObject uiRootObj = new GameObject("UI_PoolRoot", typeof(Canvas), typeof(RectTransform));
+            uiRootObj.GetComponent<Canvas>().enabled = false; // 렌더링 방지
+            DontDestroyOnLoad(uiRootObj);
+            _uiPoolRoot = uiRootObj.GetComponent<RectTransform>();
         }
 
         foreach (var setup in _globalPools)
@@ -42,6 +51,9 @@ public class PoolManager : Singleton<PoolManager>
 
         string key = prefab.name;
         if (_pools.ContainsKey(key)) return; // 이미 존재하는 풀이면 스킵
+
+        bool isUI = prefab.GetComponent<RectTransform>() != null;
+        Transform targetRoot = isUI ? _uiPoolRoot : _poolRoot;
 
         IObjectPool<GameObject> pool = new ObjectPool<GameObject>(
             createFunc: () =>
@@ -98,6 +110,8 @@ public class PoolManager : Singleton<PoolManager>
         }
 
         pool.Release(obj);
+
+        bool isUI = obj.GetComponent<RectTransform>() != null;
         obj.transform.SetParent(_poolRoot);
     }
 

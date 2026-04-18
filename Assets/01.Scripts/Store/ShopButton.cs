@@ -2,47 +2,54 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
-{
-    public RatData _ratData;
-
-    private TMPro.TextMeshProUGUI _priceText;
-    private Button _myButton;
-    private Image _image;
+{    
+    public ShopItemData _itemData;
+    [SerializeField] private TMPro.TextMeshProUGUI _priceText;
+    [SerializeField] private Button _myButton;
+    [SerializeField] private Image _shadeimage;
+    [SerializeField] private Image _mouseIcon;
 
     private bool _isLocked = false; // Temp code
 
     void Start()
     {
-        // The script finds its own neighbors!
-        _priceText = GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        _myButton = GetComponent<Button>();
-        _image = GetComponent<Image>();
-        
         RefreshUI();
 
         _myButton.onClick.AddListener(HandlePurchase);
+       //mouseIcon.SourceImage;
     }
 
-    public void Setup(RatData ratData)
+    public void Setup(ShopItemData itemData , Sprite Icon)
     {
-        _ratData = ratData;
+        
+        _itemData = itemData;
+        
+        if (Icon != null)
+        {
+            _mouseIcon.sprite = Icon;
+        }
+
+        RefreshUI();
+        
+        // Setup Button Listener if not already set in Inspector
+        _myButton.onClick.RemoveAllListeners();
+        _myButton.onClick.AddListener(HandlePurchase);
     }
 
     private void RefreshUI()
     {
-        if (_ratData == null) {return;}
+        if (_itemData == null) {return;}
 
         if (_isLocked)
         {
             _priceText.text = "LOCKED";
             _myButton.interactable = false;
-            _image.color = Color.black;
         }
+        
         else
         {
-            _priceText.text = $"{_ratData.name} : {_ratData.CommonStat.Cost}";
+            _priceText.text = $"{_itemData.displayName} : {_itemData.cost}";
             _myButton.interactable = true;
-            _image.color = Color.white;
         }
     }
 
@@ -50,12 +57,12 @@ public class ShopButton : MonoBehaviour
     {
         Debug.Log("Button clicked! Checking money...");
 
-        if (_ratData == null)
+        if (_itemData == null)
         {
-            Debug.LogWarning("[ShopButtons] : Perfab is Missing!");
+            Debug.LogWarning("[ShopButtons] : Data is Missing!");
             return;
         }
 
-        StoreManager.Instance.BuyUnit(_ratData);
+        StoreManager.Instance.SelectUnit(_itemData);
     }
 }
