@@ -13,6 +13,7 @@ public class PlacedPart : SerializedMonoBehaviour
     public List<Vector2Int> occupiedCells = new();
 
     [SerializeField] private float currentHp;
+    [SerializeField] private float _collisionDamage = 5;
 
     private readonly List<SpriteRenderer> cellRenderers = new();
     private readonly List<BoxCollider2D> cellCols = new();
@@ -295,8 +296,9 @@ public class PlacedPart : SerializedMonoBehaviour
                 continue;
 
             BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
-            boxCol.size = new Vector2(1, 1);
-
+            boxCol.size = new Vector2(.95f, .95f);
+            cellObj.AddComponent<PartCell>();
+            cellObj.GetComponent<PartCell>().collisionDamage = _collisionDamage;
             cellCols.Add(boxCol);
         }
     }
@@ -323,31 +325,15 @@ public class PlacedPart : SerializedMonoBehaviour
         cellCols.Clear();
     }
 
-    public void ShakeX()
-    {
-        if (transform.parent == null)
-        {
-            return;
-        }
-
-        if (DOTween.IsTweening(transform.parent))
-        {
-            return;
-        }
-
-        transform.parent.DOPunchPosition(new Vector3(0.3f, 0f, 0f), 0.25f, 12, 0.8f);
-    }
-
     public void DecreaseHp(float damage)
     {
         if (data == null)
         {
             ResolvePartData();
         }
-
         if (data == null)
         {
-            Debug.LogError($"{name}: DecreaseHp 실패 - PartData가 Null입니다.");
+            Debug.LogError($"Dont have PartData");
             return;
         }
 
@@ -376,8 +362,12 @@ public class PlacedPart : SerializedMonoBehaviour
 
     private IEnumerator DropAnim()
     {
-        Rigidbody2D rigid = gameObject.AddComponent<Rigidbody2D>();
-        rigid.bodyType = RigidbodyType2D.Dynamic;
+        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+
+        if (rigid == null)
+            rigid = gameObject.AddComponent<Rigidbody2D>();
+        else
+            yield break;
 
         Vector2 explosionVector = new Vector2(Random.Range(-0.7f, 0.7f), 1f);
 

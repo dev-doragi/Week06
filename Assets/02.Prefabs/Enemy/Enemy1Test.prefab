@@ -8,13 +8,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6050234101099838560, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6050234101099838560, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -6050234101099838560, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: m_GravityScale
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1514026403414102153, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 11400000, guid: d0b022c4e8beb0649b672e2802b6521c, type: 2}
+    - target: {fileID: 2330813191237439240, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: m_Layer
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_Name
       value: Enemy1Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4424045994550478800, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -59,5 +79,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 6409664085496927728}
   m_SourcePrefab: {fileID: 100100000, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+--- !u!1 &6850805367326354960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+  m_PrefabInstance: {fileID: 7581932020403072767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6409664085496927728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6850805367326354960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878483f8365d0da46bdfac9b58066ce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMove
+  moveSpeed: 2
+  returnSpeed: 3
+  collisionDamage: 1

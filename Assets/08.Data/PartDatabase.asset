@@ -378,7 +378,7 @@ MonoBehaviour:
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: Shape
       Entry: 7
       Data: 9|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],

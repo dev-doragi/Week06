@@ -160,7 +160,10 @@ public class BuildManager : MonoBehaviour
         {
             return false;
         }
-
+        /*
+        if (!PlacementManager.Instance.SubtractMouseCount(partData.Cost))
+            return;
+        */
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
         if (partObj == null) return false;
 
@@ -230,19 +233,20 @@ public class BuildManager : MonoBehaviour
     private void RemovePartAndCollapse(PlacedPart targetPart)
     {
         if (targetPart == null) return;
-
+        GridBoard targetBoard = targetPart.GetComponentInParent<GridBoard>();
+        if(targetBoard == null) return;
         // 1. 먼저 대상 파츠 제거
-        board.RemovePart(targetPart);
+        targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
 
         // 2. 바퀴와 연결 안 된 모든 파츠 찾기
-        List<PlacedPart> disconnectedParts = board.GetDisconnectedParts();
+        List<PlacedPart> disconnectedParts = targetBoard.GetDisconnectedParts();
 
         // 3. 연결 안 된 파츠들 전부 제거
         foreach (var part in disconnectedParts)
         {
             if (part == null) continue;
-
+            targetBoard.RemovePart(part);
             part.DestroyAnim();
         }
     }
