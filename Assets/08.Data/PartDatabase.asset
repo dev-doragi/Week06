@@ -126,7 +126,7 @@ MonoBehaviour:
       Data: 100
     - Name: DefenseRate
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: Cost
       Entry: 3
       Data: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
       Data: 120
     - Name: DefenseRate
       Entry: 4
-      Data: 0
+      Data: 20
     - Name: Cost
       Entry: 3
       Data: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
       Data: 130
     - Name: DefenseRate
       Entry: 4
-      Data: 0
+      Data: 30
     - Name: Cost
       Entry: 3
       Data: 0
