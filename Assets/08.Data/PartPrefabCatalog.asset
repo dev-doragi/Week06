@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af390a9b677a0cb44a73fdb5d4b92d79, type: 3}
   m_Name: PartPrefabCatalog
   m_EditorClassIdentifier: Assembly-CSharp::PartPrefabCatalog
-  _entries: []
+  _entries:
+  - _key: 4
+    _prefab: {fileID: 0}

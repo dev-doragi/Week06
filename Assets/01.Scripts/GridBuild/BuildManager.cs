@@ -14,6 +14,9 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Transform placeableHighlightRoot;
     [SerializeField] private Sprite highlightSprite;
 
+    [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
+    [SerializeField] private RatTeamType _teamType = RatTeamType.Player;
+
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
     [SerializeField] private bool _spawnRuntimePrefab = true;
 
@@ -190,46 +193,13 @@ public class BuildManager : MonoBehaviour
 
     private void TrySpawnRuntimePrefab(PartData partData, PlacedPart placedPart)
     {
-        if (!_spawnRuntimePrefab)
+        if (_partRuntimeSpawner == null)
         {
+            Debug.LogWarning($"{name}: PartRuntimeSpawner가 연결되지 않았습니다.");
             return;
         }
 
-        if (_partPrefabCatalog == null)
-        {
-            Debug.LogWarning($"{name}: PartPrefabCatalog가 연결되지 않아 런타임 프리팹 생성을 건너뜁니다.");
-            return;
-        }
-
-        if (partData == null)
-        {
-            Debug.LogError($"{name}: TrySpawnRuntimePrefab 실패 - partData가 Null입니다.");
-            return;
-        }
-
-        if (placedPart == null)
-        {
-            Debug.LogError($"{name}: TrySpawnRuntimePrefab 실패 - placedPart가 Null입니다.");
-            return;
-        }
-
-        if (!_partPrefabCatalog.TryGetPrefab(partData.Key, out GameObject prefab) || prefab == null)
-        {
-            Debug.LogWarning($"{name}: key={partData.Key} 에 해당하는 프리팹이 없어 데이터만 배치합니다.");
-            return;
-        }
-
-        GameObject runtimeInstance = Instantiate(
-            prefab,
-            placedPart.transform.position,
-            Quaternion.identity,
-            placedPart.transform);
-
-        runtimeInstance.name = $"{prefab.name}_Runtime";
-
-        runtimeInstance.transform.localPosition = Vector3.zero;
-        runtimeInstance.transform.localRotation = Quaternion.identity;
-        runtimeInstance.transform.localScale = Vector3.one;
+        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, board);
     }
 
     private void TryRemovePart()
