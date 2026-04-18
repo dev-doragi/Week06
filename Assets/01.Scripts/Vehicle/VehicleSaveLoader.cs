@@ -11,16 +11,46 @@ public class VehicleSaveLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        // 스테이지 이벤트 구독
-        StageManager.OnStageCleared += SaveCurrentVehicle;
-        StageManager.OnStageLoaded += LoadSavedVehicle;
+        // [주석처리] Static Event 구독 (EventBus로 통일)
+        // StageManager.OnStageCleared += SaveCurrentVehicle;
+        // StageManager.OnStageLoaded += LoadSavedVehicle;
+
+        // [EventBus 구독]
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Subscribe<StageClearedEvent>(OnStageCleared);
+            EventBus.Instance.Subscribe<StageLoadedEvent>(OnStageLoaded);
+        }
     }
 
     private void OnDisable()
     {
-        // 이벤트 해제
-        StageManager.OnStageCleared -= SaveCurrentVehicle;
-        StageManager.OnStageLoaded -= LoadSavedVehicle;
+        // [주석처리] Static Event 구독 해제
+        // StageManager.OnStageCleared -= SaveCurrentVehicle;
+        // StageManager.OnStageLoaded -= LoadSavedVehicle;
+
+        // [EventBus 구독 해제]
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Unsubscribe<StageClearedEvent>(OnStageCleared);
+            EventBus.Instance.Unsubscribe<StageLoadedEvent>(OnStageLoaded);
+        }
+    }
+
+    /// <summary>
+    /// [EventBus] 스테이지 클리어 시 차량 저장
+    /// </summary>
+    private void OnStageCleared(StageClearedEvent evt)
+    {
+        SaveCurrentVehicle(evt.StageIndex);
+    }
+
+    /// <summary>
+    /// [EventBus] 스테이지 로드 시 차량 복구
+    /// </summary>
+    private void OnStageLoaded(StageLoadedEvent evt)
+    {
+        LoadSavedVehicle(evt.StageIndex);
     }
 
     public void SaveCurrentVehicle(int stageIndex)
@@ -119,7 +149,7 @@ public class VehicleSaveLoader : MonoBehaviour
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            StageManager.Instance.LoadNextStage(); 
+            StageManager.Instance.LoadNextStage();
         }
 
         // 테스트용 단축키 (8:저장, 9:로드)
