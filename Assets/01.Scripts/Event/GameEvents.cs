@@ -103,3 +103,46 @@ public struct PlaySFXEvent
     public AudioClip Clip;
     public float Volume;
 }
+
+// ============================================================================
+// [입력 및 조작 관련 이벤트]
+// InputReader에서 발행하는 마우스 및 키보드 입력 이벤트
+// ============================================================================
+
+/// <summary>
+/// 마우스 좌클릭 상태 변경 시 발행
+/// [발행 위치] InputReader (Click Action)
+/// [구독자] BuildManager (배치 시도), UI 시스템 (클릭 상호작용)
+/// </summary>
+public struct ClickEvent
+{
+    public bool IsStarted; // true: 누름(Started), false: 뗌(Canceled)
+}
+
+/// <summary>
+/// 마우스 우클릭 상태 변경 시 발행
+/// [발행 위치] InputReader (RightClick Action)
+/// [구독자] CameraManager (드래그 시작/종료 판정)
+/// </summary>
+public struct RightClickEvent
+{
+    public bool IsStarted; // true: 누름(Started), false: 뗌(Canceled)
+}
+
+/// <summary>
+/// 구조물 회전 키(R) 입력 시 발행
+/// [발행 위치] InputReader (Rotate Action)
+/// [구독자] BuildManager (설치 중인 오브젝트 회전)
+/// </summary>
+public struct RotateEvent { }
+
+/// <summary>
+/// 마우스 휠 스크롤 발생 시 발행 (단발성 수치 전달)
+/// [발행 위치] InputReader (Scroll Action)
+/// [구독자] CameraManager (줌 인/아웃 처리)
+/// [사용법] EventBus.Instance.Publish(new ScrollEvent { Delta = value });
+/// </summary>
+public struct ScrollEvent
+{
+    public float Delta; // 휠 스크롤 변화량 (y값)
+}

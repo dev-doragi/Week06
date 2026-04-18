@@ -1,13 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RatAttackHandler : MonoBehaviour
 {
     [SerializeField] private bool _useAutoAttack = true;
+    [SerializeField] private MonoBehaviour _attackPerformerComponent;
 
     private RatController _ratController;
     private RatTargetFinder _ratTargetFinder;
     private RatController _currentTarget;
     private float _lastAttackTime;
+    private IAttackPerformer _attackPerformer;
 
     public bool UseAutoAttack => _useAutoAttack;
     public RatController CurrentTarget => _currentTarget;
@@ -50,6 +53,18 @@ public class RatAttackHandler : MonoBehaviour
         if (_ratTargetFinder == null)
         {
             Debug.LogError($"{name}: RatAttackHandler에 RatTargetFinder가 없습니다.");
+        }
+
+        if (_attackPerformerComponent == null)
+        {
+            Debug.LogError($"{name}: RatAttackHandler에 공격 실행기 컴포넌트가 할당되지 않았습니다.");
+            return;
+        }
+
+        _attackPerformer = _attackPerformerComponent as IAttackPerformer;
+        if (_attackPerformer == null)
+        {
+            Debug.LogError($"{name}: _attackPerformerComponent가 IAttackPerformer를 구현하지 않았습니다.");
         }
     }
 
@@ -142,6 +157,12 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
+        if (_attackPerformer == null)
+        {
+            Debug.LogError($"{name}: TryAttack 실패 - 공격 실행기가 없습니다.");
+            return false;
+        }
+
         if (!_ratController.IsEnemy(target))
         {
             return false;
@@ -179,7 +200,9 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        RatDamageCalculator.ApplyAttackDamage(_ratController, target);
+        bool launched = _attackPerformer.TryPerformAttack(_ratController, target);
+        if (!launched) return false;
+
         _lastAttackTime = Time.time;
         _currentTarget = target;
 
@@ -257,14 +280,34 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
+        if (_ratController == null)
+        {
+            Debug.LogError($"{name}: IsTargetInAttackDistance 실패 - RatController가 Null입니다.");
+            return false;
+        }
+
         if (attackDistance < 0f)
         {
             Debug.LogError($"{name}: IsTargetInAttackDistance 실패 - attackDistance는 0 이상이어야 합니다. 입력값: {attackDistance}");
             return false;
         }
 
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        return distance <= attackDistance;
+        IReadOnlyList<Vector2Int> attackerCells = _ratController.GetOccupiedCells();
+        IReadOnlyList<Vector2Int> targetCells = target.GetOccupiedCells();
+
+        if (attackerCells == null)
+        {
+            Debug.LogError($"{name}: IsTargetInAttackDistance 실패 - attackerCells가 Null입니다.");
+            return false;
+        }
+
+        if (targetCells == null)
+        {
+            Debug.LogError($"{target.name}: IsTargetInAttackDistance 실패 - targetCells가 Null입니다.");
+            return false;
+        }
+
+        return GridRangeUtility.IsWithinAttackDistance(attackerCells, targetCells, attackDistance);
     }
 
     public int GetAttackRangeRadius()
