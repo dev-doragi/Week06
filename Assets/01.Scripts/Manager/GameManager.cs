@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -38,22 +37,6 @@ public class GameManager : Singleton<GameManager>
         OnGameStateChanged?.Invoke(CurrentState);
 
         EventBus.Instance.Publish(new GameStateChangedEvent { NewState = CurrentState });
-    }
-
-    public void GoToLobby()
-    {
-        ChangeState(GameState.Ready);
-        SceneManager.LoadScene("01.LobbyScene");
-    }
-
-    public void GoToStageSelect()
-    {
-        SceneManager.LoadScene("03.StageSelectScene");
-    }
-
-    public void EnterInGame()
-    {
-        SceneManager.LoadScene("04.InGameScene");
     }
 
     public void ExitGame()
