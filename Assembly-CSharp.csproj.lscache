@@ -52,6 +52,9 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
+Assets/01.Scripts/Build/
+ GeneratorConnector.cs
+ SpellMapConnector.cs
 Assets/01.Scripts/Enemy/
  BlueprintExporter.cs
  EnemyBlueprintSO.cs
