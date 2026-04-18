@@ -1,30 +1,28 @@
-
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class PlacementManager : Singleton<PlacementManager>
 {
-    private int _currentMouseCount = 15;
+    private int _currentMouseCount = 0;
+
+    // Jaein: 활성화된 마우스들의 실시간 참조 리스트
+    private List<GameObject> _activeMice = new List<GameObject>();
 
     [Header("Mouse Spawn Data")]
     [SerializeField] private TextMeshProUGUI _countDisplay;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private Transform _spawnLocation;
-    [SerializeField] private int MaxCount = 500;
-
+    [SerializeField] private int _mouseCount; // Jaein: 디버깅, 첫 스폰할 마우스 개수
 
     [Header("Mouse Movement Bound Data")]
     [SerializeField] private RectTransform _movementBounds;
 
-    [Header("Mouse Count Data")]
     public int CurrentMouse => _currentMouseCount;
 
     void Start()
     {
-        // It's safer to pre-warm the pool here or in Start
-        //PoolManager.Instance.CreatePool(_mousePrefab, _currentMouseCount, MaxCount);
-
-        //SpawnMouseAtPoint(_currentMouseCount);
+        SpawnMouseAtPoint(_mouseCount);
         UpdateDisplay();
     }
 
@@ -38,7 +36,6 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void AddMouseCount(int amount)
     {
-        Debug.Log(amount);
         _currentMouseCount += amount;
         SpawnMouseAtPoint(amount);
         UpdateDisplay();
@@ -46,41 +43,50 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void SubtractMouseCount(int amount)
     {
-        _currentMouseCount -= amount;
-
-        _currentMouseCount = Mathf.Max(0, _currentMouseCount);
-
+        _currentMouseCount = Mathf.Max(0, _currentMouseCount - amount);
         DespawnMouseAPoint(amount);
-
         UpdateDisplay();
     }
 
     public void ResetMouseCount()
     {
-        DespawnMouseAPoint(_currentMouseCount);
+        DespawnMouseAPoint(_activeMice.Count);
         _currentMouseCount = 0;
         UpdateDisplay();
     }
 
-
     private void SpawnMouseAtPoint(int number)
     {
-        for (int i = 0; i < number ;i++)
+        for (int i = 0; i < number; i++)
         {
             GameObject obj = PoolManager.Instance.Spawn(_mousePrefab.name, _spawnLocation.position, Quaternion.identity);
 
-            if (obj.TryGetComponent(out MouseAgent agent))
+            if (obj != null)
             {
-                agent.Setup(_movementBounds);
+                _activeMice.Add(obj);
+
+                if (obj.TryGetComponent(out MouseAgent agent))
+                {
+                    agent.Setup(_movementBounds);
+                }
             }
         }
     }
 
     private void DespawnMouseAPoint(int number)
     {
-        for (int i = 0; i < number ;i++)
+        // Jaein: 리스트에서 실제 인스턴스를 꺼내 PoolManager에 반납
+        int count = Mathf.Min(number, _activeMice.Count);
+
+        for (int i = 0; i < count; i++)
         {
-            PoolManager.Instance.Despawn(_mousePrefab);
+            int lastIndex = _activeMice.Count - 1;
+            GameObject target = _activeMice[lastIndex];
+
+            // Jaein: 프리팹 원본이 아닌, 리스트에 담긴 실제 객체 참조를 전달
+            PoolManager.Instance.Despawn(target);
+
+            _activeMice.RemoveAt(lastIndex);
         }
     }
 }
