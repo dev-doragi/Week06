@@ -17,6 +17,7 @@ MonoBehaviour:
     - 8c9cfa26abfee488c85f1582747f6a02
     - 98078056f355460449407d33c32d27bd
     - cd6e33790873a1a4eba6822ebb5c6de1
+    - 8775bc3d0f1e14d47b5fe9594c42bbed
     values:
     - goDatas_byGlobalId:
         keys: []
@@ -67,5 +68,8 @@ MonoBehaviour:
           iconNameOrGuid: BoxCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
+    - goDatas_byGlobalId:
+        keys: []
+        values: []
   bookmarks: []
   bookmarkedScenePaths: []

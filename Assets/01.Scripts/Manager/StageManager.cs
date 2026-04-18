@@ -29,6 +29,7 @@ public class StageManager : Singleton<StageManager>
 
     private void Start()
     {
+        // TODO: 스테이지 불러오는 트리거도 따로 분리할건지?
         LoadStage(0);
     }
 
