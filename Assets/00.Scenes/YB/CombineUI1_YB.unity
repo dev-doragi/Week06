@@ -808,9 +808,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dede2658869275a4fafae9bb5612d7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
-  _isDontDestroyOnLoad: 1
-  _poolRoot: {fileID: 962719246}
-  _globalPools: []
+  _isDontDestroyOnLoad: 0
+  _poolRoot: {fileID: 0}
+  _uiPoolRoot: {fileID: 962719246}
+  _globalPools:
+  - Prefab: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
+    InitialSize: 3
+    MaxSize: 100
 --- !u!4 &1002001667
 Transform:
   m_ObjectHideFlags: 0

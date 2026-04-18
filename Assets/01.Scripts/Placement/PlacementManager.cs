@@ -22,9 +22,9 @@ public class PlacementManager : Singleton<PlacementManager>
     void Start()
     {
         // It's safer to pre-warm the pool here or in Start
-        PoolManager.Instance.CreatePool(_mousePrefab, _currentMouseCount, MaxCount);
+        //PoolManager.Instance.CreatePool(_mousePrefab, _currentMouseCount, MaxCount);
 
-        SpawnMouseAtPoint(_currentMouseCount);
+        //SpawnMouseAtPoint(_currentMouseCount);
         UpdateDisplay();
     }
 
