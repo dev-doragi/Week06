@@ -108,7 +108,7 @@ public class BombProjectile : MonoBehaviour
             RatController hitTarget = hitTargets[i];
             if (hitTarget == null) continue;
 
-            RatDamageCalculator.ApplyCollisionDamage(_attacker, hitTarget);
+            RatDamageCalculator.ApplyAttackDamage(_attacker, hitTarget);
         }
 
         Destroy(gameObject);
