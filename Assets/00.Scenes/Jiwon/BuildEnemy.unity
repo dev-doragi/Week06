@@ -566,6 +566,10 @@ MonoBehaviour:
   ghostRoot: {fileID: 256308168}
   placeableHighlightRoot: {fileID: 321274925}
   highlightSprite: {fileID: 21300000, guid: 634e584b57c4cd640a646984445584b0, type: 3}
+  _partRuntimeSpawner: {fileID: 0}
+  _teamType: 1
+  _partPrefabCatalog: {fileID: 0}
+  _spawnRuntimePrefab: 1
 --- !u!114 &884370199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,7 +1120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 088e9dc6a1f650b49a4a1caa5b0eabd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestMouse
-  key: 3
+  key: 4
 --- !u!114 &1321970074
 MonoBehaviour:
   m_ObjectHideFlags: 0
