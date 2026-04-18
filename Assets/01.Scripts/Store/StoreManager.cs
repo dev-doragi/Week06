@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
+
 
 // 스토어 타입
 public enum ShopItemCategory
@@ -29,6 +32,7 @@ public class StoreManager : Singleton<StoreManager>
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Scrollbar _scollbar;
 
+
     [Header("Tab Button Colors")]
     [SerializeField] private Button _attackTabButton;
     [SerializeField] private Button _defenceTabButton;
@@ -47,17 +51,21 @@ public class StoreManager : Singleton<StoreManager>
     [Header("Current Store State")]
     [SerializeField] private ShopItemCategory _currentStore;
 
+    [Header("Debug Check")]
+    [SerializeField] bool _showDebug = true;
+
 
 
     protected override void Init()
     {
-        Debug.Log("Store System Initialized via Singleton Base");
+
+        if (_showDebug) Debug.Log("Store System Initialized via Singleton Base");
         // Set default page
         AttackUnitStoreButton(); 
 
         GenerateBuyButtons();
     }
-
+    
 
 
     #region 구매 버튼
@@ -117,12 +125,13 @@ public class StoreManager : Singleton<StoreManager>
     // 구매 버튼 클리시 해당 코드 실행
     public void SelectUnit(ShopItemData data)
     {
-        PlacementManager.Instance.SubtractMouseCount(data.cost);
+        PlacementManager.Instance.AddMouseCount(data.cost);
 
-        Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
+        if (_showDebug) Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
         BuildManager.Instance.SelectPart(data.partKey);
     }
     #endregion
+
 
     private void UpdateTabColors(ShopItemCategory selected)
     {
@@ -181,9 +190,9 @@ public class StoreManager : Singleton<StoreManager>
     // 사용중인 것 제외하고 다른 상점창 닫음
     private void SwitchStore(ShopItemCategory targetStore)
     {
-        // 1. Identify which transform is the new content
         RectTransform newContent = null;
 
+        // 불려진 스토어 제외 모두 비활성화
         if (_attackStore != null)
         {
             bool isActive = (targetStore == ShopItemCategory.AttackStore);
@@ -212,16 +221,17 @@ public class StoreManager : Singleton<StoreManager>
             if (isActive) newContent = _supportStore.GetComponent<RectTransform>();
         }
 
-        // 2. Assign the new content to the ScrollRect
+        if (_showDebug) Debug.Log("[StoreManager] : Opening " + targetStore.DisplayName());
+        
+
+        // 스크롤 상태 강제로 1 로 리셋
         if (newContent != null && _scrollRect != null)
         {
             _scrollRect.content = newContent;
-
-            // 3. Reset the position to the TOP (1 is top, 0 is bottom)
             _scollbar.value = 1f;
-            
-            // 4. Force a UI layout update so it doesn't "jump" on the next frame
             Canvas.ForceUpdateCanvases();
+
+            if (_showDebug) Debug.Log("[StoreManager] : Reseting Scroll");
         }
     }
     #endregion

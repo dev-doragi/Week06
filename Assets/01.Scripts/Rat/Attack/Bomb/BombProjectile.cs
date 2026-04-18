@@ -13,6 +13,7 @@ public class BombProjectile : MonoBehaviour
 
     private RatController _attacker;
     private RatController _primaryTarget;
+    private RatController _impactTarget;
 
     private int _attackRangeRadius;
     private BombProjectileMoveType _moveType;
@@ -93,6 +94,13 @@ public class BombProjectile : MonoBehaviour
 
         if(!_attacker.IsEnemy(hitTarget)) return;
 
+        if (hitTarget.RatStatRuntime == null || hitTarget.RatStatRuntime.IsDead)
+        {
+            return;
+        }
+
+        _impactTarget = hitTarget;
+
         Explode();
     }
 
@@ -108,7 +116,7 @@ public class BombProjectile : MonoBehaviour
             RatController hitTarget = hitTargets[i];
             if (hitTarget == null) continue;
 
-            RatDamageCalculator.ApplyCollisionDamage(_attacker, hitTarget);
+            RatDamageCalculator.ApplyAttackDamage(_attacker, hitTarget);
         }
 
         Destroy(gameObject);
@@ -167,6 +175,13 @@ public class BombProjectile : MonoBehaviour
 
     private Vector2Int ResolveExplosionCenterCell()
     {
+        if(_impactTarget != null)
+        {
+            IReadOnlyList<Vector2Int> impactCells = _impactTarget.GetOccupiedCells();
+            if(impactCells != null && impactCells.Count > 0)
+                return impactCells[0];
+        }
+
         if(_primaryTarget != null)
         {
             IReadOnlyList<Vector2Int> targetCells = _primaryTarget.GetOccupiedCells();

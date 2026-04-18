@@ -882,7 +882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: _inGameSceneName
-      value: Jaein_InGameScene
+      value: Build_InGameScene
       objectReference: {fileID: 0}
     - target: {fileID: 2265297470353019938, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: m_LocalPosition.x
