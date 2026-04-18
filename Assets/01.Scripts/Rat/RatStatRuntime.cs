@@ -9,7 +9,7 @@ public class RatStatRuntime : MonoBehaviour
 
     public PartData PartData => _partData;
     public float CurrentHp => _currentHp;
-    public float MaxHp => _partData != null ? _partData.CommonStat.Health : 0f;
+    public float MaxHp => _partData != null ? _partData.CommonStat.Hp : 0f;
     public float DefenseRate => _partData != null ? _partData.CommonStat.DefenseRate : 0f;
     public bool IsDead => _currentHp <= 0f;
 
@@ -42,7 +42,7 @@ public class RatStatRuntime : MonoBehaviour
             return;
         }
 
-        _currentHp = _partData.CommonStat.Health;
+        _currentHp = _partData.CommonStat.Hp;
         OnHpChanged?.Invoke(_currentHp, MaxHp);
     }
 
@@ -107,6 +107,46 @@ public class RatStatRuntime : MonoBehaviour
         OnHpChanged?.Invoke(_currentHp, MaxHp);
     }
 
+    public bool IsUnit()
+    {
+        return _partData != null && _partData.IsUnit;
+    }
+
+    public bool IsBuilding()
+    {
+        return _partData != null && _partData.IsBuilding;
+    }
+
+    public bool IsAttackUnit()
+    {
+        return _partData != null && _partData.IsAttackUnit;
+    }
+
+    public bool IsDefenseUnit()
+    {
+        return _partData != null && _partData.IsDefenseUnit;
+    }
+
+    public bool IsSupportUnit()
+    {
+        return _partData != null && _partData.IsSupportUnit;
+    }
+
+    public bool CanUseAttack()
+    {
+        return IsAttackUnit();
+    }
+
+    public bool CanUseCollision()
+    {
+        return IsDefenseUnit();
+    }
+
+    public bool CanUseSupport()
+    {
+        return IsSupportUnit();
+    }
+
     public bool TryGetAttackStat(out PartAttackStatData attackStat)
     {
         attackStat = null;
@@ -117,13 +157,19 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.HasAttackStat)
+        if (!_partData.IsAttackUnit)
         {
             return false;
         }
 
         attackStat = _partData.AttackStat;
-        return attackStat != null;
+        if (attackStat == null)
+        {
+            Debug.LogError($"{name}: Attack 유닛인데 AttackStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
     }
 
     public bool TryGetDefenseStat(out PartDefenseStatData defenseStat)
@@ -136,13 +182,66 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.HasDefenseStat)
+        if (!_partData.IsDefenseUnit)
         {
             return false;
         }
 
         defenseStat = _partData.DefenseStat;
-        return defenseStat != null;
+        if (defenseStat == null)
+        {
+            Debug.LogError($"{name}: Defense 유닛인데 DefenseStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool TryGetSupportStat(out PartSupportStatData supportStat)
+    {
+        supportStat = null;
+
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: TryGetSupportStat 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        if (!_partData.IsSupportUnit)
+        {
+            return false;
+        }
+
+        supportStat = _partData.SupportStat;
+        if (supportStat == null)
+        {
+            Debug.LogError($"{name}: Support 유닛인데 SupportStat이 Null입니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public float GetEffectiveDefenseRate(RatStatModifierRuntime modifierRuntime)
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: GetEffectiveDefenseRate 실패 - PartData가 Null입니다.");
+            return 0f;
+        }
+
+        float baseValue = _partData.CommonStat.DefenseRate;
+
+        if (modifierRuntime == null)
+        {
+            return baseValue;
+        }
+
+        float finalValue = baseValue;
+        finalValue += modifierRuntime.DefenseRateFlatBonus;
+        finalValue += baseValue * modifierRuntime.DefenseRatePercentBonus;
+
+        return Mathf.Clamp01(finalValue);
     }
 
     private void ValidatePartData()

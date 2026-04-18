@@ -1,22 +1,28 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RatController : MonoBehaviour
 {
     [SerializeField] private PartData _partData;
+    [SerializeField] private PlacedPart _placedPart;
     [SerializeField] private RatTeamType _teamType;
 
     private RatStatRuntime _ratStatRuntime;
     private RatAttackHandler _ratAttackHandler;
     private RatCollisionHandler _ratCollisionHandler;
     private RatTargetFinder _ratTargetFinder;
+    private RatSupportHandler _ratSupportHandler;
+    private RatStatModifierRuntime _ratStatModifierRuntime;
 
     public PartData PartData => _partData;
-    public PartType PartType => _partData != null ? _partData.PartType : PartType.None;
     public RatStatRuntime RatStatRuntime => _ratStatRuntime;
     public RatAttackHandler RatAttackHandler => _ratAttackHandler;
     public RatCollisionHandler RatCollisionHandler => _ratCollisionHandler;
     public RatTargetFinder RatTargetFinder => _ratTargetFinder;
+    public RatSupportHandler RatSupportHandler => _ratSupportHandler;
+    public RatStatModifierRuntime RatStatModifierRuntime => _ratStatModifierRuntime;
     public RatTeamType TeamType => _teamType;
+    public PlacedPart PlacedPart => _placedPart;
 
     private void Awake()
     {
@@ -30,6 +36,8 @@ public class RatController : MonoBehaviour
         _ratAttackHandler = GetComponent<RatAttackHandler>();
         _ratCollisionHandler = GetComponent<RatCollisionHandler>();
         _ratTargetFinder = GetComponent<RatTargetFinder>();
+        _ratSupportHandler = GetComponent<RatSupportHandler>();
+        _ratStatModifierRuntime = GetComponent<RatStatModifierRuntime>();
 
         if (_partData == null)
         {
@@ -37,9 +45,19 @@ public class RatController : MonoBehaviour
             return;
         }
 
+        if (_placedPart == null)
+        {
+            Debug.LogError($"{name}: RatController에 PlacedPart가 할당되지 않았습니다.");
+        }
+
         if (_teamType == RatTeamType.None)
         {
             Debug.LogError($"{name}: TeamType이 None으로 설정되어 있습니다.");
+        }
+
+        if (_ratStatModifierRuntime == null)
+        {
+            Debug.LogError($"{name}: RatStatModifierRuntime 컴포넌트를 찾을 수 없습니다.");
         }
 
         _ratStatRuntime.SetPartData(_partData);
@@ -61,38 +79,15 @@ public class RatController : MonoBehaviour
         }
     }
 
-    public float GetCurrentHp()
-    {
-        if (_ratStatRuntime == null)
-        {
-            Debug.LogError($"{name}: GetCurrentHp 실패 - RatStatRuntime이 Null입니다.");
-            return 0f;
-        }
+    public bool IsUnit() => _ratStatRuntime != null && _ratStatRuntime.IsUnit();
+    public bool IsBuilding() => _ratStatRuntime != null && _ratStatRuntime.IsBuilding();
+    public bool IsAttackUnit() => _ratStatRuntime != null && _ratStatRuntime.IsAttackUnit();
+    public bool IsDefenseUnit() => _ratStatRuntime != null && _ratStatRuntime.IsDefenseUnit();
+    public bool IsSupportUnit() => _ratStatRuntime != null && _ratStatRuntime.IsSupportUnit();
 
-        return _ratStatRuntime.CurrentHp;
-    }
-
-    public float GetMaxHp()
-    {
-        if (_ratStatRuntime == null)
-        {
-            Debug.LogError($"{name}: GetMaxHp 실패 - RatStatRuntime이 Null입니다.");
-            return 0f;
-        }
-
-        return _ratStatRuntime.MaxHp;
-    }
-
-    public float GetDefenseRate()
-    {
-        if (_ratStatRuntime == null)
-        {
-            Debug.LogError($"{name}: GetDefenseRate 실패 - RatStatRuntime이 Null입니다.");
-            return 0f;
-        }
-
-        return _ratStatRuntime.DefenseRate;
-    }
+    public float GetCurrentHp() => _ratStatRuntime != null ? _ratStatRuntime.CurrentHp : 0f;
+    public float GetMaxHp() => _ratStatRuntime != null ? _ratStatRuntime.MaxHp : 0f;
+    public float GetDefenseRate() => _ratStatRuntime != null ? _ratStatRuntime.DefenseRate : 0f;
 
     public int GetCost()
     {
@@ -102,13 +97,44 @@ public class RatController : MonoBehaviour
             return 0;
         }
 
-        if (_partData.CommonStat == null)
+        return _partData.CommonStat.Cost;
+    }
+
+    public bool CanUseAttack() => IsAttackUnit();
+    public bool CanUseCollision() => IsDefenseUnit();
+    public bool CanUseSupport() => IsSupportUnit();
+
+    public bool IsArcAttack()
+    {
+        if (_partData == null)
         {
-            Debug.LogError($"{name}: GetCost 실패 - CommonStat이 Null입니다.");
-            return 0;
+            Debug.LogError($"{name}: IsArcAttack 실패 - PartData가 Null입니다.");
+            return false;
         }
 
-        return _partData.CommonStat.Cost;
+        return _partData.IsArcAttack;
+    }
+
+    public bool IsDirectAttack()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: IsDirectAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.IsDirectAttack;
+    }
+
+    public bool IsAreaAttack()
+    {
+        if (_partData == null)
+        {
+            Debug.LogError($"{name}: IsAreaAttack 실패 - PartData가 Null입니다.");
+            return false;
+        }
+
+        return _partData.IsAreaAttack;
     }
 
     public RatController GetCurrentTarget()
@@ -168,6 +194,52 @@ public class RatController : MonoBehaviour
         }
 
         return _ratStatRuntime.TryGetDefenseStat(out defenseStat);
+    }
+
+    public bool TryGetSupportStat(out PartSupportStatData supportStat)
+    {
+        supportStat = null;
+
+        if (_ratStatRuntime == null)
+        {
+            Debug.LogError($"{name}: TryGetSupportStat 실패 - RatStatRuntime이 Null입니다.");
+            return false;
+        }
+
+        return _ratStatRuntime.TryGetSupportStat(out supportStat);
+    }
+
+    public void ProcessSupport()
+    {
+        if (_ratSupportHandler == null)
+        {
+            Debug.LogError($"{name}: ProcessSupport 실패 - RatSupportHandler가 없습니다.");
+            return;
+        }
+
+        _ratSupportHandler.ProcessSupport();
+    }
+
+    public RatStatModifierRuntime GetStatModifierRuntime()
+    {
+        if (_ratStatModifierRuntime == null)
+        {
+            Debug.LogError($"{name}: GetStatModifierRuntime 실패 - RatStatModifierRuntime이 Null입니다.");
+            return null;
+        }
+
+        return _ratStatModifierRuntime;
+    }
+
+    public IReadOnlyList<Vector2Int> GetOccupiedCells()
+    {
+        if (_placedPart == null)
+        {
+            Debug.LogError($"{name}: GetOccupiedCells 실패 - PlacedPart가 Null입니다.");
+            return null;
+        }
+
+        return _placedPart.OccupiedCells;
     }
 
     public void ApplyDirectDamage(float damage)

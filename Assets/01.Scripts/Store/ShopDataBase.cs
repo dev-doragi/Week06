@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class ShopDataBase : ScriptableObject
 {
     public List<ShopItemData> attackItems;
+    public List<ShopItemData> defenseItems;
     public List<ShopItemData> buildItems;
     public List<ShopItemData> supportItems;
+
 }
