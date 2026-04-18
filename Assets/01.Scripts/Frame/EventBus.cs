@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DefaultExecutionOrder(-100)]
-public class EventBus : Singleton<EventBus>
+public class EventBus
 {
+    private static readonly Lazy<EventBus> _instance = new Lazy<EventBus>(() => new EventBus());
+    public static EventBus Instance => _instance.Value;
+
     private readonly Dictionary<Type, Delegate> _events = new Dictionary<Type, Delegate>();
+
+    private EventBus() { }
 
     public void Subscribe<T>(Action<T> onEvent)
     {
