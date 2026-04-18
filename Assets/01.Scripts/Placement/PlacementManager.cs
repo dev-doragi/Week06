@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class PlacementManager : Singleton<PlacementManager>
 {
-    private int _currentMouseCount = 10;
+    private int _currentMouseCount = 15;
 
+    [Header("Mouse Spawn Data")]
     [SerializeField] private TextMeshProUGUI _countDisplay;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private Transform _spawnLocation;
+    [SerializeField] private int MaxCount = 500;
 
+
+    [Header("Mouse Movement Bound Data")]
+    [SerializeField] private RectTransform _movementBounds;
+
+    [Header("Mouse Count Data")]
     public int CurrentMouse => _currentMouseCount;
 
     void Start()
     {
         // It's safer to pre-warm the pool here or in Start
-        PoolManager.Instance.CreatePool(_mousePrefab, 0, 500);
+        PoolManager.Instance.CreatePool(_mousePrefab, _currentMouseCount, MaxCount);
 
         SpawnMouseAtPoint(_currentMouseCount);
         UpdateDisplay();
@@ -59,7 +66,12 @@ public class PlacementManager : Singleton<PlacementManager>
     {
         for (int i = 0; i < number ;i++)
         {
-            PoolManager.Instance.Spawn(_mousePrefab.name, _spawnLocation.position, Quaternion.identity);
+            GameObject obj = PoolManager.Instance.Spawn(_mousePrefab.name, _spawnLocation.position, Quaternion.identity);
+
+            if (obj.TryGetComponent(out MouseAgent agent))
+            {
+                agent.Setup(_movementBounds);
+            }
         }
     }
 

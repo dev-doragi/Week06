@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum ItemTier
+{
+    tier1 = 0,
+    tier2,
+    tier3,
+    tier4
+}
+
 
 [CreateAssetMenu(fileName ="NewShopItem", menuName = "Store/Shop Item")]
 public class ShopItemData : ScriptableObject
@@ -12,5 +20,6 @@ public class ShopItemData : ScriptableObject
 
     [Header("Economic Info")]
     public int cost;
+    public ItemTier tier;
     public bool isLocked;
 }

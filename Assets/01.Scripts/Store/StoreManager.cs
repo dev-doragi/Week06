@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 // 스토어 타입
 public enum ShopItemCategory
@@ -54,31 +55,37 @@ public class StoreManager : Singleton<StoreManager>
     #region 구매 버튼
     private void GenerateBuyButtons()
     {
-        // For each list in the database, spawn buttons in the correct store page
-        foreach (ShopItemData item in _database.attackItems) 
-            if (item != null) CreateButton(item, _attackStore.transform);
-
-        foreach (ShopItemData item in _database.DefenseItems) 
-            if (item != null) CreateButton(item, _defenceStore.transform);
-
-        foreach (ShopItemData item in _database.buildItems) 
-            if (item != null) CreateButton(item, _buildStore.transform);
-
-        foreach (ShopItemData item in _database.supportItems) 
-            if (item != null) CreateButton(item, _supportStore.transform);
+        ProcessStoreItems(_database.attackItems, _attackStore.transform);
+        ProcessStoreItems(_database.defenseItems, _defenceStore.transform);
+        ProcessStoreItems(_database.buildItems, _buildStore.transform);
+        ProcessStoreItems(_database.supportItems, _supportStore.transform);
     }
 
-    private void CreateButton(ShopItemData data, Transform targetPage)
+    private void ProcessStoreItems(IEnumerable<ShopItemData> items, Transform storeParent)
     {
-        // 1. Spawn the UI Button Prefab as a child of the specific Store Page
+        ButtonDataList buttonDataList = storeParent.GetComponentInChildren<ButtonDataList>();
+
+        buttonDataList.ResetList();
+
+        foreach (ShopItemData item in items)
+        {
+            if (item == null) continue;
+
+            ShopButton button = CreateButton(item, storeParent);
+            if (button != null) buttonDataList.AddList(button);
+        }
+
+        buttonDataList.OrganizeList();
+    }
+
+    private ShopButton CreateButton(ShopItemData data, Transform targetPage)
+    {
         GameObject newButton = Instantiate(_buttonPrefab, targetPage);
 
-        // 2. Pass the ShopItemData into the button's script
         if (newButton.TryGetComponent(out ShopButton script))
         {
             Sprite iconSprite = null;
 
-            // CRITICAL FIX: Use 'partKey', not 'cost', to find the data in the dictionary
             if (_gridManager != null && _gridManager.partDic != null)
             {
                 if (_gridManager.partDic.TryGetValue(data.partKey, out PartData partInfo))
@@ -91,8 +98,12 @@ public class StoreManager : Singleton<StoreManager>
                 }
             }
 
-            script.Setup(data, iconSprite); 
+            script.Setup(data, iconSprite);
+            return script; // return here if found
         }
+
+        Debug.LogWarning($"[StoreManager] No ShopButton component found on prefab!");
+        return null; // return null if component missing
     }
 
     // 구매 버튼 클리시 해당 코드 실행

@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3729317078651465281
 CanvasRenderer:
@@ -88,4 +88,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563c29f07ea94dd4ea2fe10f74e65d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MouseAgent
-  _movement: {fileID: 0}

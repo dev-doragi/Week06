@@ -156,7 +156,7 @@ public class ShopItemGenerator : EditorWindow
         if (db == null) return;
 
         db.attackItems.Clear();
-        db.DefenseItems.Clear();
+        db.defenseItems.Clear();
         db.buildItems.Clear();
         db.supportItems.Clear();
 
@@ -172,7 +172,7 @@ public class ShopItemGenerator : EditorWindow
                 switch (item.category)
                 {
                     case ShopItemCategory.AttackStore: db.attackItems.Add(item); break;
-                    case ShopItemCategory.DefnseStore: db.DefenseItems.Add(item); break;
+                    case ShopItemCategory.DefnseStore: db.defenseItems.Add(item); break;
                     case ShopItemCategory.BuildStore: db.buildItems.Add(item); break;
                     case ShopItemCategory.SupportStore: db.supportItems.Add(item); break;
                 }
