@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6050234101099838560, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_GravityScale
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1514026403414102153, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: blueprint

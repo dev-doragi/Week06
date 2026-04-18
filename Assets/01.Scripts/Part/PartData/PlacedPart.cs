@@ -325,34 +325,9 @@ public class PlacedPart : SerializedMonoBehaviour
         cellCols.Clear();
     }
 
-    public void DecreaseHp(float damage)
+    public void Break()
     {
-        if (data == null)
-        {
-            ResolvePartData();
-        }
-        if (data == null)
-        {
-            Debug.LogError($"Dont have PartData");
-            return;
-        }
-
-        currentHp -= damage;
-
-        float value = 0.5f + ((currentHp / data.Hp) / 2f);
-        Color color = new Color(1f, value, value, 1f);
-        SetColor(color);
-
-        if (currentHp <= 0f)
-        {
-            BuildManager.Instance.BrokenPart(this);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 여기서 무기 충돌 판정
-        // DecreaseHp(float damage)
+        BuildManager.Instance.BrokenPart(this);
     }
 
     public void DestroyAnim()

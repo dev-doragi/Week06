@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//GridBuilder Manager아님
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager Instance;
@@ -201,8 +202,8 @@ public class BuildManager : MonoBehaviour
             Debug.LogWarning($"{name}: PartRuntimeSpawner가 연결되지 않았습니다.");
             return;
         }
-
-        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, board);
+        GridBoard gridBoard = placedPart.GetComponentInParent<GridBoard>();
+        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, gridBoard);
     }
 
     private void TryRemovePart()
@@ -290,6 +291,7 @@ public class BuildManager : MonoBehaviour
 
             if (success)
             {
+                TrySpawnRuntimePrefab(wheelData, placedPart);
                 placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
             }
             else
@@ -314,6 +316,7 @@ public class BuildManager : MonoBehaviour
 
             if (success)
             {
+                TrySpawnRuntimePrefab(coreData, placedPart);
                 placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
             }
             else

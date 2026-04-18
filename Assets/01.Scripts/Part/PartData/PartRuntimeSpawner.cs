@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PartRuntimeSpawner : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class PartRuntimeSpawner : MonoBehaviour
         TeamType teamType,
         GridBoard board)
     {
+
         if (_partPrefabCatalog == null)
         {
             Debug.LogWarning($"{name}: PartPrefabCatalog가 연결되지 않았습니다.");
@@ -33,13 +34,12 @@ public class PartRuntimeSpawner : MonoBehaviour
             Debug.LogWarning($"{name}: key={partData.Key}에 해당하는 프리팹이 없습니다.");
             return null;
         }
-
         GameObject runtimeInstance = Instantiate(
             prefab,
             placedPart.transform.position,
             Quaternion.identity,
             placedPart.transform);
-
+        Debug.Log("${prefab.name}_Runtime");
         runtimeInstance.name = $"{prefab.name}_Runtime";
         runtimeInstance.transform.localPosition = Vector3.zero;
         runtimeInstance.transform.localRotation = Quaternion.identity;
@@ -48,6 +48,7 @@ public class PartRuntimeSpawner : MonoBehaviour
         PartRuntimeBinder binder = runtimeInstance.GetComponent<PartRuntimeBinder>();
         if (binder == null)
         {
+
             binder = runtimeInstance.AddComponent<PartRuntimeBinder>();
         }
 

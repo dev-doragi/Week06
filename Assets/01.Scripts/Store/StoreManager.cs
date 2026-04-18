@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 public enum ShopItemCategory
 {
     AttackStore = 0,
-    DefnseStore,
+    DefenseStore,
     BuildStore,
     SupportStore
 }
@@ -136,7 +136,7 @@ public class StoreManager : Singleton<StoreManager>
     private void UpdateTabColors(ShopItemCategory selected)
     {
         UpdateSingleTab(_attackTabButton,  selected == ShopItemCategory.AttackStore);
-        UpdateSingleTab(_defenceTabButton, selected == ShopItemCategory.DefnseStore);
+        UpdateSingleTab(_defenceTabButton, selected == ShopItemCategory.DefenseStore);
         UpdateSingleTab(_buildTabButton,   selected == ShopItemCategory.BuildStore);
         UpdateSingleTab(_supportTabButton, selected == ShopItemCategory.SupportStore);
     }
@@ -164,7 +164,7 @@ public class StoreManager : Singleton<StoreManager>
 
     public void DefenseUnitStoreButton()
     {
-        _currentStore = ShopItemCategory.DefnseStore;
+        _currentStore = ShopItemCategory.DefenseStore;
         RefreshStoreUI();
     }
 
@@ -191,6 +191,7 @@ public class StoreManager : Singleton<StoreManager>
     private void SwitchStore(ShopItemCategory targetStore)
     {
         RectTransform newContent = null;
+        Debug.Log(targetStore);
 
         // 불려진 스토어 제외 모두 비활성화
         if (_attackStore != null)
@@ -202,7 +203,7 @@ public class StoreManager : Singleton<StoreManager>
 
         if (_defenceStore != null)
         {
-            bool isActive = (targetStore == ShopItemCategory.DefnseStore);
+            bool isActive = (targetStore == ShopItemCategory.DefenseStore);
             _defenceStore.SetActive(isActive);
             if (isActive) newContent = _defenceStore.GetComponent<RectTransform>();
         }
@@ -221,7 +222,7 @@ public class StoreManager : Singleton<StoreManager>
             if (isActive) newContent = _supportStore.GetComponent<RectTransform>();
         }
 
-        if (_showDebug) Debug.Log("[StoreManager] : Opening " + targetStore.DisplayName());
+        if (_showDebug) Debug.Log($"[StoreManager] : Opening  + {targetStore}");
         
 
         // 스크롤 상태 강제로 1 로 리셋

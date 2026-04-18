@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RatController : MonoBehaviour, IPartRuntimeBindable
@@ -359,6 +359,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
 
     private void HandleDead()
     {
-        Debug.Log($"{name}: Part 사망 처리");
+        PlacedPart pp = GetComponentInParent<PlacedPart>();
+        pp.Break();
     }
 }
