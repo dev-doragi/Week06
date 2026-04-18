@@ -53,9 +53,8 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 
 [sourceFiles]
 Assets/01.Scripts/
- Events/GameEvents.cs
+ Event/GameEvents.cs
  Frame/
-  BaseStage.cs
   EventBus.cs
   ManagerRegistry.cs
   Singleton.cs
@@ -63,26 +62,40 @@ Assets/01.Scripts/
   BuildManager.cs
   GridBoard.cs
   GridManager.cs
+  GridRangeUtility.cs
   GridRenderer.cs
   Test/TestMouse.cs
  Manager/
   GameFlowManager.cs
   GameManager.cs
   PoolManager.cs
+  SoundManager.cs
   StageManager.cs
  Part/PartData/
   AttackTrajectoryType.cs
+  ModifierType.cs
   PartAttackStatData.cs
+  PartCategory.cs
   PartCommonStatData.cs
   PartData.cs
+  PartDatabaseProvider.cs
   PartDataSO.cs
   PartDefenseStatData.cs
+  PartSupportEffectData.cs
+  PartSupportStatData.cs
   PartType.cs
   PlacedPart.cs
+  RatStatModifierRuntime.cs
+  SupportStatType.cs
+  SupportTargetRoleType.cs
+  UnitRoleType.cs
  Placement/
   MouseAgent.cs
   MouseUIMovement.cs
   PlacementManager.cs
+ Projectile/
+  ProjectileBase.cs
+  TestProjectile.cs
  Rat/
   RatAttackHandler.cs
   RatCollisionHandler.cs
@@ -96,7 +109,13 @@ Assets/01.Scripts/
    RatTeamType.cs
    RatType.cs
   RatStatRuntime.cs
+  RatSupportHandler.cs
   RatTargetFinder.cs
+ Sound/SoundPlayer.cs
+ Stage/
+  PoolSetupData.cs
+  StageDataSO.cs
+  StageLayout.cs
  Store/
   ButtonDataList.cs
   ShopButton.cs
@@ -107,6 +126,7 @@ Assets/01.Scripts/
  Vehicle/
   VehicleCache.cs
   VehicleSaveLoader.cs
+Assets/98.Debugger/CollisionTestDriver.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]

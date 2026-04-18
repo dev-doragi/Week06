@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using System.Net;
 
 public class ShopItemGenerator : EditorWindow
 {
@@ -105,19 +104,19 @@ public class ShopItemGenerator : EditorWindow
         newItem.cost = data.Cost; 
         newItem.isLocked = true;
 
-        switch (data.PartType)
+        switch (data.UnitRoleType)
         {
-            case PartType.Attack:
+            case UnitRoleType.Attack:
                 newItem.category = ShopItemCategory.AttackStore;
                 break;
-            case PartType.Defense:
+            case UnitRoleType.Defense:
                 newItem.category = ShopItemCategory.DefnseStore;
                 break;
-            case PartType.Wheel:
-                newItem.category = ShopItemCategory.BuildStore;
+            case UnitRoleType.Support:
+                newItem.category = ShopItemCategory.SupportStore;
                 break;
             default:
-                newItem.category = ShopItemCategory.SupportStore;
+                newItem.category = ShopItemCategory.BuildStore;
                 break;
         }
 
