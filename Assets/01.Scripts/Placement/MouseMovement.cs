@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public class MouseMovement : MonoBehaviour
+public class MouseMovement
 {
     
 }

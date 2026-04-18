@@ -39,12 +39,6 @@ public class StoreManager : Singleton<StoreManager>
     [SerializeField] private ShopItemCategory _currentStore;
 
 
-    [Header("Temp Reference")]
-    [SerializeField] private GameObject _tempObject;
-
-    
-
-
 
     protected override void Init()
     {

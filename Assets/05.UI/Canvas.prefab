@@ -229,8 +229,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 51.4407, y: 0.2217}
-  m_SizeDelta: {x: 658.1812, y: 88.9762}
+  m_AnchoredPosition: {x: 57.467, y: 1.1998997}
+  m_SizeDelta: {x: 646.1286, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2553605419535253063
 GameObject:
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 478550556861436162}
   - component: {fileID: 3213276882805395213}
   m_Layer: 5
-  m_Name: MouseCOunt
+  m_Name: Display Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,7 +580,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlacementManager
   _isDontDestroyOnLoad: 0
-  _countDisplay: {fileID: 0}
+  _countDisplay: {fileID: 5332923503548654982}
+  _mousePrefab: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
+  _spawnLocation: {fileID: 7786248919400629001}
 --- !u!1 &5023775198676978691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1019,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 441404093494033660}
   - {fileID: 8633438913320725994}
   - {fileID: 2482050540450170064}
   m_Father: {fileID: 0}
@@ -1901,6 +1904,52 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8237390605179690110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 441404093494033660}
+  - component: {fileID: 5264255465577812679}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &441404093494033660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8237390605179690110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.734699, y: -65.758156, z: 0}
+  m_LocalScale: {x: 0.41666663, y: 0.41666663, z: 0.41666663}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1455664392381856915}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5264255465577812679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8237390605179690110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dede2658869275a4fafae9bb5612d7d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  _isDontDestroyOnLoad: 0
+  _poolRoot: {fileID: 7786248919400629001}
 --- !u!1 &8510989520191515019
 GameObject:
   m_ObjectHideFlags: 0
