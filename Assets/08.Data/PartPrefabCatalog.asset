@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartPrefabCatalog
   _entries:
   - _key: 4
-    _prefab: {fileID: 0}
+    _prefab: {fileID: 370892442198955768, guid: fc97d5e703186cc4eb268ba18d057764, type: 3}

@@ -52,6 +52,10 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
+Assets/01.Scripts/Enemy/
+ BlueprintExporter.cs
+ EnemyBlueprintSO.cs
+ EnemyBuilder.cs
 Assets/01.Scripts/
  Event/GameEvents.cs
  Frame/
@@ -66,29 +70,39 @@ Assets/01.Scripts/
   GridRenderer.cs
   Test/TestMouse.cs
  Manager/
+  CameraManager.cs
   GameFlowManager.cs
   GameManager.cs
+  InputReader.cs
   PoolManager.cs
+  SceneLoader.cs
   SoundManager.cs
   StageManager.cs
- Part/PartData/
+ Part/PartData/Enum/
   AttackTrajectoryType.cs
   ModifierType.cs
-  PartAttackStatData.cs
   PartCategory.cs
-  PartCommonStatData.cs
-  PartData.cs
-  PartDatabaseProvider.cs
-  PartDataSO.cs
-  PartDefenseStatData.cs
-  PartSupportEffectData.cs
-  PartSupportStatData.cs
   PartType.cs
-  PlacedPart.cs
-  RatStatModifierRuntime.cs
   SupportStatType.cs
   SupportTargetRoleType.cs
   UnitRoleType.cs
+ Part/PartData/
+  IPartRuntimeBindable.cs
+  PartAttackStatData.cs
+  PartCommonStatData.cs
+  PartData.cs
+  PartDataSO.cs
+  PartDefenseStatData.cs
+  PartRuntimeBinder.cs
+  PartRuntimeContext.cs
+  PartRuntimeSpawner.cs
+  PartSupportEffectData.cs
+  PartSupportStatData.cs
+  PlacedPart.cs
+  PrefabManaging/
+   PartPrefabCatalog.cs
+   PartPrefabEntry.cs
+  RatStatModifierRuntime.cs
  Placement/
   MouseAgent.cs
   MouseUIMovement.cs
@@ -96,6 +110,13 @@ Assets/01.Scripts/
  Projectile/
   ProjectileBase.cs
   TestProjectile.cs
+ Rat/Attack/
+  BaseAttackPerformer.cs
+  Bomb/
+   BombArcAttackPerformer.cs
+   BombDirectAttackPerformer.cs
+   BombProjectile.cs
+  IAttackPerformer.cs
  Rat/
   RatAttackHandler.cs
   RatCollisionHandler.cs
@@ -126,7 +147,9 @@ Assets/01.Scripts/
  Vehicle/
   VehicleCache.cs
   VehicleSaveLoader.cs
-Assets/98.Debugger/CollisionTestDriver.cs
+Assets/98.Debugger/
+ CollisionTestDriver.cs
+ EventTester.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]

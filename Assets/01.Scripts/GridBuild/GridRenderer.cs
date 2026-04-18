@@ -6,7 +6,6 @@ public class GridRenderer : MonoBehaviour
     public float cellSize = 0.5f;
     public Transform originPos;
 
-    // 그리드 좌표를 로컬 좌표로 변환
     public Vector3 GridToLocal(Vector2Int gridPos)
     {
         Vector3 originLocal = Vector3.zero;
@@ -14,20 +13,14 @@ public class GridRenderer : MonoBehaviour
         if (originPos != null)
             originLocal = transform.InverseTransformPoint(originPos.position);
 
-        return originLocal + new Vector3(
-            gridPos.x * cellSize,
-            gridPos.y * cellSize,
-            0f
-        );
+        return originLocal + new Vector3(gridPos.x * cellSize, gridPos.y * cellSize, 0f);
     }
 
-    // 월드 좌표가 필요할 때만 origin 기준으로 변환
     public Vector3 GridToWorld(Vector2Int gridPos)
     {
         return transform.TransformPoint(GridToLocal(gridPos));
     }
 
-    // 월드 좌표를 그리드 좌표로 변환
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         Vector3 local = transform.InverseTransformPoint(worldPos);
@@ -38,11 +31,12 @@ public class GridRenderer : MonoBehaviour
 
         Vector3 relative = local - originLocal;
 
-        int x = Mathf.FloorToInt(relative.x / cellSize);
-        int y = Mathf.FloorToInt(relative.y / cellSize);
+        int x = Mathf.RoundToInt(relative.x / cellSize);
+        int y = Mathf.RoundToInt(relative.y / cellSize);
 
         return new Vector2Int(x, y);
     }
+
     private void OnDrawGizmos()
     {
         if (board == null) return;

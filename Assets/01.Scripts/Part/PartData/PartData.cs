@@ -18,7 +18,7 @@ public class PartData
     public float Hp;
     public float DefenseRate;
     public int Cost;
-    //public string SpriteName;
+    public string SpriteName;
     public Sprite Icon;
 
     public float AttackDamage;
