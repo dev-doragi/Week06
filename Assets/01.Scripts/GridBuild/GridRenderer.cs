@@ -3,22 +3,37 @@
 public class GridRenderer : MonoBehaviour
 {
     public GridBoard board;
-    public float cellSize = 1f; 
+    public float cellSize = 0.5f;
     public Transform originPos;
+
+    public Vector3 GridToLocal(Vector2Int gridPos)
+    {
+        Vector3 originLocal = Vector3.zero;
+
+        if (originPos != null)
+            originLocal = transform.InverseTransformPoint(originPos.position);
+
+        return originLocal + new Vector3(gridPos.x * cellSize, gridPos.y * cellSize, 0f);
+    }
 
     public Vector3 GridToWorld(Vector2Int gridPos)
     {
-        return new Vector3(
-            originPos.position.x + gridPos.x * cellSize + cellSize * 0.5f,
-            originPos.position.y + gridPos.y * cellSize + cellSize * 0.5f,
-            0f
-        );
+        return transform.TransformPoint(GridToLocal(gridPos));
     }
 
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
-        int x = Mathf.FloorToInt((worldPos.x - originPos.position.x) / cellSize);
-        int y = Mathf.FloorToInt((worldPos.y - originPos.position.y) / cellSize);
+        Vector3 local = transform.InverseTransformPoint(worldPos);
+
+        Vector3 originLocal = Vector3.zero;
+        if (originPos != null)
+            originLocal = transform.InverseTransformPoint(originPos.position);
+
+        Vector3 relative = local - originLocal;
+
+        int x = Mathf.RoundToInt(relative.x / cellSize);
+        int y = Mathf.RoundToInt(relative.y / cellSize);
+
         return new Vector2Int(x, y);
     }
 

@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlacementManager : Singleton<PlacementManager>
 {
-    private int _currentMouseCount = 0;
+    private int _currentMouseCount = 15;
 
-    // Jaein: 활성화된 마우스들의 실시간 참조 리스트
     private List<GameObject> _activeMice = new List<GameObject>();
 
     [Header("Mouse Spawn Data")]
     [SerializeField] private TextMeshProUGUI _countDisplay;
     [SerializeField] private GameObject _mousePrefab;
     [SerializeField] private Transform _spawnLocation;
-    [SerializeField] private int _mouseCount; // Jaein: 디버깅, 첫 스폰할 마우스 개수
+    [SerializeField] private int _mouseCount;
 
     [Header("Mouse Movement Bound Data")]
     [SerializeField] private RectTransform _movementBounds;
@@ -22,7 +21,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     void Start()
     {
-        SpawnMouseAtPoint(_mouseCount);
+        SpawnMouseAtPoint(_currentMouseCount);
         UpdateDisplay();
     }
 
@@ -75,7 +74,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void DespawnMouseAPoint(int number)
     {
-        // Jaein: 리스트에서 실제 인스턴스를 꺼내 PoolManager에 반납
+        
         int count = Mathf.Min(number, _activeMice.Count);
 
         for (int i = 0; i < count; i++)
@@ -83,7 +82,7 @@ public class PlacementManager : Singleton<PlacementManager>
             int lastIndex = _activeMice.Count - 1;
             GameObject target = _activeMice[lastIndex];
 
-            // Jaein: 프리팹 원본이 아닌, 리스트에 담긴 실제 객체 참조를 전달
+            
             PoolManager.Instance.Despawn(target);
 
             _activeMice.RemoveAt(lastIndex);

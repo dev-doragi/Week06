@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RatController : MonoBehaviour
+public class RatController : MonoBehaviour, IPartRuntimeBindable
 {
     [SerializeField] private PartData _partData;
     [SerializeField] private PlacedPart _placedPart;
@@ -14,7 +14,20 @@ public class RatController : MonoBehaviour
     private RatSupportHandler _ratSupportHandler;
     private RatStatModifierRuntime _ratStatModifierRuntime;
 
-    public PartData PartData => _partData;
+    public PartData PartData
+    {
+        get
+        {
+            // 주요 라인: 가능하면 PlacedPart가 가진 데이터(owner)를 우선 사용한다.
+            if (_placedPart != null && _placedPart.data != null)
+            {
+                return _placedPart.data;
+            }
+
+            return _partData;
+        }
+    }
+
     public RatStatRuntime RatStatRuntime => _ratStatRuntime;
     public RatAttackHandler RatAttackHandler => _ratAttackHandler;
     public RatCollisionHandler RatCollisionHandler => _ratCollisionHandler;
@@ -26,41 +39,46 @@ public class RatController : MonoBehaviour
 
     private void Awake()
     {
+        // 주요 라인: 같은 GameObject 내부 컴포넌트는 Awake에서 캐싱한다.
         _ratStatRuntime = GetComponent<RatStatRuntime>();
-        if (_ratStatRuntime == null)
-        {
-            Debug.LogError($"{name}: RatStatRuntime 컴포넌트를 찾을 수 없습니다.");
-            return;
-        }
-
         _ratAttackHandler = GetComponent<RatAttackHandler>();
         _ratCollisionHandler = GetComponent<RatCollisionHandler>();
         _ratTargetFinder = GetComponent<RatTargetFinder>();
         _ratSupportHandler = GetComponent<RatSupportHandler>();
         _ratStatModifierRuntime = GetComponent<RatStatModifierRuntime>();
 
-        if (_partData == null)
+        if (_ratStatRuntime == null)
         {
-            Debug.LogError($"{name}: RatController에 PartData가 할당되지 않았습니다.");
+            Debug.LogError($"{name}: RatStatRuntime 컴포넌트를 찾을 수 없습니다.");
             return;
-        }
-
-        if (_placedPart == null)
-        {
-            Debug.LogError($"{name}: RatController에 PlacedPart가 할당되지 않았습니다.");
-        }
-
-        if (_teamType == RatTeamType.None)
-        {
-            Debug.LogError($"{name}: TeamType이 None으로 설정되어 있습니다.");
         }
 
         if (_ratStatModifierRuntime == null)
         {
             Debug.LogError($"{name}: RatStatModifierRuntime 컴포넌트를 찾을 수 없습니다.");
         }
+    }
 
-        _ratStatRuntime.SetPartData(_partData);
+    private void Start()
+    {
+        // 주요 라인: 런타임 바인딩 이후 최종 데이터 기준으로 StatRuntime을 초기화한다.
+        if (PartData == null)
+        {
+            Debug.LogError($"{name}: RatController 초기화 실패 - PartData가 할당되지 않았습니다.");
+            return;
+        }
+
+        if (_placedPart == null)
+        {
+            Debug.LogError($"{name}: RatController 초기화 실패 - PlacedPart가 할당되지 않았습니다.");
+        }
+
+        if (_teamType == RatTeamType.None)
+        {
+            Debug.LogError($"{name}: RatController 초기화 실패 - TeamType이 None입니다.");
+        }
+
+        _ratStatRuntime.SetPartData(PartData);
     }
 
     private void OnEnable()
@@ -79,6 +97,31 @@ public class RatController : MonoBehaviour
         }
     }
 
+    public void BindRuntime(PartRuntimeContext context)
+    {
+        if (context.PlacedPart == null)
+        {
+            Debug.LogError($"{name}: BindRuntime 실패 - PlacedPart가 Null입니다.");
+            return;
+        }
+
+        if (context.PartData == null)
+        {
+            Debug.LogError($"{name}: BindRuntime 실패 - PartData가 Null입니다.");
+            return;
+        }
+
+        // 주요 라인: 런타임 생성 시 전달받은 배치 owner와 데이터를 연결한다.
+        _placedPart = context.PlacedPart;
+        _partData = context.PartData;
+        _teamType = context.TeamType;
+
+        if (_ratStatRuntime != null)
+        {
+            _ratStatRuntime.SetPartData(PartData);
+        }
+    }
+
     public bool IsUnit() => _ratStatRuntime != null && _ratStatRuntime.IsUnit();
     public bool IsBuilding() => _ratStatRuntime != null && _ratStatRuntime.IsBuilding();
     public bool IsAttackUnit() => _ratStatRuntime != null && _ratStatRuntime.IsAttackUnit();
@@ -91,13 +134,13 @@ public class RatController : MonoBehaviour
 
     public int GetCost()
     {
-        if (_partData == null)
+        if (PartData == null)
         {
             Debug.LogError($"{name}: GetCost 실패 - PartData가 Null입니다.");
             return 0;
         }
 
-        return _partData.CommonStat.Cost;
+        return PartData.CommonStat.Cost;
     }
 
     public bool CanUseAttack() => IsAttackUnit();
@@ -106,35 +149,35 @@ public class RatController : MonoBehaviour
 
     public bool IsArcAttack()
     {
-        if (_partData == null)
+        if (PartData == null)
         {
             Debug.LogError($"{name}: IsArcAttack 실패 - PartData가 Null입니다.");
             return false;
         }
 
-        return _partData.IsArcAttack;
+        return PartData.IsArcAttack;
     }
 
     public bool IsDirectAttack()
     {
-        if (_partData == null)
+        if (PartData == null)
         {
             Debug.LogError($"{name}: IsDirectAttack 실패 - PartData가 Null입니다.");
             return false;
         }
 
-        return _partData.IsDirectAttack;
+        return PartData.IsDirectAttack;
     }
 
     public bool IsAreaAttack()
     {
-        if (_partData == null)
+        if (PartData == null)
         {
             Debug.LogError($"{name}: IsAreaAttack 실패 - PartData가 Null입니다.");
             return false;
         }
 
-        return _partData.IsAreaAttack;
+        return PartData.IsAreaAttack;
     }
 
     public RatController GetCurrentTarget()
