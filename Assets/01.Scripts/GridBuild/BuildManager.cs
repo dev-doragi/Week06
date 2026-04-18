@@ -14,6 +14,12 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Transform placeableHighlightRoot;
     [SerializeField] private Sprite highlightSprite;
 
+    [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
+    [SerializeField] private RatTeamType _teamType = RatTeamType.Player;
+
+    [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
+    [SerializeField] private bool _spawnRuntimePrefab = true;
+
     private readonly List<GameObject> placeableHighlights = new();
 
     private PartData currentPartData;
@@ -139,27 +145,61 @@ public class BuildManager : MonoBehaviour
             return;
 
         Vector2Int gridPos = GetMouseGridPosition();
+        PlacePartInternal(currentPartData, gridPos, currentRotation);
+    }
 
-        if (!board.CanPlacePartByRules(currentPartData, gridPos, currentRotation))
+    private bool PlacePartInternal(PartData partData, Vector2Int gridPos, int rotation)
+    {
+        if (partData == null)
         {
-            return;
+            Debug.LogError($"{name}: PlacePartInternal 실패 - partData가 Null입니다.");
+            return false;
         }
 
-        GameObject partObj = new GameObject($"Placed_{currentPartData.PartName}");
-        partObj.transform.SetParent(placedPartsRoot);
+        if (!board.CanPlacePartByRules(partData, gridPos, rotation))
+        {
+            return false;
+        }
+
+        GameObject partObj = CreatePlacedPartObject(partData, gridPos);
+        if (partObj == null) return false;
 
         PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
 
-        bool success = board.PlacePart(currentPartData, gridPos, currentRotation, placedPart);
+        bool success = board.PlacePart(partData, gridPos, rotation, placedPart);
 
         if (!success)
         {
             Destroy(partObj);
-            return;
+            return false;
         }
 
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+        TrySpawnRuntimePrefab(partData, placedPart);
+
         ShowPlaceableCells();
+        return true;
+    }
+
+    private GameObject CreatePlacedPartObject(PartData partData, Vector2Int gridPos)
+    {
+        GameObject partObj = new GameObject($"Placed_{partData.PartName}");
+        partObj.transform.SetParent(placedPartsRoot);
+
+        partObj.transform.position = gridRenderer.GridToWorld(gridPos);
+
+        return partObj;
+    }
+
+    private void TrySpawnRuntimePrefab(PartData partData, PlacedPart placedPart)
+    {
+        if (_partRuntimeSpawner == null)
+        {
+            Debug.LogWarning($"{name}: PartRuntimeSpawner가 연결되지 않았습니다.");
+            return;
+        }
+
+        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, board);
     }
 
     private void TryRemovePart()
@@ -205,13 +245,6 @@ public class BuildManager : MonoBehaviour
 
             part.DestroyAnim();
         }
-
-        foreach (var part in disconnectedParts)
-        {
-            if (part == null) continue;
-
-            part.DestroyAnim();
-        }
     }
 
     private void ClearSelection()
@@ -234,61 +267,13 @@ public class BuildManager : MonoBehaviour
             Debug.LogWarning("[BuildManager] Key 10001 바퀴 데이터가 없습니다.");
             return;
         }
-        
+
         int startX = Mathf.Max(0, (board.width / 2) - 1);
         for (int i = 0; i < board.startWheelCount; i++)
         {
             Vector2Int pos = new Vector2Int(startX + i, 0);
-
-            if (!board.CanPlacePartByRules(wheelData, pos, 0))
-                continue;
-
-            GameObject partObj = new GameObject($"StartWheel_{i}");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(wheelData, pos, 0, placedPart);
-
-            if (success)
-            {
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
+            PlacePartInternal(wheelData, pos, 0);
         }
-
-        if (GridManager.instance.partDic.TryGetValue(GridBoard.CORE_KEY, out PartData coreData))
-        {
-            Vector2Int pos = new Vector2Int(startX, 1);
-
-            if (!board.CanPlacePartByRules(coreData, pos, 0))
-                return;
-
-            GameObject partObj = new GameObject($"Core");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(coreData, pos, 0, placedPart);
-
-            if (success)
-            {
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("[BuildManager] Key 10002 코어 데이터가 없습니다.");
-            return;
-        }
-
     }
 
     private void ShowPlaceableCells()

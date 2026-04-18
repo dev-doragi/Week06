@@ -2,6 +2,8 @@
 
 public class EnemyBuilder : MonoBehaviour
 {
+    [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
+    [SerializeField] private RatTeamType _teamType = RatTeamType.Enemy;
 
     [SerializeField] private GridBoard board;
     [SerializeField] private GridRenderer gridRenderer;
@@ -27,6 +29,7 @@ public class EnemyBuilder : MonoBehaviour
 
             GameObject partObj = new GameObject($"EnemyPart_{partData.PartName}");
             partObj.transform.SetParent(placedPartsRoot);
+            partObj.transform.position = gridRenderer.GridToWorld(placement.origin);
 
             PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
 
@@ -40,6 +43,11 @@ public class EnemyBuilder : MonoBehaviour
             }
 
             placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+
+            if (_partRuntimeSpawner != null)
+            {
+                _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, board);
+            }
         }
     }
 }

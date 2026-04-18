@@ -52,4 +52,19 @@ public static class GridRangeUtility
 
         return false;
     }
+
+    public static bool IsWithinAttackDistance(
+        IReadOnlyList<Vector2Int> attackerCells,
+        IReadOnlyList<Vector2Int> targetCells,
+        float attackDistance)
+    {
+        if (attackDistance < 0f)
+        {
+            Debug.LogError($"IsWithinAttackDistance 실패 - attackDistance는 0 이상이어야 합니다. 입력값: {attackDistance}");
+            return false;
+        }
+
+        int cellRadius = Mathf.RoundToInt(attackDistance);
+        return IsWithinCellRadius(attackerCells, targetCells, cellRadius);
+    }
 }
