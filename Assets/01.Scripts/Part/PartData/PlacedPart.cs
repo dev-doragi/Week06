@@ -166,25 +166,29 @@ public class PlacedPart : SerializedMonoBehaviour
     }
 
 
-    public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, UnityEngine.Color color)
+    public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, UnityEngine.Color color, bool ghost = false)
     {
         ClearVisual();
 
         foreach (var cell in occupiedCells)
         {
             GameObject cellObj = new GameObject($"Cell_{cell.x}_{cell.y}");
-            cellObj.transform.SetParent(visualParent != null ? visualParent : transform, false);
-            cellObj.transform.localPosition = gridRenderer.GridToLocal(cell);
+            cellObj.transform.SetParent(visualParent != null ? visualParent : transform, true);
+            cellObj.transform.position = gridRenderer.GridToWorld(cell);
+
             SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
-            BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
-            boxCol.size = new Vector2(1, 1);
             sr.sprite = data.Icon;
             sr.color = color;
 
-            float scale = gridRenderer.cellSize;
             cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
 
             cellRenderers.Add(sr);
+
+            if (ghost)
+                continue;
+
+            BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
+            boxCol.size = new Vector2(1, 1);
             cellCols.Add(boxCol);
         }
     }

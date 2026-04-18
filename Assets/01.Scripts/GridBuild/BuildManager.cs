@@ -127,7 +127,7 @@ public class BuildManager : MonoBehaviour
         List<Vector2Int> targetCells = board.GetRotatedCells(currentPartData, gridPos, currentRotation);
 
         ghostPart.Initialize(currentPartData, gridPos, currentRotation, targetCells);
-        ghostPart.BuildVisual(gridRenderer, ghostPart.transform, new Color(1f, 1f, 1f, 0.45f));
+        ghostPart.BuildVisual(gridRenderer, ghostPart.transform, new Color(1f, 1f, 1f, 0.45f), true);
 
         bool canPlace = board.CanPlacePartByRules(currentPartData, gridPos, currentRotation);
         ghostPart.SetColor(canPlace ? new Color(0f, 1f, 0f, 0.45f) : new Color(1f, 0f, 0f, 0.45f));
@@ -308,8 +308,8 @@ public class BuildManager : MonoBehaviour
                     continue;
 
                 GameObject cellObj = new GameObject($"PlaceableOrigin_{x}_{y}");
-                cellObj.transform.SetParent(placeableHighlightRoot, false);
-                cellObj.transform.localPosition = gridRenderer.GridToLocal(origin);
+                cellObj.transform.SetParent(placeableHighlightRoot, true);
+                cellObj.transform.position = gridRenderer.GridToWorld(origin);
                 cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
 
                 SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
