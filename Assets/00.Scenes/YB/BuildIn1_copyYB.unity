@@ -553,12 +553,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1032520119}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: subPerSpell
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _spellmapCount
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _generatorCount
-      value: 10
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _addGaugeProgress
@@ -574,7 +578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _mouseGenPerGenerator
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1455664392381856915, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_Pivot.x
@@ -1997,10 +2001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   _cmCamera: {fileID: 2075420626}
   _cameraTarget: {fileID: 1266283801}
+  _confinerCollider: {fileID: 0}
   _zoomStep: 2
   _minZoom: 5
   _maxZoom: 30
-  _zoomSmoothing: 10
 --- !u!4 &2138799778
 Transform:
   m_ObjectHideFlags: 0

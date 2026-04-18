@@ -43,9 +43,9 @@ public class PlacementManager : Singleton<PlacementManager>
 
 
     [Header("Rates")]
-    [SerializeField] private int subtractAmount = 3;
-    [SerializeField] private float _mouseGenPerGenerator = 0.3f;
-    [SerializeField] private float _mouseSubPerSpellMap = 0.2f;
+    [SerializeField] private int subPerSpell = 3;
+    [SerializeField] private float _mouseGenTime = 0.3f;
+    [SerializeField] private float _mouseSubTime = 0.2f;
     [SerializeField] private float _addGaugeProgress = 0f;
     [SerializeField] private float _subGaugeProgress = 0f;
 
@@ -53,6 +53,8 @@ public class PlacementManager : Singleton<PlacementManager>
     [SerializeField] private Slider _addGauge;
     [SerializeField] private Slider _subGauge;
 
+    [Header ("buff state")]
+    public bool BuffIsEnabled = false;
 
     private Vector2 _anchoredPosition; // Best for UI stability
     private bool _isAnimating = false;
@@ -88,7 +90,7 @@ public class PlacementManager : Singleton<PlacementManager>
             return;
         }
 
-        float addRate = _generatorCount * _mouseGenPerGenerator;
+        float addRate =  _mouseGenTime;
         if (addRate > 0)
         {
             _addGaugeProgress += addRate * Time.deltaTime;
@@ -98,7 +100,7 @@ public class PlacementManager : Singleton<PlacementManager>
                 // Double check capacity before adding
                 if (!_isFull) 
                 { 
-                    AddMouseCount(1);
+                    AddMouseCount(_generatorCount);
                     _addGaugeProgress = 0f;
                 }
             }
@@ -107,35 +109,26 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void HandleSubtracting()
     {
-        // 1. Check if we are broke FIRST
-        if (_currentMouseCount <= 0)
-        {
-            _subGaugeProgress = 1f; // Keep it visibly "Full" or "Danger"
-        }
-        else
-        {
-            // 2. Only progress the logic if we actually have mice to lose
-            float subRate = _spellmapCount * _mouseSubPerSpellMap;
-            if (subRate > 0)
-            {
-                _subGaugeProgress += subRate * Time.deltaTime;
+        if (_spellmapCount <= 0) return;
 
-                if (_subGaugeProgress >= 1f)
-                {
-                    // if (! (subtractAmount > _currentMouseCount))
-                    // {
-                    //     _subGaugeProgress = 0f;
-                    //     SubtractMouseCount(subtractAmount); 
-                    // }
-                }
+        if (_mouseSubTime < 0) return;
+
+        // get progress value but Time
+        _subGaugeProgress += _mouseSubTime * Time.deltaTime;
+
+        if (_subGaugeProgress >= 1f)
+        {
+            if (! ((subPerSpell * _spellmapCount) > _currentMouseCount))
+            {
+                _subGaugeProgress = 0f;
+                SubtractMouseCount(subPerSpell * _spellmapCount); 
+                BuffIsEnabled = true;
             }
             else
             {
-                // Optional: If no spellmaps are active, should the gauge empty?
-                _subGaugeProgress = 0f; 
+                BuffIsEnabled = false;
             }
         }
-
         // 3. Update Visuals LAST so the UI reflects the logic above immediately
         _subGauge.value = _subGaugeProgress;
     }
@@ -186,19 +179,20 @@ public class PlacementManager : Singleton<PlacementManager>
         UpdateDisplay();
     }
 
-    public void SubtractMouseCount(int amount)
+    public bool SubtractMouseCount(int amount)
     {
         if (_currentMouseCount < amount)
         {
             PlayDenyAction(true);
             Debug.Log("[StoreManager]: Not Enough money!");
-            return;
+            return false;
         }
 
         _isFull = false;
         _currentMouseCount = Mathf.Max(0, _currentMouseCount - amount);
         DespawnMouseAPoint(amount);
         UpdateDisplay();
+        return true;
     }
 
     public void ResetMouseCount()

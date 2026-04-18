@@ -59,6 +59,7 @@ Assets/01.Scripts/Enemy/
  BlueprintExporter.cs
  EnemyBlueprintSO.cs
  EnemyBuilder.cs
+ EnemyMove.cs
 Assets/01.Scripts/
  Event/GameEvents.cs
  Frame/
@@ -83,11 +84,13 @@ Assets/01.Scripts/
   StageManager.cs
  Part/PartData/Enum/
   AttackTrajectoryType.cs
+  BuildingType.cs
   ModifierType.cs
   PartCategory.cs
   PartType.cs
   SupportStatType.cs
   SupportTargetRoleType.cs
+  TeamType.cs
   UnitRoleType.cs
  Part/PartData/
   IPartRuntimeBindable.cs
@@ -125,13 +128,6 @@ Assets/01.Scripts/
   RatCollisionHandler.cs
   RatController.cs
   RatDamageCalculator.cs
-  RatData/
-   RatAttackStatData.cs
-   RatCommonStatData.cs
-   RatData.cs
-   RatDefenceStatData.cs
-   RatTeamType.cs
-   RatType.cs
   RatStatRuntime.cs
   RatSupportHandler.cs
   RatTargetFinder.cs
