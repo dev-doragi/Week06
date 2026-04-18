@@ -15,7 +15,7 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Sprite highlightSprite;
 
     [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
-    [SerializeField] private RatTeamType _teamType = RatTeamType.Player;
+    [SerializeField] private TeamType _teamType = TeamType.Player;
 
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
     [SerializeField] private bool _spawnRuntimePrefab = true;
@@ -268,14 +268,63 @@ public class BuildManager : MonoBehaviour
             return;
         }
 
+
         int startX = Mathf.Max(0, (board.width / 2) - 1);
         for (int i = 0; i < board.startWheelCount; i++)
         {
             Vector2Int pos = new Vector2Int(startX + i, 0);
-            PlacePartInternal(wheelData, pos, 0);
-        }
-    }
 
+            if (!board.CanPlacePartByRules(wheelData, pos, 0))
+                continue;
+
+            GameObject partObj = new GameObject($"StartWheel_{i}");
+            partObj.transform.SetParent(placedPartsRoot);
+
+            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
+
+            bool success = board.PlacePart(wheelData, pos, 0, placedPart);
+
+            if (success)
+            {
+                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+            }
+            else
+            {
+                Destroy(partObj);
+            }
+        }
+
+        if (GridManager.instance.partDic.TryGetValue(GridBoard.CORE_KEY, out PartData coreData))
+        {
+            Vector2Int pos = new Vector2Int(startX, 1);
+
+            if (!board.CanPlacePartByRules(coreData, pos, 0))
+                return;
+
+            GameObject partObj = new GameObject($"Core");
+            partObj.transform.SetParent(placedPartsRoot);
+
+            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
+
+            bool success = board.PlacePart(coreData, pos, 0, placedPart);
+
+            if (success)
+            {
+                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
+            }
+            else
+            {
+                Destroy(partObj);
+            }
+            PlacePartInternal(coreData, pos, 0);
+        }
+        else
+        {
+            Debug.LogWarning("[BuildManager] Key 10002 코어 데이터가 없습니다.");
+            return;
+        }
+
+    }
     private void ShowPlaceableCells()
     {
         ClearPlaceableHighlights();
