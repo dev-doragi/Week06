@@ -52,6 +52,10 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
+Assets/01.Scripts/Enemy/
+ BlueprintExporter.cs
+ EnemyBlueprintSO.cs
+ EnemyBuilder.cs
 Assets/01.Scripts/
  Event/GameEvents.cs
  Frame/
@@ -69,6 +73,7 @@ Assets/01.Scripts/
   GameFlowManager.cs
   GameManager.cs
   PoolManager.cs
+  SceneLoader.cs
   SoundManager.cs
   StageManager.cs
  Part/PartData/
@@ -126,7 +131,9 @@ Assets/01.Scripts/
  Vehicle/
   VehicleCache.cs
   VehicleSaveLoader.cs
-Assets/98.Debugger/CollisionTestDriver.cs
+Assets/98.Debugger/
+ CollisionTestDriver.cs
+ EventTester.cs
 Temp/obj/Assembly-CSharp/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 
 [metadataReferences]

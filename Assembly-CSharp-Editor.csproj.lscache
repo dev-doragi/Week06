@@ -54,6 +54,7 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 [sourceFiles]
 Assets/Editor/
  BasePartSpreadsheetImporter.cs
+ BlueprintExporterEditor.cs
  ShopItemGenerator.cs
 Temp/obj/Assembly-CSharp-Editor/.NETStandard,Version=v2.1.AssemblyAttributes.cs
 

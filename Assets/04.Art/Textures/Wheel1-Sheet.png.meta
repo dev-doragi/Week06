@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e99a2f6d2340bc44a8b8ce7609952957
+guid: 128bf868c03dab04bbfca611dd27f74a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5748739045923937088
-    second: RunningSPrite_0
+      213: -4422140865799512813
+    second: Wheel1-Sheet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RunningSPrite_0
+      name: Wheel1-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,14 +115,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 04bd6b244bf97cf40800000000000000
-      internalID: 5748739045923937088
+      spriteID: 31d1843ef4661a2c0800000000000000
+      internalID: -4422140865799512813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RunningSPrite_1
+      name: Wheel1-Sheet_1
       rect:
         serializedVersion: 2
         x: 64
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e127d535edff5bc4eb4fed36c0b560b0
-      internalID: -2100951806
+      spriteID: cd563a52cd26d2d4fb7fec40fe509b4b
+      internalID: 1741694252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RunningSPrite_2
+      name: Wheel1-Sheet_2
       rect:
         serializedVersion: 2
         x: 128
@@ -159,14 +159,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2112782b87acdf24ab14b8baa257f63e
-      internalID: 1550757562
+      spriteID: 4f4c86a76546cc940881acae2874533a
+      internalID: 1828338944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RunningSPrite_3
+      name: Wheel1-Sheet_3
       rect:
         serializedVersion: 2
         x: 192
@@ -181,8 +181,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dee8704585c51d74aa880d0dc7b4a8b6
-      internalID: 1808548791
+      spriteID: 9a98ea3a8b8554b4baac28f25f8a165c
+      internalID: 2089814927
       vertices: []
       indices: 
       edges: []
@@ -191,7 +191,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f5a6d5126ae64b34499841501eac8abb
+    spriteID: 5a00d4311314d0944a0a6a172048af36
     internalID: 0
     vertices: []
     indices: 
@@ -203,10 +203,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      RunningSPrite_0: 5748739045923937088
-      RunningSPrite_1: -2100951806
-      RunningSPrite_2: 1550757562
-      RunningSPrite_3: 1808548791
+      Wheel1-Sheet_0: -4422140865799512813
+      Wheel1-Sheet_1: 1741694252
+      Wheel1-Sheet_2: 1828338944
+      Wheel1-Sheet_3: 2089814927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
