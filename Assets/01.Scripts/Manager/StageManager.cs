@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem; // 추가
 
 public class StageManager : Singleton<StageManager>
 {
@@ -30,9 +31,17 @@ public class StageManager : Singleton<StageManager>
 
     private void Start()
     {
-        // 디버깅용
+        // 디버깅용: 스테이지만 로드하고 배치 페이즈 진입
         LoadStage(0);
-        PlayWave(); // PlayStage -> PlayWave로 변경
+    }
+
+    private void Update()
+    {
+        // 디버깅용: 스페이스바로 웨이브 시작
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            PlayWave();
+        }
     }
 
     public void LoadNextStage()
@@ -72,7 +81,7 @@ public class StageManager : Singleton<StageManager>
         OnStageLoaded?.Invoke(CurrentStageIndex);
         EventBus.Instance.Publish(new StageLoadedEvent { StageIndex = CurrentStageIndex });
 
-        Debug.Log($"[StageManager] Stage {stageIndex} 로드 완료.");
+        Debug.Log($"[StageManager] Stage {stageIndex} 로드 완료. 스페이스바를 눌러 웨이브를 시작하세요.");
     }
 
     /// <summary>

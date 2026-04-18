@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d517f12c79bb5448797fb80117198a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StageLayout
-  _allyBasePoint: {fileID: 0}
+  _allyBasePoint: {fileID: 6019734596659681034}
   _enemySiegePoint: {fileID: 210470950811901283}
 --- !u!1 &6523776064333525243
 GameObject:
