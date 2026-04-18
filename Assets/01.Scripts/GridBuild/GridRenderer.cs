@@ -3,25 +3,46 @@
 public class GridRenderer : MonoBehaviour
 {
     public GridBoard board;
-    public float cellSize = 1f; 
+    public float cellSize = 0.5f;
     public Transform originPos;
 
-    public Vector3 GridToWorld(Vector2Int gridPos)
+    // 그리드 좌표를 로컬 좌표로 변환
+    public Vector3 GridToLocal(Vector2Int gridPos)
     {
-        return new Vector3(
-            originPos.position.x + gridPos.x * cellSize + cellSize * 0.5f,
-            originPos.position.y + gridPos.y * cellSize + cellSize * 0.5f,
+        Vector3 originLocal = Vector3.zero;
+
+        if (originPos != null)
+            originLocal = transform.InverseTransformPoint(originPos.position);
+
+        return originLocal + new Vector3(
+            gridPos.x * cellSize,
+            gridPos.y * cellSize,
             0f
         );
     }
 
-    public Vector2Int WorldToGrid(Vector3 worldPos)
+    // 월드 좌표가 필요할 때만 origin 기준으로 변환
+    public Vector3 GridToWorld(Vector2Int gridPos)
     {
-        int x = Mathf.FloorToInt((worldPos.x - originPos.position.x) / cellSize);
-        int y = Mathf.FloorToInt((worldPos.y - originPos.position.y) / cellSize);
-        return new Vector2Int(x, y);
+        return transform.TransformPoint(GridToLocal(gridPos));
     }
 
+    // 월드 좌표를 그리드 좌표로 변환
+    public Vector2Int WorldToGrid(Vector3 worldPos)
+    {
+        Vector3 local = transform.InverseTransformPoint(worldPos);
+
+        Vector3 originLocal = Vector3.zero;
+        if (originPos != null)
+            originLocal = transform.InverseTransformPoint(originPos.position);
+
+        Vector3 relative = local - originLocal;
+
+        int x = Mathf.FloorToInt(relative.x / cellSize);
+        int y = Mathf.FloorToInt(relative.y / cellSize);
+
+        return new Vector2Int(x, y);
+    }
     private void OnDrawGizmos()
     {
         if (board == null) return;

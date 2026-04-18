@@ -317,6 +317,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: _mouseCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1386200102551478942, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -927,8 +931,8 @@ MonoBehaviour:
   _uiPoolRoot: {fileID: 962719246}
   _globalPools:
   - Prefab: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
-    InitialSize: 3
-    MaxSize: 100
+    InitialSize: 13
+    MaxSize: 13
 --- !u!4 &1002001667
 Transform:
   m_ObjectHideFlags: 0

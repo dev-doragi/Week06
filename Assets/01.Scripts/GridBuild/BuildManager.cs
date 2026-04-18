@@ -308,9 +308,8 @@ public class BuildManager : MonoBehaviour
                     continue;
 
                 GameObject cellObj = new GameObject($"PlaceableOrigin_{x}_{y}");
-                cellObj.transform.SetParent(placeableHighlightRoot);
-
-                cellObj.transform.position = gridRenderer.GridToWorld(origin);
+                cellObj.transform.SetParent(placeableHighlightRoot, false);
+                cellObj.transform.localPosition = gridRenderer.GridToLocal(origin);
                 cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
 
                 SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
