@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4539645838985547296}
   - component: {fileID: 6101976227634908747}
   m_Layer: 5
-  m_Name: MouseTemp
+  m_Name: MouseUIPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
