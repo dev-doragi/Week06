@@ -14,17 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShopDataBase
   attackItems:
   - {fileID: 11400000, guid: aced02b75811ec64f9807b464c760af6, type: 2}
-  - {fileID: 11400000, guid: 5164ea6eb6e3a674389e9c5ebe599515, type: 2}
   defenseItems:
   - {fileID: 11400000, guid: c0c564239d339be48b03d9dc7e15fca2, type: 2}
   - {fileID: 11400000, guid: 355faeb22b60bbc468681e67f792c522, type: 2}
   - {fileID: 11400000, guid: 84fcf2bca51853d439f255d0bd6cf676, type: 2}
-  - {fileID: 11400000, guid: 9cf240407c9dd9c4f88f22adcf4509e1, type: 2}
-  - {fileID: 11400000, guid: dba83448fef96ca4daaccb1593fb9060, type: 2}
-  - {fileID: 11400000, guid: 772a900933527fd43b60a1f6887d0c4a, type: 2}
   buildItems:
   - {fileID: 11400000, guid: 10a32a92682693448aa995c3279ede27, type: 2}
-  - {fileID: 11400000, guid: 0e53879a14b829541af65839ac0a0ea5, type: 2}
-  - {fileID: 11400000, guid: 58790eec1d17a174b86afa61f5436925, type: 2}
-  - {fileID: 11400000, guid: 418ee6fdee0a69342a126d5362dc4f21, type: 2}
   supportItems: []

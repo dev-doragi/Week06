@@ -9,7 +9,7 @@ public class GridBoard : MonoBehaviour
         Enemy
     }
 
-    [SerializeField] private BoardOwnerType boardOwner;
+    public BoardOwnerType boardOwner;
 
     public const int WHEEL_KEY = 10001;
     public const int CORE_KEY = 10002;
@@ -150,6 +150,11 @@ public class GridBoard : MonoBehaviour
         if (!CanSupportMoreBlocks(data))
             return false;
 
+        foreach (var cell in targets)
+        {
+            if (HasAttackPartDirectlyBelow(cell))
+                return false;
+        }
         bool hasAnyBlock = HasAnyBlock();
 
         // 첫 블럭은 바퀴 바로 위에만
@@ -216,6 +221,19 @@ public class GridBoard : MonoBehaviour
         }
 
         return true;
+    }
+    //전달된 좌표 바로 아래 공격형 셀이 있는지 
+    public bool HasAttackPartDirectlyBelow(Vector2Int pos)
+    {
+        Vector2Int below = pos + Vector2Int.down;
+
+        if (!IsInside(below))
+            return false;
+
+        PlacedPart belowPart = GetCell(below);
+        return belowPart != null &&
+               belowPart.data != null &&
+               IsAttackPart(belowPart.data);
     }
 
     // 전달된 좌표 바로 아래에 바퀴가 있는지 확인하는 함수

@@ -360,9 +360,14 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     private void HandleDead()
     {
         _placedPart.Break();
+        if(_ratAttackHandler != null)
+            _ratAttackHandler.enabled = false;
         if (_partData.BuildingType == BuildingType.Core)
             EventBus.Instance.Publish(new BaseDestroyedEvent());
         if(_partData.BuildingType == BuildingType.EnemyCore)
+        {
+            PlacementManager.Instance.AddMouseCount(100);
             EventBus.Instance.Publish(new EnemyDefeatedEvent());
+        }
     }
 }
