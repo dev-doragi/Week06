@@ -39,6 +39,8 @@ public class PartData
     public bool IsProductionRoom => IsBuilding && BuildingType == BuildingType.ProductionRoom;
     public bool IsAltar => IsBuilding && BuildingType == BuildingType.Altar;
 
+    public bool CanBeCombatTarget => !IsWheelBuilding;
+
     // ------------------------------------------------------------
     // 런타임용 래퍼
     // ------------------------------------------------------------

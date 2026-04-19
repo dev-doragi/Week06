@@ -6,7 +6,7 @@ public struct WaveData
 {
     [Tooltip("이 웨이브에 등장할 적 공성병기")]
     public GameObject EnemySiegePrefab;
-    public float SpawnInterval; // 쫄따구 스폰 주기가 필요하다면 사용
+    public float WaveInterval; // 쫄따구 스폰 주기가 필요하다면 사용
 }
 
 [CreateAssetMenu(fileName = "StageData_", menuName = "08.Data/Stage/StageData")]

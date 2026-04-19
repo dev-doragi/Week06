@@ -143,6 +143,11 @@ public static class RatDamageCalculator
             return;
         }
 
+        if (!target.CanBeCombatTarget())
+        {
+            return;
+        }
+
         float damage = CalculateAttackDamage(attacker, target);
         target.ApplyDirectDamage(damage);
     }
