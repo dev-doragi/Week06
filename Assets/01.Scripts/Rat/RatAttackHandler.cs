@@ -4,13 +4,22 @@ using UnityEngine;
 public class RatAttackHandler : MonoBehaviour
 {
     [SerializeField] private bool _useAutoAttack = true;
+
+    [Header("Legacy / Fallback")]
     [SerializeField] private MonoBehaviour _attackPerformerComponent;
+
+    [Header("Trajectory Based Performer")]
+    [SerializeField] private MonoBehaviour _arcAttackPerformerComponent;
+    [SerializeField] private MonoBehaviour _directAttackPerformerComponent;
 
     private RatController _ratController;
     private RatTargetFinder _ratTargetFinder;
     private RatController _currentTarget;
     private float _lastAttackTime;
-    private IAttackPerformer _attackPerformer;
+
+    private IAttackPerformer _fallbackAttackPerformer;
+    private IAttackPerformer _arcAttackPerformer;
+    private IAttackPerformer _directAttackPerformer;
 
     public bool UseAutoAttack => _useAutoAttack;
     public RatController CurrentTarget => _currentTarget;
@@ -55,17 +64,7 @@ public class RatAttackHandler : MonoBehaviour
             Debug.LogError($"{name}: RatAttackHandler에 RatTargetFinder가 없습니다.");
         }
 
-        if (_attackPerformerComponent == null)
-        {
-            Debug.LogError($"{name}: RatAttackHandler에 공격 실행기 컴포넌트가 할당되지 않았습니다.");
-            return;
-        }
-
-        _attackPerformer = _attackPerformerComponent as IAttackPerformer;
-        if (_attackPerformer == null)
-        {
-            Debug.LogError($"{name}: _attackPerformerComponent가 IAttackPerformer를 구현하지 않았습니다.");
-        }
+        CacheAttackPerformers();
     }
 
     private void Update()
@@ -157,9 +156,10 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        if (_attackPerformer == null)
+        IAttackPerformer attackPerformer = ResolveAttackPerformer();
+        if (attackPerformer == null)
         {
-            Debug.LogError($"{name}: TryAttack 실패 - 공격 실행기가 없습니다.");
+            Debug.LogError($"{name}: TryAttack 실패 - TrajectoryType에 맞는 공격 실행기가 없습니다.");
             return false;
         }
 
@@ -200,8 +200,11 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        bool launched = _attackPerformer.TryPerformAttack(_ratController, target);
-        if (!launched) return false;
+        bool launched = attackPerformer.TryPerformAttack(_ratController, target);
+        if (!launched)
+        {
+            return false;
+        }
 
         _lastAttackTime = Time.time;
         _currentTarget = target;
@@ -375,5 +378,75 @@ public class RatAttackHandler : MonoBehaviour
         }
 
         return 1f / finalAttackSpeed;
+    }
+
+    private void CacheAttackPerformers()
+    {
+        _fallbackAttackPerformer = _attackPerformerComponent as IAttackPerformer;
+        _arcAttackPerformer = _arcAttackPerformerComponent as IAttackPerformer;
+        _directAttackPerformer = _directAttackPerformerComponent as IAttackPerformer;
+
+        if (_attackPerformerComponent != null && _fallbackAttackPerformer == null)
+        {
+            Debug.LogError($"{name}: _attackPerformerComponent가 IAttackPerformer를 구현하지 않았습니다.");
+        }
+
+        if (_arcAttackPerformerComponent != null && _arcAttackPerformer == null)
+        {
+            Debug.LogError($"{name}: _arcAttackPerformerComponent가 IAttackPerformer를 구현하지 않았습니다.");
+        }
+
+        if (_directAttackPerformerComponent != null && _directAttackPerformer == null)
+        {
+            Debug.LogError($"{name}: _directAttackPerformerComponent가 IAttackPerformer를 구현하지 않았습니다.");
+        }
+
+        if (_attackPerformerComponent == null &&
+            _arcAttackPerformerComponent == null &&
+            _directAttackPerformerComponent == null)
+        {
+            Debug.LogError($"{name}: RatAttackHandler에 공격 실행기 컴포넌트가 하나도 할당되지 않았습니다.");
+        }
+    }
+
+    private IAttackPerformer ResolveAttackPerformer()
+    {
+        if (_ratController == null)
+        {
+            Debug.LogError($"{name}: ResolveAttackPerformer 실패 - RatController가 Null입니다.");
+            return null;
+        }
+
+        PartData partData = _ratController.PartData;
+        if (partData == null)
+        {
+            Debug.LogError($"{name}: ResolveAttackPerformer 실패 - PartData가 Null입니다.");
+            return _fallbackAttackPerformer;
+        }
+
+        if (partData.IsArcAttack)
+        {
+            if (_arcAttackPerformer != null)
+            {
+                return _arcAttackPerformer;
+            }
+
+            Debug.LogWarning($"{name}: TrajectoryType은 Arc인데 Arc 공격 실행기가 없습니다. fallback을 사용합니다.");
+            return _fallbackAttackPerformer;
+        }
+
+        if (partData.IsDirectAttack)
+        {
+            if (_directAttackPerformer != null)
+            {
+                return _directAttackPerformer;
+            }
+
+            Debug.LogWarning($"{name}: TrajectoryType은 Direct인데 Direct 공격 실행기가 없습니다. fallback을 사용합니다.");
+            return _fallbackAttackPerformer;
+        }
+
+        Debug.LogWarning($"{name}: TrajectoryType에 맞는 공격 실행기를 찾지 못했습니다. fallback을 사용합니다.");
+        return _fallbackAttackPerformer;
     }
 }

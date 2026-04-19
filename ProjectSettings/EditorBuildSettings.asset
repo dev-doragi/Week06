@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/00.Scenes/Jaein/Jaein_LobbyScene.unity
     guid: 98078056f355460449407d33c32d27bd
   - enabled: 1
+    path: Assets/00.Scenes/Build/04.InGameScene.unity
+    guid: 62242931b7f73374db8ef43ec14069e3
+  - enabled: 0
     path: Assets/00.Scenes/Jaein/Jaein_InGameScene.unity
     guid: 8afc234402882c042910b2b0da1377da
   m_configObjects:

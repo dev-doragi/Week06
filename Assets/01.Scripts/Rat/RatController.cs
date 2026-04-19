@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RatController : MonoBehaviour, IPartRuntimeBindable
 {
     [SerializeField] private PartData _partData;
     [SerializeField] private PlacedPart _placedPart;
-    [SerializeField] private RatTeamType _teamType;
+    [SerializeField] private TeamType _teamType;
 
     private RatStatRuntime _ratStatRuntime;
     private RatAttackHandler _ratAttackHandler;
@@ -34,7 +34,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     public RatTargetFinder RatTargetFinder => _ratTargetFinder;
     public RatSupportHandler RatSupportHandler => _ratSupportHandler;
     public RatStatModifierRuntime RatStatModifierRuntime => _ratStatModifierRuntime;
-    public RatTeamType TeamType => _teamType;
+    public TeamType TeamType => _teamType;
     public PlacedPart PlacedPart => _placedPart;
 
     private void Awake()
@@ -73,7 +73,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
             Debug.LogError($"{name}: RatController 초기화 실패 - PlacedPart가 할당되지 않았습니다.");
         }
 
-        if (_teamType == RatTeamType.None)
+        if (_teamType == TeamType.None)
         {
             Debug.LogError($"{name}: RatController 초기화 실패 - TeamType이 None입니다.");
         }
@@ -315,7 +315,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
             return false;
         }
 
-        if (_teamType == RatTeamType.None || other.TeamType == RatTeamType.None)
+        if (_teamType == TeamType.None || other.TeamType == TeamType.None)
         {
             Debug.LogError($"{name}: IsEnemy 실패 - TeamType이 None인 대상이 있습니다.");
             return false;
@@ -359,6 +359,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
 
     private void HandleDead()
     {
-        Debug.Log($"{name}: Part 사망 처리");
+        PlacedPart pp = GetComponentInParent<PlacedPart>();
+        pp.Break();
     }
 }

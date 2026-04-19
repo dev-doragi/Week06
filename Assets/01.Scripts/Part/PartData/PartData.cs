@@ -14,6 +14,7 @@ public class PartData
     public string PartName;
     public PartCategory PartCategory;
     public UnitRoleType UnitRoleType;
+    public BuildingType BuildingType;
     public List<Vector2Int> Shape;
     public float Hp;
     public float DefenseRate;
@@ -32,6 +33,11 @@ public class PartData
 
     public int SupportRangeRadius;
     public string SupportEffectsRaw;
+
+    public bool IsWheelBuilding => IsBuilding && BuildingType == BuildingType.Wheel;
+    public bool IsCoreBuilding => IsBuilding && BuildingType == BuildingType.Core;
+    public bool IsProductionRoom => IsBuilding && BuildingType == BuildingType.ProductionRoom;
+    public bool IsAltar => IsBuilding && BuildingType == BuildingType.Altar;
 
     // ------------------------------------------------------------
     // 런타임용 래퍼
@@ -167,10 +173,27 @@ public class PartData
             return false;
         }
 
-        if (IsBuilding && UnitRoleType != UnitRoleType.None)
+        if (IsBuilding)
         {
-            Debug.LogError($"{PartName}: Building인데 UnitRoleType이 None이 아닙니다.");
-            return false;
+            if (BuildingType == BuildingType.None)
+            {
+                Debug.LogError($"{PartName}: Building인데 BuildingType이 None입니다.");
+                return false;
+            }
+
+            if (UnitRoleType != UnitRoleType.None)
+            {
+                Debug.LogError($"{PartName}: Building인데 UnitRoleType이 설정되어 있습니다.");
+                return false;
+            }
+        }
+        else
+        {
+            if (BuildingType != BuildingType.None)
+            {
+                Debug.LogError($"{PartName}: Building이 아닌데 BuildingType이 설정되어 있습니다.");
+                return false;
+            }
         }
 
         if (IsAttackUnit)
