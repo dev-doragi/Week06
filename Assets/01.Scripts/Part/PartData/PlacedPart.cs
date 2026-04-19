@@ -231,7 +231,7 @@ public class PlacedPart : SerializedMonoBehaviour
         }
     }
 
-    public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, Color color, bool ghost = false)
+    public void BuildVisual(GridRenderer gridRenderer, Transform visualParent, Color color, bool ghost = false, Sprite icon = null)
     {
         ClearVisual();
 
@@ -265,6 +265,7 @@ public class PlacedPart : SerializedMonoBehaviour
             cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
             cellRenderers.Add(sr);
             if (ghost)
+                sr.sprite = icon;
                 continue;
 
             BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
