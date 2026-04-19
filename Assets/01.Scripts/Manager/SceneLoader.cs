@@ -1,3 +1,4 @@
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,5 +28,10 @@ public class SceneLoader : Singleton<SceneLoader>
     public void EnterInGame()
     {
         SceneManager.LoadScene(_inGameSceneName);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using System.IO;
 
@@ -110,7 +110,7 @@ public class ShopItemGenerator : EditorWindow
                 newItem.category = ShopItemCategory.AttackStore;
                 break;
             case UnitRoleType.Defense:
-                newItem.category = ShopItemCategory.DefnseStore;
+                newItem.category = ShopItemCategory.DefenseStore;
                 break;
             case UnitRoleType.Support:
                 newItem.category = ShopItemCategory.SupportStore;
@@ -171,7 +171,7 @@ public class ShopItemGenerator : EditorWindow
                 switch (item.category)
                 {
                     case ShopItemCategory.AttackStore: db.attackItems.Add(item); break;
-                    case ShopItemCategory.DefnseStore: db.defenseItems.Add(item); break;
+                    case ShopItemCategory.DefenseStore: db.defenseItems.Add(item); break;
                     case ShopItemCategory.BuildStore: db.buildItems.Add(item); break;
                     case ShopItemCategory.SupportStore: db.supportItems.Add(item); break;
                 }

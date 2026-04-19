@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//GridBuilder Manager아님
 public class BuildManager : MonoBehaviour
 {
     public static BuildManager Instance;
@@ -19,6 +20,12 @@ public class BuildManager : MonoBehaviour
 
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
     [SerializeField] private bool _spawnRuntimePrefab = true;
+
+    [SerializeField] private Transform supportRangeHighlightRoot;
+    [SerializeField] private Sprite supportRangeHighlightSprite;
+    [SerializeField] private Color supportRangeHighlightColor = new Color(0.2f, 0.6f, 1f, 0.2f);
+
+    private readonly List<GameObject> supportRangeHighlights = new();
 
     private readonly List<GameObject> placeableHighlights = new();
 
@@ -72,6 +79,8 @@ public class BuildManager : MonoBehaviour
 
     public void SelectPart(int key)
     {
+        ClearSupportRangeHighlights();
+
         if (!GridManager.instance.partDic.TryGetValue(key, out currentPartData))
         {
             currentPartData = null;
@@ -137,6 +146,8 @@ public class BuildManager : MonoBehaviour
 
         bool canPlace = board.CanPlacePartByRules(currentPartData, gridPos, currentRotation);
         ghostPart.SetColor(canPlace ? new Color(0f, 1f, 0f, 0.45f) : new Color(1f, 0f, 0f, 0.45f));
+
+        UpdateSupportRangePreview();
     }
 
     public void TryPlaceCurrentPart()
@@ -160,7 +171,8 @@ public class BuildManager : MonoBehaviour
         {
             return false;
         }
-
+        if (!PlacementManager.Instance.SubtractMouseCount(partData.Cost))
+            return false;
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
         if (partObj == null) return false;
 
@@ -198,8 +210,8 @@ public class BuildManager : MonoBehaviour
             Debug.LogWarning($"{name}: PartRuntimeSpawner가 연결되지 않았습니다.");
             return;
         }
-
-        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, board);
+        GridBoard gridBoard = placedPart.GetComponentInParent<GridBoard>();
+        GameObject spawnObj = _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, gridBoard);
     }
 
     private void TryRemovePart()
@@ -230,19 +242,20 @@ public class BuildManager : MonoBehaviour
     private void RemovePartAndCollapse(PlacedPart targetPart)
     {
         if (targetPart == null) return;
-
+        GridBoard targetBoard = targetPart.GetComponentInParent<GridBoard>();
+        if (targetBoard == null) return;
         // 1. 먼저 대상 파츠 제거
-        board.RemovePart(targetPart);
+        targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
 
         // 2. 바퀴와 연결 안 된 모든 파츠 찾기
-        List<PlacedPart> disconnectedParts = board.GetDisconnectedParts();
+        List<PlacedPart> disconnectedParts = targetBoard.GetDisconnectedParts();
 
         // 3. 연결 안 된 파츠들 전부 제거
         foreach (var part in disconnectedParts)
         {
             if (part == null) continue;
-
+            targetBoard.RemovePart(part);
             part.DestroyAnim();
         }
     }
@@ -253,6 +266,7 @@ public class BuildManager : MonoBehaviour
         currentPartData = null;
         currentRotation = 0;
         ClearPlaceableHighlights();
+        ClearSupportRangeHighlights();
         if (ghostPart != null)
         {
             Destroy(ghostPart.gameObject);
@@ -274,24 +288,7 @@ public class BuildManager : MonoBehaviour
         {
             Vector2Int pos = new Vector2Int(startX + i, 0);
 
-            if (!board.CanPlacePartByRules(wheelData, pos, 0))
-                continue;
-
-            GameObject partObj = new GameObject($"StartWheel_{i}");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(wheelData, pos, 0, placedPart);
-
-            if (success)
-            {
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
+            PlacePartInternal(wheelData, pos, 0);
         }
 
         if (GridManager.instance.partDic.TryGetValue(GridBoard.CORE_KEY, out PartData coreData))
@@ -301,22 +298,8 @@ public class BuildManager : MonoBehaviour
             if (!board.CanPlacePartByRules(coreData, pos, 0))
                 return;
 
-            GameObject partObj = new GameObject($"Core");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(coreData, pos, 0, placedPart);
-
-            if (success)
-            {
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
             PlacePartInternal(coreData, pos, 0);
+
         }
         else
         {
@@ -367,4 +350,95 @@ public class BuildManager : MonoBehaviour
 
         placeableHighlights.Clear();
     }
+
+    #region 서포트 반경 시각화
+    private void UpdateSupportRangePreview()
+    {
+        ClearSupportRangeHighlights();
+
+        if (currentPartData == null)
+        {
+            return;
+        }
+
+        if (!currentPartData.CanUseSupport)
+        {
+            return;
+        }
+
+        if (ghostPart == null)
+        {
+            return;
+        }
+
+        if (supportRangeHighlightRoot == null)
+        {
+            Debug.LogWarning($"{name}: supportRangeHighlightRoot가 연결되지 않았습니다.");
+            return;
+        }
+
+        if (supportRangeHighlightSprite == null)
+        {
+            Debug.LogWarning($"{name}: supportRangeHighlightSprite가 연결되지 않았습니다.");
+            return;
+        }
+
+        IReadOnlyList<Vector2Int> sourceCells = ghostPart.OccupiedCells;
+        if (sourceCells == null || sourceCells.Count == 0)
+        {
+            return;
+        }
+
+        int supportRangeRadius = currentPartData.SupportRangeRadius;
+        if (supportRangeRadius <= 0)
+        {
+            return;
+        }
+
+        for (int x = 0; x < board.width; x++)
+        {
+            for (int y = 0; y < board.height; y++)
+            {
+                Vector2Int cell = new Vector2Int(x, y);
+                List<Vector2Int> targetCells = new List<Vector2Int> { cell };
+
+                if (!GridRangeUtility.IsWithinCellRadius(sourceCells, targetCells, supportRangeRadius))
+                {
+                    continue;
+                }
+
+                CreateSupportRangeHighlight(cell);
+            }
+        }
+    }
+
+    private void CreateSupportRangeHighlight(Vector2Int cell)
+    {
+        GameObject cellObj = new GameObject($"SupportRange_{cell.x}_{cell.y}");
+        cellObj.transform.SetParent(supportRangeHighlightRoot);
+        cellObj.transform.position = gridRenderer.GridToWorld(cell);
+
+        SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
+        sr.sprite = supportRangeHighlightSprite;
+        sr.color = supportRangeHighlightColor;
+
+        float scale = gridRenderer.cellSize;
+        cellObj.transform.localScale = new Vector3(scale, scale, 1f);
+
+        supportRangeHighlights.Add(cellObj);
+    }
+
+    private void ClearSupportRangeHighlights()
+    {
+        for (int i = 0; i < supportRangeHighlights.Count; i++)
+        {
+            if (supportRangeHighlights[i] != null)
+            {
+                Destroy(supportRangeHighlights[i]);
+            }
+        }
+
+        supportRangeHighlights.Clear();
+    }
+    #endregion
 }
