@@ -1,60 +1,59 @@
 using UnityEngine;
-using Unity.Cinemachine;
 
+[RequireComponent(typeof(Camera))]
 public class CameraManager : MonoBehaviour
 {
-    [Header("Required Components")]
-    [SerializeField] private CinemachineCamera _cmCamera;
-    [SerializeField] private Transform _cameraTarget;
-    [SerializeField] private Collider2D _confinerCollider;
+    [Header("Bounds")]
+    [SerializeField] private BoxCollider2D _cameraBounds;
 
     [Header("Zoom Settings")]
-    [SerializeField] private float _zoomStep = 2.0f;
-    [SerializeField] private float _minZoom = 5.0f;
-    [SerializeField] private float _maxZoom = 30.0f;
+    [SerializeField] private float _zoomStep = 2f;
+    [SerializeField] private float _minZoom = 3f;
+    [SerializeField] private float _maxZoom = 15f;
 
+    private Camera _mainCamera;
     private InputReader _inputReader;
+
     private float _targetZoom;
     private float _initialZoom;
-    private bool _isDragging = false;
-    private float _aspectRatio;
+    private bool _isDragging;
 
     private void Awake()
     {
+        _mainCamera = GetComponent<Camera>();
+
+        if (_mainCamera == null)
+        {
+            Debug.LogError("CameraManager: Camera not found");
+            enabled = false;
+            return;
+        }
+
+        if (_mainCamera.orthographic == false)
+        {
+            Debug.LogError("CameraManager: Orthographic Camera only");
+            enabled = false;
+            return;
+        }
+
         if (!ManagerRegistry.TryGet(out _inputReader))
         {
             Debug.LogError("CameraManager: InputReader not found");
         }
 
-        if (_cmCamera == null) _cmCamera = GetComponent<CinemachineCamera>();
-
-        if (_cmCamera == null || _cameraTarget == null)
-        {
-            Debug.LogError("CameraManager: Critical components missing");
-            return;
-        }
-
-        _initialZoom = _cmCamera.Lens.OrthographicSize;
+        _initialZoom = _mainCamera.orthographicSize;
         _targetZoom = _initialZoom;
-        _aspectRatio = (float)Screen.width / Screen.height;
-
-        if (_confinerCollider == null)
-        {
-            var confiner = GetComponent<CinemachineConfiner2D>();
-            if (confiner != null) _confinerCollider = confiner.BoundingShape2D;
-        }
     }
 
     private void Start()
     {
-        Vector3 clampedPos = ClampTargetPosition(_cameraTarget.position);
-        _cameraTarget.position = clampedPos;
-        _cmCamera.ForceCameraPosition(clampedPos, Quaternion.identity);
+        transform.position = ClampCameraPosition(transform.position, _mainCamera.orthographicSize);
     }
 
     private void OnEnable()
     {
         if (EventBus.Instance == null) return;
+
         EventBus.Instance.Subscribe<RightClickEvent>(HandleRightClick);
         EventBus.Instance.Subscribe<ScrollEvent>(HandleScroll);
     }
@@ -62,90 +61,113 @@ public class CameraManager : MonoBehaviour
     private void OnDisable()
     {
         if (EventBus.Instance == null) return;
+
         EventBus.Instance.Unsubscribe<RightClickEvent>(HandleRightClick);
         EventBus.Instance.Unsubscribe<ScrollEvent>(HandleScroll);
     }
 
     private void Update()
     {
-        if (Time.timeScale <= 0) return;
+        if (Time.timeScale <= 0f) return;
+
         HandlePanning();
     }
 
     private void HandlePanning()
     {
-        if (!_isDragging || _inputReader == null) return;
+        if (_isDragging == false || _inputReader == null) return;
+
+        if (Mathf.Abs(_mainCamera.orthographicSize - _maxZoom) < 0.001f) return;
 
         Vector2 mouseDelta = _inputReader.GetMouseDelta();
+        if (mouseDelta.sqrMagnitude <= 0.01f) return;
 
-        if (mouseDelta.sqrMagnitude > 0.01f)
-        {
-            float currentZoom = _cmCamera.Lens.OrthographicSize;
-            float unitsPerPixel = (currentZoom * 2f) / Screen.height;
-            Vector3 move = new Vector3(-mouseDelta.x, -mouseDelta.y, 0) * unitsPerPixel;
+        float unitsPerPixel = (_mainCamera.orthographicSize * 2f) / Screen.height;
+        Vector3 move = new Vector3(-mouseDelta.x, -mouseDelta.y, 0f) * unitsPerPixel;
 
-            _cameraTarget.position = ClampTargetPosition(_cameraTarget.position + move);
-        }
-    }
-
-    private void ApplyZoom()
-    {
-        LensSettings lens = _cmCamera.Lens;
-        lens.OrthographicSize = _targetZoom;
-        _cmCamera.Lens = lens;
-
-        _cameraTarget.position = ClampTargetPosition(_cameraTarget.position);
+        Vector3 nextPos = transform.position + move;
+        transform.position = ClampCameraPosition(nextPos, _mainCamera.orthographicSize);
     }
 
     private void HandleRightClick(RightClickEvent e)
     {
-        if (_inputReader.IsPointerOverUI && e.IsStarted) return;
+        if (_inputReader != null && _inputReader.IsPointerOverUI && e.IsStarted) return;
         _isDragging = e.IsStarted;
     }
 
     private void HandleScroll(ScrollEvent e)
     {
-        if (_inputReader.IsPointerOverUI) return;
+        if (_inputReader != null && _inputReader.IsPointerOverUI) return;
 
         float direction = e.Delta > 0 ? -1f : 1f;
-        float nextZoom = _targetZoom + (direction * _zoomStep);
+        float nextZoom = _targetZoom + direction * _zoomStep;
 
-        bool isCrossingInitial = (_targetZoom > _initialZoom && nextZoom < _initialZoom) ||
-                                 (_targetZoom < _initialZoom && nextZoom > _initialZoom);
+        bool isCrossingInitial =
+            (_targetZoom > _initialZoom && nextZoom < _initialZoom) ||
+            (_targetZoom < _initialZoom && nextZoom > _initialZoom);
 
         bool isAlreadyAtInitial = Mathf.Abs(_targetZoom - _initialZoom) < 0.01f;
 
-        if (isCrossingInitial && !isAlreadyAtInitial)
-        {
+        if (isCrossingInitial && isAlreadyAtInitial == false)
             _targetZoom = _initialZoom;
-        }
         else
-        {
             _targetZoom = Mathf.Clamp(nextZoom, _minZoom, _maxZoom);
-        }
 
-        ApplyZoom();
+        ApplyZoomAtMousePosition(_targetZoom);
     }
 
-    private Vector3 ClampTargetPosition(Vector3 targetPos)
+    private void ApplyZoomAtMousePosition(float newZoom)
     {
-        if (_confinerCollider == null) return targetPos;
+        if (_inputReader == null) return;
 
-        Bounds b = _confinerCollider.bounds;
-        float camHeight = _cmCamera.Lens.OrthographicSize;
-        float camWidth = camHeight * _aspectRatio;
+        Vector2 mousePos = _inputReader.GetMousePosition();
+        Vector3 mouseScreen = new Vector3(mousePos.x, mousePos.y, _mainCamera.nearClipPlane);
 
-        float minX = b.min.x + camWidth;
-        float maxX = b.max.x - camWidth;
-        float minY = b.min.y + camHeight;
-        float maxY = b.max.y - camHeight;
+        Vector3 beforeWorld = _mainCamera.ScreenToWorldPoint(mouseScreen);
 
-        if (minX > maxX) { float mid = (minX + maxX) / 2f; minX = maxX = mid; }
-        if (minY > maxY) { float mid = (minY + maxY) / 2f; minY = maxY = mid; }
+        _mainCamera.orthographicSize = newZoom;
 
-        float newX = Mathf.Clamp(targetPos.x, minX, maxX);
-        float newY = Mathf.Clamp(targetPos.y, minY, maxY);
+        Vector3 afterWorld = _mainCamera.ScreenToWorldPoint(mouseScreen);
+        Vector3 delta = beforeWorld - afterWorld;
 
-        return new Vector3(newX, newY, targetPos.z);
+        Vector3 nextPos = transform.position + new Vector3(delta.x, delta.y, 0f);
+        transform.position = ClampCameraPosition(nextPos, _mainCamera.orthographicSize);
+
+        _targetZoom = _mainCamera.orthographicSize;
+    }
+
+    private Vector3 ClampCameraPosition(Vector3 targetPos, float zoomSize)
+    {
+        if (_cameraBounds == null)
+            return new Vector3(targetPos.x, targetPos.y, transform.position.z);
+
+        Bounds bounds = _cameraBounds.bounds;
+
+        float camHalfHeight = zoomSize;
+        float camHalfWidth = zoomSize * _mainCamera.aspect;
+
+        float minX = bounds.min.x + camHalfWidth;
+        float maxX = bounds.max.x - camHalfWidth;
+        float minY = bounds.min.y + camHalfHeight;
+        float maxY = bounds.max.y - camHalfHeight;
+
+        if (minX > maxX)
+        {
+            float midX = (bounds.min.x + bounds.max.x) * 0.5f;
+            minX = midX;
+            maxX = midX;
+        }
+
+        if (minY > maxY)
+        {
+            float midY = (bounds.min.y + bounds.max.y) * 0.5f;
+            minY = midY;
+            maxY = midY;
+        }
+
+        float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
+        float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
+
+        return new Vector3(clampedX, clampedY, transform.position.z);
     }
 }
