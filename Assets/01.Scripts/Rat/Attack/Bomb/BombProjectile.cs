@@ -7,7 +7,7 @@ public enum BombProjectileMoveType
     Arc = 1
 }
 
-public class BombProjectile : MonoBehaviour
+public class BombProjectile : ProjectileBase
 {
     [SerializeField] private bool _explodeOnTriggerEnter = true;
 
@@ -43,23 +43,32 @@ public class BombProjectile : MonoBehaviour
             return;
         }
 
+        // 주요 라인: 풀 재사용을 고려해 상태를 매번 완전히 초기화한다.
         _attacker = attacker;
         _primaryTarget = primaryTarget;
+        _impactTarget = null;
+
         _attackRangeRadius = attackRangeRadius;
         _moveType = moveType;
+
         _startPosition = startPosition;
         _targetPosition = targetPosition;
         _travelTime = Mathf.Max(0.01f, travelTime);
         _arcHeight = Mathf.Max(0f, arcHeight);
 
-        transform.position = _startPosition;
         _elapsedTime = 0f;
+        _hasExploded = false;
         _isInitialized = true;
+
+        transform.position = _startPosition;
     }
 
     private void Update()
     {
-        if (!_isInitialized || _hasExploded) return;
+        if (!_isInitialized || _hasExploded)
+        {
+            return;
+        }
 
         _elapsedTime += Time.deltaTime;
         float t = Mathf.Clamp01(_elapsedTime / _travelTime);
@@ -73,7 +82,7 @@ public class BombProjectile : MonoBehaviour
             transform.position = CalculateArcPosition(_startPosition, _targetPosition, t, _arcHeight);
         }
 
-        if(t >= 1f)
+        if (t >= 1f)
         {
             Explode();
         }
@@ -81,10 +90,16 @@ public class BombProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!_explodeOnTriggerEnter || _hasExploded || !_isInitialized) return;
+        if (!_explodeOnTriggerEnter || _hasExploded || !_isInitialized)
+        {
+            return;
+        }
 
         RatController hitTarget = other.GetComponent<RatController>();
-        if (hitTarget == null) return;
+        if (hitTarget == null)
+        {
+            return;
+        }
 
         if (_attacker == null)
         {
@@ -92,41 +107,51 @@ public class BombProjectile : MonoBehaviour
             return;
         }
 
-        if(!_attacker.IsEnemy(hitTarget)) return;
+        if (!_attacker.IsEnemy(hitTarget))
+        {
+            return;
+        }
 
         if (hitTarget.RatStatRuntime == null || hitTarget.RatStatRuntime.IsDead)
         {
             return;
         }
 
+        // 주요 라인: 비행 중 먼저 맞은 대상이 있으면 그 대상을 폭발 중심으로 사용한다.
         _impactTarget = hitTarget;
-
         Explode();
     }
 
     private void Explode()
     {
-        if (_hasExploded) return;
+        if (_hasExploded)
+        {
+            return;
+        }
 
         _hasExploded = true;
 
         List<RatController> hitTargets = CollectHitTargetsByCellRadius();
-        for(int i = 0; i < hitTargets.Count; i++)
+        for (int i = 0; i < hitTargets.Count; i++)
         {
             RatController hitTarget = hitTargets[i];
-            if (hitTarget == null) continue;
+            if (hitTarget == null)
+            {
+                continue;
+            }
 
             RatDamageCalculator.ApplyAttackDamage(_attacker, hitTarget);
         }
 
-        Destroy(gameObject);
+        // 주요 라인: ProjectileBase의 회수 로직을 사용한다.
+        Despawn();
     }
 
     private List<RatController> CollectHitTargetsByCellRadius()
     {
         List<RatController> result = new List<RatController>();
 
-        if(_attacker == null)
+        if (_attacker == null)
         {
             Debug.LogError($"{name}: CollectHitTargets 실패 - attacker가 Null입니다.");
             return result;
@@ -136,38 +161,49 @@ public class BombProjectile : MonoBehaviour
         List<Vector2Int> explosionCells = new List<Vector2Int> { explosionCenterCell };
 
         RatController[] allTargets = FindObjectsByType<RatController>(FindObjectsSortMode.None);
+        if (allTargets == null || allTargets.Length == 0)
+        {
+            return result;
+        }
 
-        if(allTargets == null || allTargets.Length == 0) return result;
-
-        for(int i = 0; i < allTargets.Length; i++)
+        for (int i = 0; i < allTargets.Length; i++)
         {
             RatController target = allTargets[i];
+            if (target == null)
+            {
+                continue;
+            }
 
-            if(target == null) continue;
+            if (!_attacker.IsEnemy(target))
+            {
+                continue;
+            }
 
-            if (!_attacker.IsEnemy(target)) continue;
-
-            if(target.RatStatRuntime == null || target.RatStatRuntime.IsDead) continue;
+            if (target.RatStatRuntime == null || target.RatStatRuntime.IsDead)
+            {
+                continue;
+            }
 
             IReadOnlyList<Vector2Int> targetCells = target.GetOccupiedCells();
-
-            if (targetCells == null || targetCells.Count == 0) continue;
-
-            if(_attackRangeRadius <= 0)
+            if (targetCells == null || targetCells.Count == 0)
             {
-                if(GridRangeUtility.IsWithinCellRadius(explosionCells, targetCells, 0))
+                continue;
+            }
+
+            if (_attackRangeRadius <= 0)
+            {
+                if (GridRangeUtility.IsWithinCellRadius(explosionCells, targetCells, 0))
                 {
                     result.Add(target);
-                    break;
                 }
 
                 continue;
             }
 
-            if(GridRangeUtility.IsWithinCellRadius(explosionCells, targetCells, _attackRangeRadius))
+            if (GridRangeUtility.IsWithinCellRadius(explosionCells, targetCells, _attackRangeRadius))
+            {
                 result.Add(target);
-
-            return result;
+            }
         }
 
         return result;
@@ -175,17 +211,19 @@ public class BombProjectile : MonoBehaviour
 
     private Vector2Int ResolveExplosionCenterCell()
     {
-        if(_impactTarget != null)
+        if (_impactTarget != null)
         {
             IReadOnlyList<Vector2Int> impactCells = _impactTarget.GetOccupiedCells();
-            if(impactCells != null && impactCells.Count > 0)
+            if (impactCells != null && impactCells.Count > 0)
+            {
                 return impactCells[0];
+            }
         }
 
-        if(_primaryTarget != null)
+        if (_primaryTarget != null)
         {
             IReadOnlyList<Vector2Int> targetCells = _primaryTarget.GetOccupiedCells();
-            if(targetCells != null && targetCells.Count > 0)
+            if (targetCells != null && targetCells.Count > 0)
             {
                 return targetCells[0];
             }
@@ -199,5 +237,19 @@ public class BombProjectile : MonoBehaviour
         Vector3 linear = Vector3.Lerp(start, end, t);
         float heightOffset = 4f * arcHeight * t * (1f - t);
         return linear + Vector3.up * heightOffset;
+    }
+
+    protected override void Despawn()
+    {
+        // 주요 라인: 풀 반환 전에 내부 상태를 정리해 다음 재사용 시 꼬이지 않게 한다.
+        _isInitialized = false;
+        _hasExploded = false;
+        _elapsedTime = 0f;
+
+        _attacker = null;
+        _primaryTarget = null;
+        _impactTarget = null;
+
+        base.Despawn();
     }
 }
