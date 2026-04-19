@@ -15,13 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 21300000, guid: cdd33ff01eb0524468f81335b8bacc46, type: 3}
-    - {fileID: 21300000, guid: c9b44f13f61abdc498ef4160a34b6779, type: 3}
-    - {fileID: 21300000, guid: 950d400edf793ac49ab949968377687a, type: 3}
-    - {fileID: 21300000, guid: 955da794090410545ad553a76b49e1a1, type: 3}
-    - {fileID: 21300000, guid: 2ff430c91a8438847ad249c33aa7eb73, type: 3}
-    - {fileID: 4457835537561387818, guid: 289a33b1921db1147975e40564c3f05a, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -55,13 +49,13 @@ MonoBehaviour:
       Data: 1
     - Name: PartName
       Entry: 1
-      Data: "\uACF5\uACA91"
+      Data: "\uBCBD1"
     - Name: PartCategory
       Entry: 3
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: BuildingType
       Entry: 3
       Data: 0
@@ -71,52 +65,16 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
       Data: 1
     - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
       Entry: 7
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: 
       Entry: 3
       Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -135,33 +93,30 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Blue
     - Name: Icon
-      Entry: 10
-      Data: 0
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: AttackSpeed
       Entry: 4
-      Data: 1
+      Data: 0
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: AttackDistance
       Entry: 4
-      Data: 3
+      Data: 0
     - Name: TrajectoryType
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: PenetrationRate
       Entry: 4
       Data: 10
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -188,13 +143,13 @@ MonoBehaviour:
       Data: 2
     - Name: PartName
       Entry: 1
-      Data: "\uACF5\uACA92"
+      Data: "\uBCBD2"
     - Name: PartCategory
       Entry: 3
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: BuildingType
       Entry: 3
       Data: 0
@@ -232,33 +187,30 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Green
     - Name: Icon
-      Entry: 10
-      Data: 1
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 20
+      Data: 0
     - Name: AttackSpeed
       Entry: 4
-      Data: 2
+      Data: 0
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 3
+      Data: 0
     - Name: AttackDistance
       Entry: 4
-      Data: 4
+      Data: 0
     - Name: TrajectoryType
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: PenetrationRate
       Entry: 4
       Data: 20
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -285,13 +237,13 @@ MonoBehaviour:
       Data: 3
     - Name: PartName
       Entry: 1
-      Data: "\uACF5\uACA93"
+      Data: "\uBCBD3"
     - Name: PartCategory
       Entry: 3
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: BuildingType
       Entry: 3
       Data: 0
@@ -329,33 +281,30 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Pink
     - Name: Icon
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 30
+      Data: 0
     - Name: AttackSpeed
       Entry: 4
-      Data: 3
+      Data: 0
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 4
+      Data: 0
     - Name: AttackDistance
       Entry: 4
-      Data: 5
+      Data: 0
     - Name: TrajectoryType
       Entry: 3
-      Data: 2
+      Data: 0
     - Name: PenetrationRate
       Entry: 4
       Data: 30
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -426,12 +375,9 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 2
-    - Name: SpriteName
-      Entry: 1
-      Data: Blue
     - Name: Icon
-      Entry: 10
-      Data: 3
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
       Data: 10
@@ -452,7 +398,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -485,7 +431,7 @@ MonoBehaviour:
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: BuildingType
       Entry: 3
       Data: 0
@@ -523,12 +469,9 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Pink
     - Name: Icon
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
       Data: 0
@@ -549,7 +492,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 20
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -582,7 +525,7 @@ MonoBehaviour:
       Data: 1
     - Name: UnitRoleType
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: BuildingType
       Entry: 3
       Data: 0
@@ -620,12 +563,9 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Pink
     - Name: Icon
-      Entry: 10
-      Data: 2
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
       Data: 0
@@ -646,7 +586,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 15
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -717,12 +657,9 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Red
     - Name: Icon
-      Entry: 10
-      Data: 4
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
       Data: 0
@@ -743,7 +680,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
@@ -826,12 +763,9 @@ MonoBehaviour:
     - Name: Cost
       Entry: 3
       Data: 0
-    - Name: SpriteName
-      Entry: 1
-      Data: Black
     - Name: Icon
-      Entry: 10
-      Data: 5
+      Entry: 6
+      Data: 
     - Name: AttackDamage
       Entry: 4
       Data: 0
@@ -852,7 +786,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0

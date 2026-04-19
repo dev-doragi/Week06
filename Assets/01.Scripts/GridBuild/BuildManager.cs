@@ -161,10 +161,8 @@ public class BuildManager : MonoBehaviour
         {
             return false;
         }
-        /*
         if (!PlacementManager.Instance.SubtractMouseCount(partData.Cost))
-            return;
-        */
+            return false;
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
         if (partObj == null) return false;
 
@@ -203,7 +201,7 @@ public class BuildManager : MonoBehaviour
             return;
         }
         GridBoard gridBoard = placedPart.GetComponentInParent<GridBoard>();
-        _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, gridBoard);
+        GameObject spawnObj = _partRuntimeSpawner.SpawnRuntime(partData, placedPart, _teamType, gridBoard);
     }
 
     private void TryRemovePart()
@@ -279,25 +277,7 @@ public class BuildManager : MonoBehaviour
         {
             Vector2Int pos = new Vector2Int(startX + i, 0);
 
-            if (!board.CanPlacePartByRules(wheelData, pos, 0))
-                continue;
-
-            GameObject partObj = new GameObject($"StartWheel_{i}");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(wheelData, pos, 0, placedPart);
-
-            if (success)
-            {
-                TrySpawnRuntimePrefab(wheelData, placedPart);
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
+            PlacePartInternal(wheelData, pos, 0);
         }
 
         if (GridManager.instance.partDic.TryGetValue(GridBoard.CORE_KEY, out PartData coreData))
@@ -307,23 +287,8 @@ public class BuildManager : MonoBehaviour
             if (!board.CanPlacePartByRules(coreData, pos, 0))
                 return;
 
-            GameObject partObj = new GameObject($"Core");
-            partObj.transform.SetParent(placedPartsRoot);
-
-            PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
-
-            bool success = board.PlacePart(coreData, pos, 0, placedPart);
-
-            if (success)
-            {
-                TrySpawnRuntimePrefab(coreData, placedPart);
-                placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
-            }
-            else
-            {
-                Destroy(partObj);
-            }
             PlacePartInternal(coreData, pos, 0);
+
         }
         else
         {
