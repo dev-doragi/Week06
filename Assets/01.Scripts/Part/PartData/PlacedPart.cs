@@ -12,7 +12,6 @@ public class PlacedPart : SerializedMonoBehaviour
     public int rotation;
     public List<Vector2Int> occupiedCells = new();
 
-    [SerializeField] private float currentHp;
     [SerializeField] private float _collisionDamage = 5;
 
     private readonly List<SpriteRenderer> cellRenderers = new();
@@ -21,9 +20,6 @@ public class PlacedPart : SerializedMonoBehaviour
     [Header("Added For Grid/Owner Structure")]
     [SerializeField] private int _partKey;
     [SerializeField] private Vector2Int _anchorCell;
-
-    public float CurrentHp => currentHp;
-
     // ------------------------------------------------------------
     // 새 구조에서 사용하는 읽기 전용 프로퍼티
     // ------------------------------------------------------------
@@ -57,10 +53,6 @@ public class PlacedPart : SerializedMonoBehaviour
         _partKey = data != null ? data.Key : 0;
         _anchorCell = origin;
 
-        if (data != null && currentHp <= 0f)
-        {
-            currentHp = data.Hp;
-        }
     }
 
     // ------------------------------------------------------------
@@ -94,10 +86,6 @@ public class PlacedPart : SerializedMonoBehaviour
             RebuildOccupiedCells();
         }
 
-        if (currentHp <= 0f)
-        {
-            currentHp = data.Hp;
-        }
     }
 
     // ------------------------------------------------------------
@@ -115,11 +103,6 @@ public class PlacedPart : SerializedMonoBehaviour
 
         ResolvePartData();
         RebuildOccupiedCells();
-
-        if (data != null && currentHp <= 0f)
-        {
-            currentHp = data.Hp;
-        }
     }
 
     public void SetAnchorCell(Vector2Int anchorCell)
@@ -149,12 +132,6 @@ public class PlacedPart : SerializedMonoBehaviour
             {
                 RebuildOccupiedCells();
             }
-
-            if (currentHp <= 0f)
-            {
-                currentHp = data.Hp;
-            }
-
             return;
         }
 
@@ -165,11 +142,6 @@ public class PlacedPart : SerializedMonoBehaviour
             RebuildOccupiedCells();
 
             origin = _anchorCell;
-
-            if (data != null && currentHp <= 0f)
-            {
-                currentHp = data.Hp;
-            }
         }
     }
 

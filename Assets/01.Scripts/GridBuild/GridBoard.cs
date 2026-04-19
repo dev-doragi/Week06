@@ -340,11 +340,11 @@ public class GridBoard : MonoBehaviour
 
     #region RemovePart
 
-    // 바퀴와 연결되지 않은 파츠들만 찾아서 반환하는 함수
+    // 코어와 연결되지 않은 파츠들만 찾아서 반환하는 함수
     public List<PlacedPart> GetDisconnectedParts()
     {
         HashSet<PlacedPart> allParts = GetAllParts();
-        HashSet<PlacedPart> connectedParts = GetPartsConnectedToWheels();
+        HashSet<PlacedPart> connectedParts = GetPartsConnectedToCore();
 
         List<PlacedPart> disconnected = new();
 
@@ -377,19 +377,22 @@ public class GridBoard : MonoBehaviour
         return result;
     }
 
-    // 바퀴를 시작점으로 현재 연결되어 있는 모든 파츠를 찾는 함수
-    public HashSet<PlacedPart> GetPartsConnectedToWheels()
+    // 코어를 시작점으로 현재 연결되어 있는 모든 파츠를 찾는 함수
+    public HashSet<PlacedPart> GetPartsConnectedToCore()
     {
         HashSet<PlacedPart> connectedParts = new();
         Queue<PlacedPart> queue = new();
 
         for (int x = 0; x < width; x++)
         {
-            PlacedPart part = GetCell(new Vector2Int(x, 0));
-            if (part != null && part.data != null && part.data.Key == WHEEL_KEY)
+            for (int y = 0; y < height; y++)
             {
-                if (connectedParts.Add(part))
-                    queue.Enqueue(part);
+                PlacedPart part = GetCell(new Vector2Int(x, y));
+                if (part != null && part.data != null && part.data.Key == CORE_KEY)
+                {
+                    if (connectedParts.Add(part))
+                        queue.Enqueue(part);
+                }
             }
         }
 

@@ -248,7 +248,7 @@ public class BuildManager : MonoBehaviour
         targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
 
-        // 2. 바퀴와 연결 안 된 모든 파츠 찾기
+        // 2. 코어와 연결 안 된 모든 파츠 찾기
         List<PlacedPart> disconnectedParts = targetBoard.GetDisconnectedParts();
 
         // 3. 연결 안 된 파츠들 전부 제거

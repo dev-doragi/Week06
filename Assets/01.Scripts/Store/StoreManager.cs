@@ -130,7 +130,7 @@ public class StoreManager : Singleton<StoreManager>
     // 구매 버튼 클리시 해당 코드 실행
     public void SelectUnit(ShopItemData data)
     {
-        PlacementManager.Instance.AddMouseCount(data.cost);
+        //PlacementManager.Instance.AddMouseCount(data.cost); 이거 왜 있는건가요?
 
         if (_showDebug) Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
         BuildManager.Instance.SelectPart(data.partKey);

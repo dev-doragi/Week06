@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a644091615131e3409a2355cedc82ada, type: 3}
-  m_Name: "ShopItem_10001_\uD14C\uC2A4\uD2B8\uBC14\uD034\uC785\uB2C8\uB2E4"
+  m_Name: "ShopItem_10002_\uCF54\uC5B4"
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
-  displayName: "\uD14C\uC2A4\uD2B8\uBC14\uD034\uC785\uB2C8\uB2E4"
-  partKey: 10001
+  displayName: "\uCF54\uC5B4"
+  partKey: 10002
   category: 2
   cost: 0
   tier: 0

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class RatAttackHandler : MonoBehaviour
@@ -11,6 +11,9 @@ public class RatAttackHandler : MonoBehaviour
     [Header("Trajectory Based Performer")]
     [SerializeField] private MonoBehaviour _arcAttackPerformerComponent;
     [SerializeField] private MonoBehaviour _directAttackPerformerComponent;
+
+    [Header("Animator")]
+    [SerializeField] private Animator anim;
 
     private RatController _ratController;
     private RatTargetFinder _ratTargetFinder;
@@ -205,6 +208,7 @@ public class RatAttackHandler : MonoBehaviour
         {
             return false;
         }
+        anim.SetTrigger("OnAttack");
 
         _lastAttackTime = Time.time;
         _currentTarget = target;

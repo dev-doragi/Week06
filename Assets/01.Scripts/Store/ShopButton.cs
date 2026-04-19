@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,8 +56,6 @@ public class ShopButton : MonoBehaviour
 
     private void HandlePurchase()
     {
-        Debug.Log("Button clicked! Checking money...");
-
         if (_itemData == null)
         {
             Debug.LogWarning("[ShopButtons] : Data is Missing!");
