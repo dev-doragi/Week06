@@ -47,11 +47,11 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     // ========================================================================
-    // [EventBus 이벤트 핸들러]
+    // EventBus 이벤트 핸들러
     // ========================================================================
 
     /// <summary>
-    /// [EventBus] StageLoadedEvent 핸들러
+    /// 스테이지 로드 완료 시 Prepare 상태로 진입한다.
     /// </summary>
     private void OnStageLoaded(StageLoadedEvent evt)
     {
@@ -60,7 +60,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     /// <summary>
-    /// [EventBus] WaveStartedEvent 핸들러
+    /// 웨이브 시작 이벤트 수신 시 WavePlaying 상태로 진입한다.
     /// </summary>
     private void OnWaveStarted(WaveStartedEvent evt)
     {
@@ -69,7 +69,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     /// <summary>
-    /// [EventBus] EnemyDefeatedEvent 핸들러 (적 격파)
+    /// 웨이브 종료 조건 대상 파괴 시 승리 조건을 체크한다.
     /// </summary>
     private void OnEnemyDefeated(EnemyDefeatedEvent evt)
     {
@@ -78,7 +78,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     /// <summary>
-    /// [EventBus] BaseDestroyedEvent 핸들러 (기지 파괴)
+    /// 아군 기지 파괴 시 패배 처리한다.
     /// </summary>
     private void OnBaseDestroyed(BaseDestroyedEvent evt)
     {
@@ -87,7 +87,7 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     // ========================================================================
-    // [상태 전환 및 로직 처리]
+    // 상태 전환 및 로직 처리
     // ========================================================================
 
     public void ChangeFlowState(InGameState newState)
@@ -99,10 +99,8 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
         Debug.Log($"[GameFlowManager] 상태 전환: {previousState} → {CurrentInGameState}");
 
-        // [EventBus 발행]
         EventBus.Instance.Publish(new InGameStateChangedEvent { NewState = CurrentInGameState });
 
-        // StageManager에 현재 상태 동기화
         _stageManager?.UpdateState(CurrentInGameState);
 
         ProcessStateLogic(newState);
@@ -133,21 +131,24 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
                 if (_stageManager.CurrentWaveIndex >= _stageManager.CurrentStageData.Waves.Count - 1)
                 {
-                    Debug.Log($"[GameFlowManager] 모든 웨이브 클리어 → 스테이지 클리어");
+                    Debug.Log("[GameFlowManager] 모든 웨이브 클리어 → 스테이지 클리어");
                     ChangeFlowState(InGameState.StageCleared);
                 }
                 else
                 {
-                    Debug.Log($"[GameFlowManager] 다음 웨이브 준비 중...");
+                    Debug.Log("[GameFlowManager] 다음 웨이브 준비 중...");
                     _stageManager.GoToNextWave();
                     ChangeFlowState(InGameState.Prepare);
                 }
                 break;
 
             case InGameState.StageCleared:
+                // 스테이지 클리어 시점에 저장 이벤트를 먼저 발행한다.
+                // 이후 다음 스테이지 로드를 요청하면,
+                // StageManager.LoadStage() 내부에서 기존 스테이지 정리와 다음 스테이지 로드가 함께 처리된다.
                 Debug.Log($"[GameFlowManager] Stage {_stageManager.CurrentStageIndex} 클리어!");
                 _stageManager?.NotifyStageCleared();
-                _stageManager?.ClearCurrentStage();
+                _stageManager?.LoadNextStage();
                 break;
 
             case InGameState.StageFailed:
