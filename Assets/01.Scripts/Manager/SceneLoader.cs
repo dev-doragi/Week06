@@ -25,8 +25,11 @@ public class SceneLoader : Singleton<SceneLoader>
         SceneManager.LoadScene(_stageSelectSceneName);
     }
 
-    public void EnterInGame()
+    public void EnterInGame(int stageIndex)
     {
+        // 스테이지 정보 설정
+        StageLoadContext.SetStageIndex(stageIndex);
+
         SceneManager.LoadScene(_inGameSceneName);
     }
 

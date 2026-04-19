@@ -249,6 +249,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 3864161175262882670, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _globalPools.Array.data[2].Prefab
       value: 
       objectReference: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
@@ -324,11 +328,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: _lobbySceneName
-      value: Jaein_LobbyScene
+      value: LobbyScene_Jaein
       objectReference: {fileID: 0}
     - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: _inGameSceneName
-      value: Build_InGameScene
+      value: InGameScene_Jaein
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
+      propertyPath: _stageSelectSceneName
+      value: StageSelectScene_Jaein
       objectReference: {fileID: 0}
     - target: {fileID: 2265297470353019938, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: m_LocalPosition.x

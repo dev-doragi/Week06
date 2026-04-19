@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 870e0f9ed7cf8c94a9cd81fffe3a4e31, type: 3}
-  m_Name: StageData_1
+  m_Name: StageData 1
   m_EditorClassIdentifier: Assembly-CSharp::StageDataSO
   StageLayoutPrefab: {fileID: -2608601988575246210, guid: 7067c0de1107b37408455c4d53c9fc3a, type: 3}
   Waves:
