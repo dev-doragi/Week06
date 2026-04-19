@@ -1,4 +1,4 @@
-
+﻿
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlacementManager : Singleton<PlacementManager>
 {
-    private int _currentMouseCount = 1;
+    [SerializeField] private int _currentMouseCount = 1;
 
     private List<GameObject> _activeMice = new List<GameObject>();
 
@@ -43,7 +43,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
 
     [Header("Rates")]
-    [SerializeField] private int subPerSpell = 3;
+    [SerializeField] private int subPerSpell = 0;
     [SerializeField] private float _mouseGenTime = 0.3f;
     [SerializeField] private float _mouseSubTime = 0.2f;
     [SerializeField] private float _addGaugeProgress = 0f;
@@ -59,6 +59,7 @@ public class PlacementManager : Singleton<PlacementManager>
     private Vector2 _anchoredPosition; // Best for UI stability
     private bool _isAnimating = false;
     private bool _isFull = false;
+    private int usedMouse;
 
 
     void Start()
@@ -76,8 +77,13 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void Update()
     {
-        HandleAdding();
-        HandleSubtracting();
+        if(_generatorCount > 0)
+        {
+            HandleAdding();
+        }
+        usedMouse = _spellmapCount + subPerSpell;
+        if (usedMouse > 0)
+            HandleSubtracting();
     }
 
     private void HandleAdding()
@@ -109,7 +115,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void HandleSubtracting()
     {
-        if (_spellmapCount <= 0) return;
+        
 
         if (_mouseSubTime < 0) return;
 
@@ -118,10 +124,10 @@ public class PlacementManager : Singleton<PlacementManager>
 
         if (_subGaugeProgress >= 1f)
         {
-            if (! ((subPerSpell * _spellmapCount) > _currentMouseCount))
+            if (! ((usedMouse) > _currentMouseCount))
             {
                 _subGaugeProgress = 0f;
-                SubtractMouseCount(subPerSpell * _spellmapCount); 
+                SubtractMouseCount(usedMouse); 
                 BuffIsEnabled = true;
             }
             else
@@ -144,14 +150,14 @@ public class PlacementManager : Singleton<PlacementManager>
         _generatorCount -= count;
     }
 
-    public void AddSpellGenerator()
+    public void AddSpellGenerator(int count)
     {
-        _spellmapCount++;
+        _spellmapCount += count;
     }
 
-    public void SubtractSpellGenerator()
+    public void SubtractSpellGenerator(int count)
     {
-        _spellmapCount--;
+        _spellmapCount-= count;
     }
 
     #endregion

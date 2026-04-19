@@ -19,6 +19,7 @@ public class StoreManager : Singleton<StoreManager>
     // 모든 쥐 데이터를 여기에 저장
     [SerializeField] private ShopDataBase _database;
     [SerializeField] private GridManager _gridManager;
+    [SerializeField] private BuildManager _buildManager;
     [SerializeField] private GameObject _buttonPrefab;
 
     // 각 타입에 따른 스토어
@@ -133,7 +134,7 @@ public class StoreManager : Singleton<StoreManager>
         //PlacementManager.Instance.AddMouseCount(data.cost); 이거 왜 있는건가요?
 
         if (_showDebug) Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
-        BuildManager.Instance.SelectPart(data.partKey);
+        _buildManager.SelectPart(data.partKey);
     }
     #endregion
 

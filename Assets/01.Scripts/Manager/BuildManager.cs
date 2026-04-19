@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +8,7 @@ using UnityEngine.InputSystem;
 //GridBuilder Manager아님
 public class BuildManager : MonoBehaviour
 {
-    public static BuildManager Instance;
+    [SerializeField] private bool enemyBuild = false;
 
     [SerializeField] private GridBoard board;
     [SerializeField] private GridRenderer gridRenderer;
@@ -35,22 +37,14 @@ public class BuildManager : MonoBehaviour
 
     private bool haveMouse;
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
-
     private void Start()
     {
         if (VehicleCache.HasSavedData) return;
 
-        SpawnBase();
+        if(enemyBuild)
+            SpawnEnemyBase();
+        else
+            SpawnBase();
     }
 
     private void Update()
@@ -171,8 +165,10 @@ public class BuildManager : MonoBehaviour
         {
             return false;
         }
+
         if (!PlacementManager.Instance.SubtractMouseCount(partData.Cost))
             return false;
+
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
         if (partObj == null) return false;
 
@@ -185,7 +181,6 @@ public class BuildManager : MonoBehaviour
             Destroy(partObj);
             return false;
         }
-
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
         TrySpawnRuntimePrefab(partData, placedPart);
 
@@ -242,19 +237,19 @@ public class BuildManager : MonoBehaviour
     private void RemovePartAndCollapse(PlacedPart targetPart)
     {
         if (targetPart == null) return;
+
         GridBoard targetBoard = targetPart.GetComponentInParent<GridBoard>();
-        if (targetBoard == null) return;
-        // 1. 먼저 대상 파츠 제거
+        if (targetBoard == null)
+            return;
+
         targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
 
-        // 2. 코어와 연결 안 된 모든 파츠 찾기
         List<PlacedPart> disconnectedParts = targetBoard.GetDisconnectedParts();
-
-        // 3. 연결 안 된 파츠들 전부 제거
         foreach (var part in disconnectedParts)
         {
-            if (part == null) continue;
+            if (part == null || part == targetPart) continue;
+
             targetBoard.RemovePart(part);
             part.DestroyAnim();
         }
@@ -306,8 +301,42 @@ public class BuildManager : MonoBehaviour
             Debug.LogWarning("[BuildManager] Key 10002 코어 데이터가 없습니다.");
             return;
         }
-
     }
+
+    private void SpawnEnemyBase()
+    {
+        if (!GridManager.instance.partDic.TryGetValue(20001, out PartData wheelData))
+        {
+            Debug.LogWarning("[BuildManager] Key 20001 바퀴 데이터가 없습니다.");
+            return;
+        }
+
+
+        int startX = Mathf.Max(0, (board.width / 2) - 1);
+        for (int i = 0; i < board.startWheelCount; i++)
+        {
+            Vector2Int pos = new Vector2Int(startX + i, 0);
+
+            PlacePartInternal(wheelData, pos, 0);
+        }
+
+        if (GridManager.instance.partDic.TryGetValue(20002, out PartData coreData))
+        {
+            Vector2Int pos = new Vector2Int(startX, 1);
+
+            if (!board.CanPlacePartByRules(coreData, pos, 0))
+                return;
+
+            PlacePartInternal(coreData, pos, 0);
+
+        }
+        else
+        {
+            Debug.LogWarning("[BuildManager] Key 20002 코어 데이터가 없습니다.");
+            return;
+        }
+    }
+
     private void ShowPlaceableCells()
     {
         ClearPlaceableHighlights();

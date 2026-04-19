@@ -359,7 +359,10 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
 
     private void HandleDead()
     {
-        PlacedPart pp = GetComponentInParent<PlacedPart>();
-        pp.Break();
+        _placedPart.Break();
+        if (_partData.BuildingType == BuildingType.Core)
+            EventBus.Instance.Publish(new BaseDestroyedEvent());
+        if(_partData.BuildingType == BuildingType.EnemyCore)
+            EventBus.Instance.Publish(new EnemyDefeatedEvent());
     }
 }

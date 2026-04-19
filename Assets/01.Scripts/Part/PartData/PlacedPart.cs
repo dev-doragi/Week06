@@ -299,7 +299,9 @@ public class PlacedPart : SerializedMonoBehaviour
 
     public void Break()
     {
-        BuildManager.Instance.BrokenPart(this);
+        Debug.Log($"[Break] {name} / frame={Time.frameCount}");
+        BuildManager _buildManager = GetComponentInParent<GridBoard>()._buildManager;
+        _buildManager.BrokenPart(this);
     }
 
     public void DestroyAnim()

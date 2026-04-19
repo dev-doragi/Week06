@@ -43,7 +43,9 @@ GameObject:
   - component: {fileID: 1514026403414102153}
   - component: {fileID: 1373237326967404772}
   - component: {fileID: 4072886057407895755}
+  - component: {fileID: 5491827871093807292}
   - component: {fileID: -6050234101099838560}
+  - component: {fileID: 3404230611424503028}
   m_Layer: 0
   m_Name: EnemyTemplate
   m_TagString: Untagged
@@ -84,7 +86,7 @@ MonoBehaviour:
   board: {fileID: 1373237326967404772}
   gridRenderer: {fileID: 4072886057407895755}
   placedPartsRoot: {fileID: 1977613973595570379}
-  blueprint: {fileID: 11400000, guid: 09d6749c7b6a4a64c88d465ce5231f7e, type: 2}
+  blueprint: {fileID: 0}
 --- !u!114 &1373237326967404772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,12 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345bf54035511824393b5268fcdc087b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridBoard
+  boardOwner: 1
   width: 7
   height: 21
   maxWheelCount: 7
   startWheelCount: 3
   maxBlockHeight: 20
   supportPerWheel: 5
+  _buildManager: {fileID: 5491827871093807292}
 --- !u!114 &4072886057407895755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +122,32 @@ MonoBehaviour:
   board: {fileID: 1373237326967404772}
   cellSize: 1
   originPos: {fileID: 4424045994550478800}
+--- !u!114 &5491827871093807292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903103754015817967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64db79404c07c54c91250903d97fb6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildManager
+  enemyBuild: 0
+  board: {fileID: 1373237326967404772}
+  gridRenderer: {fileID: 4072886057407895755}
+  placedPartsRoot: {fileID: 1977613973595570379}
+  ghostRoot: {fileID: 0}
+  placeableHighlightRoot: {fileID: 0}
+  highlightSprite: {fileID: 0}
+  _partRuntimeSpawner: {fileID: 0}
+  _teamType: 1
+  _partPrefabCatalog: {fileID: 0}
+  _spawnRuntimePrefab: 1
+  supportRangeHighlightRoot: {fileID: 0}
+  supportRangeHighlightSprite: {fileID: 0}
+  supportRangeHighlightColor: {r: 0.2, g: 0.6, b: 1, a: 0.2}
 --- !u!50 &-6050234101099838560
 Rigidbody2D:
   serializedVersion: 5
@@ -126,7 +156,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3903103754015817967}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -145,3 +175,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3404230611424503028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903103754015817967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878483f8365d0da46bdfac9b58066ce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMove
+  moveSpeed: 2
+  returnSpeed: 3
+  collisionDamage: 40

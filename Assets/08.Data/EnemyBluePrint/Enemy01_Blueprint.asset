@@ -10,25 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6e335d714721704c8f7be74eb04bc6f, type: 3}
-  m_Name: NewEnemyBlueprint_Blueprint
+  m_Name: Enemy01_Blueprint
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBlueprintSO
-  blueprintName: NewEnemyBlueprint
+  blueprintName: Enemy01
   placements:
-  - partKey: 10001
+  - partKey: 20001
     origin: {x: 2, y: 0}
     rotation: 0
-  - partKey: 10001
+  - partKey: 20001
     origin: {x: 3, y: 0}
     rotation: 0
-  - partKey: 10001
+  - partKey: 20001
     origin: {x: 4, y: 0}
     rotation: 0
-  - partKey: 10002
+  - partKey: 101
+    origin: {x: 1, y: 1}
+    rotation: 0
+  - partKey: 20002
     origin: {x: 2, y: 1}
     rotation: 0
-  - partKey: 2
+  - partKey: 101
     origin: {x: 4, y: 1}
     rotation: 0
-  - partKey: 2
+  - partKey: 104
+    origin: {x: 1, y: 2}
+    rotation: 0
+  - partKey: 101
     origin: {x: 2, y: 2}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 3, y: 2}
+    rotation: 0
+  - partKey: 104
+    origin: {x: 4, y: 2}
+    rotation: 0
+  - partKey: 104
+    origin: {x: 3, y: 3}
     rotation: 0

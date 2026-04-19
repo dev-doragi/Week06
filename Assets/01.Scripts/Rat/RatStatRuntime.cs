@@ -70,7 +70,6 @@ public class RatStatRuntime : MonoBehaviour
         {
             _currentHp = 0f;
         }
-
         OnHpChanged?.Invoke(_currentHp, MaxHp);
 
         if (IsDead)

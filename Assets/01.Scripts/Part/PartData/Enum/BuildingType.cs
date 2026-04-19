@@ -1,8 +1,9 @@
-public enum BuildingType
+﻿public enum BuildingType
 {
     None = 0,
     Wheel = 1,
     Core = 2,
     ProductionRoom = 3,
-    Altar = 4
+    Altar = 4,
+    EnemyCore = 5
 }

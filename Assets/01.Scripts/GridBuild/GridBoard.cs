@@ -3,8 +3,18 @@ using UnityEngine;
 
 public class GridBoard : MonoBehaviour
 {
+    public enum BoardOwnerType
+    {
+        Player,
+        Enemy
+    }
+
+    [SerializeField] private BoardOwnerType boardOwner;
+
     public const int WHEEL_KEY = 10001;
     public const int CORE_KEY = 10002;
+    public const int ENEMY_WHEEL_KEY = 20001;
+    public const int ENEMY_CORE_KEY = 20002;
 
     [Header("Grid Size")]
     public int width = 7;
@@ -16,6 +26,7 @@ public class GridBoard : MonoBehaviour
     public int maxBlockHeight = 20;
     public int supportPerWheel = 5;
 
+    public BuildManager _buildManager;
     private PlacedPart[,] cells;
 
     // 보드의 셀 배열을 초기화하는 함수
@@ -93,7 +104,7 @@ public class GridBoard : MonoBehaviour
     // 전달된 데이터가 바퀴 파츠인지 확인하는 함수
     public bool IsWheelPart(PartData data)
     {
-        return data != null && data.Key == WHEEL_KEY;
+        return data != null && (data.Key == WHEEL_KEY || data.Key == ENEMY_WHEEL_KEY);
     }
 
     // 바퀴 파츠가 현재 위치에 규칙상 배치 가능한지 확인하는 함수
@@ -120,7 +131,7 @@ public class GridBoard : MonoBehaviour
         for (int x = 0; x < width; x++)
         {
             PlacedPart part = GetCell(new Vector2Int(x, 0));
-            if (part != null && part.data != null && part.data.Key == WHEEL_KEY)
+            if (part != null && part.data != null && (part.data.Key == WHEEL_KEY || part.data.Key == ENEMY_WHEEL_KEY))
                 uniqueParts.Add(part);
         }
 
@@ -223,7 +234,7 @@ public class GridBoard : MonoBehaviour
         if (!IsInside(pos)) return false;
 
         PlacedPart part = GetCell(pos);
-        return part != null && part.data != null && part.data.Key == WHEEL_KEY;
+        return part != null && part.data != null && (part.data.Key == WHEEL_KEY || part.data.Key == ENEMY_WHEEL_KEY);
     }
     // 바퀴 수 대비 일반 블럭을 더 설치할 수 있는지 확인하는 함수
     public bool CanSupportMoreBlocks(PartData newPartData)
@@ -247,7 +258,7 @@ public class GridBoard : MonoBehaviour
             for (int y = 1; y <= maxBlockHeight && y < height; y++)
             {
                 PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
+                if (part != null && part.data != null && part.data.Key != WHEEL_KEY && part.data.Key != ENEMY_WHEEL_KEY)
                     return true;
             }
         }
@@ -327,7 +338,7 @@ public class GridBoard : MonoBehaviour
             for (int y = 1; y <= maxBlockHeight && y < height; y++)
             {
                 PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key != WHEEL_KEY)
+                if (part != null && part.data != null && part.data.Key != WHEEL_KEY && part.data.Key != ENEMY_WHEEL_KEY)
                     count++;
             }
         }
@@ -383,12 +394,14 @@ public class GridBoard : MonoBehaviour
         HashSet<PlacedPart> connectedParts = new();
         Queue<PlacedPart> queue = new();
 
+        int targetCoreKey = boardOwner == BoardOwnerType.Player ? CORE_KEY : ENEMY_CORE_KEY;
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key == CORE_KEY)
+                if (part != null && part.data != null && part.data.Key == targetCoreKey)
                 {
                     if (connectedParts.Add(part))
                         queue.Enqueue(part);
