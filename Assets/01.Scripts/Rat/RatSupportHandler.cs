@@ -45,7 +45,16 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsSupportUnit())
+        PartData partData = _ratController.PartData;
+
+        if (partData == null)
+        {
+            Debug.LogError($"{name}: CanProvideSupport 실패 - PartData가 없습니다.");
+            return false;
+        }
+
+        // 주요 라인: 이제 지원 제공자는 지원형 유닛 + 지원형 빌딩을 모두 포함한다.
+        if (!partData.CanUseSupport)
         {
             return false;
         }

@@ -144,7 +144,7 @@ public class RatStatRuntime : MonoBehaviour
 
     public bool CanUseSupport()
     {
-        return IsSupportUnit();
+        return _partData != null && _partData.CanUseSupport;
     }
 
     public bool TryGetAttackStat(out PartAttackStatData attackStat)
