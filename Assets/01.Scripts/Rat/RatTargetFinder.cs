@@ -56,6 +56,11 @@ public class RatTargetFinder : MonoBehaviour
             return false;
         }
 
+        if (!target.CanBeCombatTarget())
+        {
+            return false;
+        }
+
         if (target.RatStatRuntime.IsDead)
         {
             return false;

@@ -32,6 +32,12 @@ public class RatCollisionHandler : MonoBehaviour
             return false;
         }
 
+        // 주요 라인: wheel은 충돌 피해 대상이 아니다.
+        if (!target.CanBeCombatTarget())
+        {
+            return false;
+        }
+
         if (!_ratController.TryGetDefenseStat(out _))
         {
             Debug.LogError($"{name}: Defense 유닛인데 DefenseStat을 가져오지 못했습니다.");
