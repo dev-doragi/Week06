@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(-100)]
 public class StageManager : Singleton<StageManager>
 {
     [Header("Stage Settings")]
@@ -13,7 +14,6 @@ public class StageManager : Singleton<StageManager>
     public int CurrentStageIndex { get; private set; } = 0;
     public int CurrentWaveIndex { get; private set; } = 0;
 
-    // [추가] 현재 진행 상태 저장
     public InGameState CurrentState { get; private set; } = InGameState.None;
 
     public StageDataSO CurrentStageData => _stageDatas[CurrentStageIndex];
@@ -27,10 +27,17 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     private void Start()
     {
-        // TODO: 스테이지 불러오는 트리거도 따로 분리할건지?
-        LoadStage(0);
+        int targetIndex = StageLoadContext.GetStageIndex();
+        LoadStage(targetIndex);
+
+        Debug.Log($"[StageManager] Init 완료 및 Stage {targetIndex} 로드 시작");
     }
 
     /// <summary>

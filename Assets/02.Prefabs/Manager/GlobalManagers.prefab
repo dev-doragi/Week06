@@ -328,11 +328,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: _lobbySceneName
-      value: Jaein_LobbyScene
+      value: LobbyScene_Jaein
       objectReference: {fileID: 0}
     - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: _inGameSceneName
-      value: Build_InGameScene
+      value: InGameScene_Jaein
+      objectReference: {fileID: 0}
+    - target: {fileID: 1527159094488526342, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
+      propertyPath: _stageSelectSceneName
+      value: StageSelectScene_Jaein
       objectReference: {fileID: 0}
     - target: {fileID: 2265297470353019938, guid: 83efa2acb481e8b4cac693bc83fa2704, type: 3}
       propertyPath: m_LocalPosition.x

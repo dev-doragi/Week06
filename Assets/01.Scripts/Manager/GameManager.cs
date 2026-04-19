@@ -10,6 +10,7 @@ public enum GameState
     GameClear
 }
 
+[DefaultExecutionOrder(-105)]
 public class GameManager : Singleton<GameManager>
 {
     public GameState CurrentState { get; private set; } = GameState.Ready;

@@ -11,18 +11,20 @@ public enum InGameState
     StageFailed
 }
 
-[DefaultExecutionOrder(-98)]
+[DefaultExecutionOrder(-100)]
 public class GameFlowManager : Singleton<GameFlowManager>
 {
-    private StageManager _stageManager;
+    private StageManager _stageManager
+    {
+        get
+        {
+            if (ManagerRegistry.TryGet(out StageManager sm))
+                return sm;
+            return StageManager.Instance;
+        }
+    }
 
     public InGameState CurrentInGameState { get; private set; } = InGameState.None;
-
-    protected override void Init()
-    {
-        if (!ManagerRegistry.TryGet(out _stageManager))
-            Debug.LogError("[GameFlowManager] StageManager를 Registry에서 찾을 수 없습니다.");
-    }
 
     private void OnEnable()
     {

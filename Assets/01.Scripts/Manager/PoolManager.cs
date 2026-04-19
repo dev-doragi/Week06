@@ -26,10 +26,10 @@ public class PoolManager : Singleton<PoolManager>
 
         if (_uiPoolRoot == null)
         {
-            GameObject uiRootObj = new GameObject("UI_PoolRoot", typeof(Canvas), typeof(RectTransform));
-            uiRootObj.GetComponent<Canvas>().enabled = false; // 렌더링 방지
-            DontDestroyOnLoad(uiRootObj);
-            _uiPoolRoot = uiRootObj.GetComponent<RectTransform>();
+            //GameObject uiRootObj = new GameObject("UI_PoolRoot", typeof(Canvas), typeof(RectTransform));
+            //uiRootObj.GetComponent<Canvas>().enabled = false; // 렌더링 방지
+            //DontDestroyOnLoad(uiRootObj);
+            //_uiPoolRoot = uiRootObj.GetComponent<RectTransform>();
         }
 
         foreach (var setup in _globalPools)
