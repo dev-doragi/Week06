@@ -39,7 +39,6 @@ public class PartRuntimeSpawner : MonoBehaviour
             placedPart.transform.position,
             Quaternion.identity,
             placedPart.transform);
-        Debug.Log("${prefab.name}_Runtime");
         runtimeInstance.name = $"{prefab.name}_Runtime";
         runtimeInstance.transform.localPosition = Vector3.zero;
         runtimeInstance.transform.localRotation = Quaternion.identity;

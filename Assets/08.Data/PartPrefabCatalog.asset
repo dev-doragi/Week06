@@ -24,4 +24,4 @@ MonoBehaviour:
   - _key: 10001
     _prefab: {fileID: 370892442198955768, guid: b9ad5e0b27d1e7f4dbbe971263c3c297, type: 3}
   - _key: 10002
-    _prefab: {fileID: 370892442198955768, guid: cd9c30150eb95554fa633671dcd61e31, type: 3}
+    _prefab: {fileID: 370892442198955768, guid: 470973166d72f9f42987b3884e79994d, type: 3}
