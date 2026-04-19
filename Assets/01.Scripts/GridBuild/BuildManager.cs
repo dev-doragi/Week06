@@ -21,6 +21,12 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
     [SerializeField] private bool _spawnRuntimePrefab = true;
 
+    [SerializeField] private Transform supportRangeHighlightRoot;
+    [SerializeField] private Sprite supportRangeHighlightSprite;
+    [SerializeField] private Color supportRangeHighlightColor = new Color(0.2f, 0.6f, 1f, 0.2f);
+
+    private readonly List<GameObject> supportRangeHighlights = new();
+
     private readonly List<GameObject> placeableHighlights = new();
 
     private PartData currentPartData;
@@ -73,6 +79,8 @@ public class BuildManager : MonoBehaviour
 
     public void SelectPart(int key)
     {
+        ClearSupportRangeHighlights();
+
         if (!GridManager.instance.partDic.TryGetValue(key, out currentPartData))
         {
             currentPartData = null;
@@ -138,6 +146,8 @@ public class BuildManager : MonoBehaviour
 
         bool canPlace = board.CanPlacePartByRules(currentPartData, gridPos, currentRotation);
         ghostPart.SetColor(canPlace ? new Color(0f, 1f, 0f, 0.45f) : new Color(1f, 0f, 0f, 0.45f));
+
+        UpdateSupportRangePreview();
     }
 
     public void TryPlaceCurrentPart()
@@ -233,7 +243,7 @@ public class BuildManager : MonoBehaviour
     {
         if (targetPart == null) return;
         GridBoard targetBoard = targetPart.GetComponentInParent<GridBoard>();
-        if(targetBoard == null) return;
+        if (targetBoard == null) return;
         // 1. 먼저 대상 파츠 제거
         targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
@@ -256,6 +266,7 @@ public class BuildManager : MonoBehaviour
         currentPartData = null;
         currentRotation = 0;
         ClearPlaceableHighlights();
+        ClearSupportRangeHighlights();
         if (ghostPart != null)
         {
             Destroy(ghostPart.gameObject);
@@ -339,4 +350,95 @@ public class BuildManager : MonoBehaviour
 
         placeableHighlights.Clear();
     }
+
+    #region 서포트 반경 시각화
+    private void UpdateSupportRangePreview()
+    {
+        ClearSupportRangeHighlights();
+
+        if (currentPartData == null)
+        {
+            return;
+        }
+
+        if (!currentPartData.CanUseSupport)
+        {
+            return;
+        }
+
+        if (ghostPart == null)
+        {
+            return;
+        }
+
+        if (supportRangeHighlightRoot == null)
+        {
+            Debug.LogWarning($"{name}: supportRangeHighlightRoot가 연결되지 않았습니다.");
+            return;
+        }
+
+        if (supportRangeHighlightSprite == null)
+        {
+            Debug.LogWarning($"{name}: supportRangeHighlightSprite가 연결되지 않았습니다.");
+            return;
+        }
+
+        IReadOnlyList<Vector2Int> sourceCells = ghostPart.OccupiedCells;
+        if (sourceCells == null || sourceCells.Count == 0)
+        {
+            return;
+        }
+
+        int supportRangeRadius = currentPartData.SupportRangeRadius;
+        if (supportRangeRadius <= 0)
+        {
+            return;
+        }
+
+        for (int x = 0; x < board.width; x++)
+        {
+            for (int y = 0; y < board.height; y++)
+            {
+                Vector2Int cell = new Vector2Int(x, y);
+                List<Vector2Int> targetCells = new List<Vector2Int> { cell };
+
+                if (!GridRangeUtility.IsWithinCellRadius(sourceCells, targetCells, supportRangeRadius))
+                {
+                    continue;
+                }
+
+                CreateSupportRangeHighlight(cell);
+            }
+        }
+    }
+
+    private void CreateSupportRangeHighlight(Vector2Int cell)
+    {
+        GameObject cellObj = new GameObject($"SupportRange_{cell.x}_{cell.y}");
+        cellObj.transform.SetParent(supportRangeHighlightRoot);
+        cellObj.transform.position = gridRenderer.GridToWorld(cell);
+
+        SpriteRenderer sr = cellObj.AddComponent<SpriteRenderer>();
+        sr.sprite = supportRangeHighlightSprite;
+        sr.color = supportRangeHighlightColor;
+
+        float scale = gridRenderer.cellSize;
+        cellObj.transform.localScale = new Vector3(scale, scale, 1f);
+
+        supportRangeHighlights.Add(cellObj);
+    }
+
+    private void ClearSupportRangeHighlights()
+    {
+        for (int i = 0; i < supportRangeHighlights.Count; i++)
+        {
+            if (supportRangeHighlights[i] != null)
+            {
+                Destroy(supportRangeHighlights[i]);
+            }
+        }
+
+        supportRangeHighlights.Clear();
+    }
+    #endregion
 }
