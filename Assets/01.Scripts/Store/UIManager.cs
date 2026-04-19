@@ -1,34 +1,85 @@
-
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    public static UIManager Instance {get; private set;}
+    [Header("Main UI Panels")]
+    [SerializeField] private GameObject _inGamePanel;
+    [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private GameObject _gameClearPanel;
+    [SerializeField] private GameObject _pausePanel;
 
-    private void Awake()
+    protected override void Init()
     {
-        if (Instance == null)
+
+    }
+
+    private void OnEnable()
+    {
+        if (EventBus.Instance != null)
         {
-            Instance = this;
-            Debug.Log("[UIManager] : Creating UIManager Instance");
-            return;
+            EventBus.Instance.Subscribe<GameStateChangedEvent>(OnGameStateChanged);
+            EventBus.Instance.Subscribe<InGameStateChangedEvent>(OnInGameStateChanged);
         }
-        
-        Debug.LogWarning("[UIManager] : Found Multiple UIManager, Destorying Current Instance");
-        Destroy(this);
     }
 
-    private void Start()
+    private void OnDisable()
     {
-
-        RefreshStoreUI();
-
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Unsubscribe<GameStateChangedEvent>(OnGameStateChanged);
+            EventBus.Instance.Unsubscribe<InGameStateChangedEvent>(OnInGameStateChanged);
+        }
     }
 
-
-    private void RefreshStoreUI()
+    private void OnGameStateChanged(GameStateChangedEvent evt)
     {
-        // Refresh Logic here
+        switch (evt.NewState)
+        {
+            case GameState.Playing:
+                if (_pausePanel != null) _pausePanel.SetActive(false);
+                if (_inGamePanel != null) _inGamePanel.SetActive(true);
+                break;
+
+            case GameState.Paused:
+                if (_pausePanel != null) _pausePanel.SetActive(true);
+                break;
+
+            case GameState.GameOver:
+                if (_gameOverPanel != null) _gameOverPanel.SetActive(true);
+                break;
+
+            case GameState.GameClear:
+                if (_gameClearPanel != null) _gameClearPanel.SetActive(true);
+                break;
+
+            case GameState.Ready:
+                HideAllPanels();
+                break;
+        }
+    }
+
+    // 만약 인게임 상태에 따라 UI 변화가 필요하다면
+    private void OnInGameStateChanged(InGameStateChangedEvent evt)
+    {
+        switch (evt.NewState)
+        {
+            case InGameState.None:
+                break;
+
+            case InGameState.StageFailed:
+                break;
+
+            case InGameState.StageCleared:
+                break;
+        }
+    }
+
+    public void HideAllPanels()
+    {
+        if (_inGamePanel != null) _inGamePanel.SetActive(false);
+        if (_gameOverPanel != null) _gameOverPanel.SetActive(false);
+        if (_gameClearPanel != null) _gameClearPanel.SetActive(false);
+        if (_pausePanel != null) _pausePanel.SetActive(false);
     }
 }

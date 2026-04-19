@@ -51,6 +51,9 @@ MonoBehaviour:
   - Prefab: {fileID: 683115500821441532, guid: 88cd124393c49f44f9b22146d9cf199b, type: 3}
     InitialSize: 30
     MaxSize: 30
-  - Prefab: {fileID: 3100642160546611706, guid: 96f392c40ae379648be56a14ee8311f9, type: 3}
+  - Prefab: {fileID: 3864161175262882670, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
+    InitialSize: 30
+    MaxSize: 100
+  - Prefab: {fileID: 3864161175262882670, guid: fdce04cb37ab7244187fc77818c0bebf, type: 3}
     InitialSize: 30
     MaxSize: 100

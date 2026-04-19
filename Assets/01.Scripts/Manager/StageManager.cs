@@ -109,12 +109,6 @@ public class StageManager : Singleton<StageManager>
         Debug.Log($"[StageManager] 다음 웨이브로 이동: Wave {CurrentWaveIndex}/{CurrentStageData.Waves.Count - 1}");
     }
 
-    public void NotifyStageCleared()
-    {
-        EventBus.Instance.Publish(new StageClearedEvent { StageIndex = CurrentStageIndex });
-        Debug.Log($"[StageManager] Stage {CurrentStageIndex} 클리어 알림 발송");
-    }
-
     public void ClearCurrentStage()
     {
         if (_currentLayout != null)

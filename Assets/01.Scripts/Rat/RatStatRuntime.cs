@@ -7,7 +7,7 @@ public class RatStatRuntime : MonoBehaviour
 
     private float _currentHp;
 
-    public PartData PartData => _partData;
+    //public PartData PartData => _partData;
     public float CurrentHp => _currentHp;
     public float MaxHp => _partData != null ? _partData.CommonStat.Hp : 0f;
     public float DefenseRate => _partData != null ? _partData.CommonStat.DefenseRate : 0f;

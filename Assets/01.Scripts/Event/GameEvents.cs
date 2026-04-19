@@ -146,3 +146,6 @@ public struct ScrollEvent
 {
     public float Delta; // 휠 스크롤 변화량 (y값)
 }
+
+// 일시정지 이벤트
+public struct PausePressedEvent { }

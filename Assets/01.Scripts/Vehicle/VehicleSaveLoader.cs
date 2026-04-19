@@ -11,11 +11,6 @@ public class VehicleSaveLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        // [주석처리] Static Event 구독 (EventBus로 통일)
-        // StageManager.OnStageCleared += SaveCurrentVehicle;
-        // StageManager.OnStageLoaded += LoadSavedVehicle;
-
-        // [EventBus 구독]
         if (EventBus.Instance != null)
         {
             EventBus.Instance.Subscribe<StageClearedEvent>(OnStageCleared);
@@ -25,11 +20,6 @@ public class VehicleSaveLoader : MonoBehaviour
 
     private void OnDisable()
     {
-        // [주석처리] Static Event 구독 해제
-        // StageManager.OnStageCleared -= SaveCurrentVehicle;
-        // StageManager.OnStageLoaded -= LoadSavedVehicle;
-
-        // [EventBus 구독 해제]
         if (EventBus.Instance != null)
         {
             EventBus.Instance.Unsubscribe<StageClearedEvent>(OnStageCleared);

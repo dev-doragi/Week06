@@ -38,7 +38,7 @@ public class EventTester : MonoBehaviour
     {
         if (ManagerRegistry.TryGet(out StageManager stageManager))
         {
-            stageManager.NotifyStageCleared();
+            //stageManager.NotifyStageCleared();
             Debug.Log("[GameEventTester] 강제 스테이지 클리어 완료");
         }
     }

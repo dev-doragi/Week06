@@ -7,32 +7,50 @@ public class InputReader : Singleton<InputReader>
 {
     private PlayerInput _playerInput;
 
+    private InputActionMap _playerMap;
+    private InputActionMap _systemMap;
+
     private InputAction _clickAction;
     private InputAction _rightClickAction;
     private InputAction _rotateAction;
     private InputAction _pointAction;
     private InputAction _scrollAction;
+    private InputAction _pauseAction;
 
     public bool IsPointerOverUI { get; private set; }
 
     protected override void Init()
     {
         _playerInput = GetComponent<PlayerInput>();
-        if (_playerInput == null)
-        {
-            Debug.LogError("InputReader: PlayerInput 컴포넌트가 누락되었습니다.");
-            return;
-        }
 
-        InputActionMap map = _playerInput.actions.FindActionMap("Player", true);
+        _playerMap = _playerInput.actions.FindActionMap("Player", true);
+        _systemMap = _playerInput.actions.FindActionMap("System", true);
 
-        _clickAction = map.FindAction("Click", true);
-        _rightClickAction = map.FindAction("RightClick", true);
-        _rotateAction = map.FindAction("Rotate", true);
-        _pointAction = map.FindAction("Point", true);
-        _scrollAction = map.FindAction("Scroll", true);
+        _clickAction = _playerMap.FindAction("Click", true);
+        _rightClickAction = _playerMap.FindAction("RightClick", true);
+        _rotateAction = _playerMap.FindAction("Rotate", true);
+        _pointAction = _playerMap.FindAction("Point", true);
+        _scrollAction = _playerMap.FindAction("Scroll", true);
+
+        _pauseAction = _systemMap.FindAction("Pause", true);
 
         BindEvents();
+    }
+
+    private void OnEnable()
+    {
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Subscribe<GameStateChangedEvent>(OnGameStateChanged);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Unsubscribe<GameStateChangedEvent>(OnGameStateChanged);
+        }
     }
 
     private void Update()
@@ -45,7 +63,6 @@ public class InputReader : Singleton<InputReader>
 
     private void BindEvents()
     {
-        // EventBus를 통한 이벤트 전파
         _clickAction.started += _ => EventBus.Instance.Publish(new ClickEvent { IsStarted = true });
         _clickAction.canceled += _ => EventBus.Instance.Publish(new ClickEvent { IsStarted = false });
 
@@ -62,9 +79,25 @@ public class InputReader : Singleton<InputReader>
                 EventBus.Instance.Publish(new ScrollEvent { Delta = scrollValue });
             }
         };
+
+        _pauseAction.performed += _ => EventBus.Instance.Publish(new PausePressedEvent());
     }
 
-    // --- 폴링 메서드 (규칙 준수: _camelCase 필드 참조) ---
+    private void OnGameStateChanged(GameStateChangedEvent evt)
+    {
+        switch (evt.NewState)
+        {
+            case GameState.Playing:
+                _playerMap.Enable();
+                break;
+            case GameState.Paused:
+            case GameState.GameOver:
+            case GameState.GameClear:
+                _playerMap.Disable();
+                break;
+        }
+    }
+
     public Vector2 GetMousePosition() => _pointAction?.ReadValue<Vector2>() ?? Vector2.zero;
     public Vector2 GetMouseDelta() => Mouse.current.delta.ReadValue();
 }
