@@ -48,10 +48,5 @@ public class PauseManager : Singleton<PauseManager>
     {
         _isPaused = pause;
         GameManager.Instance.ChangeState(_isPaused ? GameState.Paused : GameState.Playing);
-
-        // TODO : 이벤트 처리
-        EventBus.Instance.Publish(new PausePressedEvent
-        {
-        });
     }
 }

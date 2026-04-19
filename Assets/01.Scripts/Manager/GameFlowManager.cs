@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public enum InGameState
 {
     None,
@@ -13,103 +13,52 @@ public enum InGameState
 [DefaultExecutionOrder(-100)]
 public class GameFlowManager : Singleton<GameFlowManager>
 {
-    private StageManager _stageManager
-    {
-        get
-        {
-            if (ManagerRegistry.TryGet(out StageManager sm))
-                return sm;
-            return StageManager.Instance;
-        }
-    }
+    private StageManager _stageManager => ManagerRegistry.TryGet(out StageManager sm) ? sm : StageManager.Instance;
 
     public InGameState CurrentInGameState { get; private set; } = InGameState.None;
 
     private void OnEnable()
     {
-        if (EventBus.Instance != null)
-        {
-            // 전역 게임 상태 모니터링
-            EventBus.Instance.Subscribe<GameStateChangedEvent>(OnGlobalStateChanged);
-
-            // 인게임 진행 이벤트 구독
-            EventBus.Instance.Subscribe<StageLoadedEvent>(OnStageLoaded);
-            EventBus.Instance.Subscribe<WaveStartedEvent>(OnWaveStarted);
-            EventBus.Instance.Subscribe<EnemyDefeatedEvent>(OnEnemyDefeated);
-            EventBus.Instance.Subscribe<BaseDestroyedEvent>(OnBaseDestroyed);
-        }
+        if (EventBus.Instance == null) return;
+        EventBus.Instance.Subscribe<GameStateChangedEvent>(OnGlobalStateChanged);
+        EventBus.Instance.Subscribe<StageLoadedEvent>(OnStageLoaded);
+        EventBus.Instance.Subscribe<WaveStartedEvent>(OnWaveStarted);
+        EventBus.Instance.Subscribe<EnemyDefeatedEvent>(OnEnemyDefeated);
+        EventBus.Instance.Subscribe<BaseDestroyedEvent>(OnBaseDestroyed);
     }
 
     private void OnDisable()
     {
-        if (EventBus.Instance != null)
-        {
-            EventBus.Instance.Unsubscribe<GameStateChangedEvent>(OnGlobalStateChanged);
-            EventBus.Instance.Unsubscribe<StageLoadedEvent>(OnStageLoaded);
-            EventBus.Instance.Unsubscribe<WaveStartedEvent>(OnWaveStarted);
-            EventBus.Instance.Unsubscribe<EnemyDefeatedEvent>(OnEnemyDefeated);
-            EventBus.Instance.Unsubscribe<BaseDestroyedEvent>(OnBaseDestroyed);
-        }
+        if (EventBus.Instance == null) return;
+        EventBus.Instance.Unsubscribe<GameStateChangedEvent>(OnGlobalStateChanged);
+        EventBus.Instance.Unsubscribe<StageLoadedEvent>(OnStageLoaded);
+        EventBus.Instance.Unsubscribe<WaveStartedEvent>(OnWaveStarted);
+        EventBus.Instance.Unsubscribe<EnemyDefeatedEvent>(OnEnemyDefeated);
+        EventBus.Instance.Unsubscribe<BaseDestroyedEvent>(OnBaseDestroyed);
     }
-
-    // ========================================================================
-    // EventBus 이벤트 핸들러
-    // ========================================================================
 
     private void OnGlobalStateChanged(GameStateChangedEvent evt)
     {
-        // 게임 오버, 클리어, 혹은 로비(Ready)로 돌아갈 경우 인게임 상태 초기화
-        if (evt.NewState == GameState.GameOver || evt.NewState == GameState.GameClear || evt.NewState == GameState.Ready)
-        {
+        if (evt.NewState == GameState.GameOver || evt.NewState == GameState.Ready || evt.NewState == GameState.GameClear)
             ChangeFlowState(InGameState.None);
-        }
     }
 
-    private void OnStageLoaded(StageLoadedEvent evt)
-    {
-        Debug.Log($"[GameFlowManager] Stage {evt.StageIndex} 로드됨");
-        ChangeFlowState(InGameState.Prepare);
-    }
-
-    private void OnWaveStarted(WaveStartedEvent evt)
-    {
-        Debug.Log($"[GameFlowManager] Stage {evt.StageIndex} - Wave {evt.WaveIndex} 시작");
-        ChangeFlowState(InGameState.WavePlaying);
-    }
-
-    private void OnEnemyDefeated(EnemyDefeatedEvent evt)
-    {
-        CheckWinLossCondition(isBaseDestroyed: false);
-    }
-
-    private void OnBaseDestroyed(BaseDestroyedEvent evt)
-    {
-        CheckWinLossCondition(isBaseDestroyed: true);
-    }
-
-    // ========================================================================
-    // 상태 전환 및 로직 처리
-    // ========================================================================
+    private void OnStageLoaded(StageLoadedEvent evt) => ChangeFlowState(InGameState.Prepare);
+    private void OnWaveStarted(WaveStartedEvent evt) => ChangeFlowState(InGameState.WavePlaying);
+    private void OnEnemyDefeated(EnemyDefeatedEvent evt) => CheckWinLossCondition(false);
+    private void OnBaseDestroyed(BaseDestroyedEvent evt) => CheckWinLossCondition(true);
 
     public void ChangeFlowState(InGameState newState)
     {
         if (CurrentInGameState == newState) return;
-
-        if (newState != InGameState.None && GameManager.Instance.CurrentState != GameState.Playing)
-        {
-            Debug.LogWarning($"[GameFlowManager] 전역 상태가 Playing이 아니므로 {newState} 전환을 거부합니다.");
-            return;
-        }
+        if (newState != InGameState.None && GameManager.Instance.CurrentState != GameState.Playing) return;
 
         InGameState previousState = CurrentInGameState;
         CurrentInGameState = newState;
 
-        Debug.Log($"[GameFlowManager] State Changed: {CurrentInGameState} -> {newState}");
+        Debug.Log($"[GameFlowManager] {previousState} -> {CurrentInGameState}");
 
-        // 상태 변경 방송
         EventBus.Instance.Publish(new InGameStateChangedEvent { NewState = CurrentInGameState });
-
-        // 스테이지 매니저 동기화
         _stageManager?.UpdateState(CurrentInGameState);
 
         ProcessStateLogic(newState);
@@ -119,41 +68,64 @@ public class GameFlowManager : Singleton<GameFlowManager>
     {
         switch (state)
         {
+            case InGameState.Prepare:
+                //_stageManager?.PlayWave(); // 웨이브 시작 처리는 버튼으로?
+                break;
             case InGameState.WaveCleared:
                 if (_stageManager.CurrentWaveIndex >= _stageManager.CurrentStageData.Waves.Count - 1)
-                {
-                    ChangeFlowState(InGameState.StageCleared);
-                }
+                    StartCoroutine(SlowMotionTransitionRoutine(GameState.GameClear));
                 else
-                {
-                    _stageManager.GoToNextWave();
-                    // TODO: 다음 웨이브는 인터벌 이후 자동 진행되도록 해야함
-                    ChangeFlowState(InGameState.Prepare);
-                }
+                    StartCoroutine(NextWaveRoutine());
+                break;
+
+            case InGameState.StageFailed:
+                StartCoroutine(SlowMotionTransitionRoutine(GameState.GameOver));
                 break;
 
             case InGameState.StageCleared:
                 EventBus.Instance.Publish(new StageClearedEvent { StageIndex = _stageManager.CurrentStageIndex });
                 break;
+        }
+    }
 
-            case InGameState.StageFailed:
-                EventBus.Instance.Publish(new StageFailedEvent { StageIndex = _stageManager.CurrentStageIndex });
-                break;
+    private IEnumerator NextWaveRoutine()
+    {
+        int nextIndex = _stageManager.CurrentWaveIndex + 1;
+        float timer = _stageManager.CurrentStageData.Waves[nextIndex].WaveInterval;
+
+        while (timer > 0)
+        {
+            timer -= Time.unscaledDeltaTime;
+            EventBus.Instance.Publish(new WaveCountdownEvent { RemainingTime = timer, IsActive = true });
+            yield return null;
+        }
+
+        EventBus.Instance.Publish(new WaveCountdownEvent { IsActive = false });
+        _stageManager.GoToNextWave();
+        _stageManager.PlayWave();
+    }
+
+    private IEnumerator SlowMotionTransitionRoutine(GameState targetGlobalState)
+    {
+        Time.timeScale = 0.3f;
+        yield return new WaitForSecondsRealtime(1.5f);
+        Time.timeScale = 1f;
+
+        if (targetGlobalState == GameState.GameClear)
+        {
+            ChangeFlowState(InGameState.StageCleared);
+        }
+        else
+        {
+            EventBus.Instance.Publish(new StageFailedEvent { StageIndex = _stageManager.CurrentStageIndex });
         }
     }
 
     public void CheckWinLossCondition(bool isBaseDestroyed)
     {
-        // 전투 중일 때만 판정 수행
         if (CurrentInGameState != InGameState.WavePlaying) return;
 
-        if (isBaseDestroyed)
-        {
-            ChangeFlowState(InGameState.StageFailed);
-        }
-        else
-        {
-            ChangeFlowState(InGameState.WaveCleared);
-        }
+        // 적이 하나뿐이므로, 어떤 이벤트가 먼저 들어오느냐에 따라 바로 승패 결정
+        ChangeFlowState(isBaseDestroyed ? InGameState.StageFailed : InGameState.WaveCleared);
     }
 }
