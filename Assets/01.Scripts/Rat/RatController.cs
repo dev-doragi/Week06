@@ -128,6 +128,11 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     public bool IsDefenseUnit() => _ratStatRuntime != null && _ratStatRuntime.IsDefenseUnit();
     public bool IsSupportUnit() => _ratStatRuntime != null && _ratStatRuntime.IsSupportUnit();
 
+    public bool CanBeCombatTarget()
+    {
+        return PartData != null && PartData.CanBeCombatTarget;
+    }
+
     public float GetCurrentHp() => _ratStatRuntime != null ? _ratStatRuntime.CurrentHp : 0f;
     public float GetMaxHp() => _ratStatRuntime != null ? _ratStatRuntime.MaxHp : 0f;
     public float GetDefenseRate() => _ratStatRuntime != null ? _ratStatRuntime.DefenseRate : 0f;
@@ -360,9 +365,14 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     private void HandleDead()
     {
         _placedPart.Break();
+        if(_ratAttackHandler != null)
+            _ratAttackHandler.enabled = false;
         if (_partData.BuildingType == BuildingType.Core)
             EventBus.Instance.Publish(new BaseDestroyedEvent());
         if(_partData.BuildingType == BuildingType.EnemyCore)
+        {
+            PlacementManager.Instance.AddMouseCount(100);
             EventBus.Instance.Publish(new EnemyDefeatedEvent());
+        }
     }
 }

@@ -117,7 +117,12 @@ public class BombProjectile : ProjectileBase
             return;
         }
 
-        // 주요 라인: 비행 중 먼저 맞은 대상이 있으면 그 대상을 폭발 중심으로 사용한다.
+        // 주요 라인: wheel은 직접 맞아도 전투 대상이 아니므로 무시한다.
+        if (!hitTarget.CanBeCombatTarget())
+        {
+            return;
+        }
+
         _impactTarget = hitTarget;
         Explode();
     }
@@ -180,6 +185,12 @@ public class BombProjectile : ProjectileBase
             }
 
             if (target.RatStatRuntime == null || target.RatStatRuntime.IsDead)
+            {
+                continue;
+            }
+
+            // 주요 라인: wheel은 폭발 반경 안에 있어도 피해 계산 대상이 아니다.
+            if (!target.CanBeCombatTarget())
             {
                 continue;
             }

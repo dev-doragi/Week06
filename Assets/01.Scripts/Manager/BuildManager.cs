@@ -214,10 +214,12 @@ public class BuildManager : MonoBehaviour
         Vector2Int gridPos = GetMouseGridPosition();
 
         if (!board.IsInside(gridPos)) return;
-
+        if (board.boardOwner != GridBoard.BoardOwnerType.Player)
+            return;
         PlacedPart targetPart = board.GetCell(gridPos);
+        if (targetPart.PartKey == 10001 || targetPart.PartKey == 10002)
+            return;
         if (targetPart == null) return;
-
         if (board.HasPartAbove(targetPart))
         {
             Debug.LogWarning("위에 파츠가 있어서 제거할 수 없습니다.");
