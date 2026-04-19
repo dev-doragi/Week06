@@ -13,5 +13,15 @@ MonoBehaviour:
   m_Name: PartPrefabCatalog
   m_EditorClassIdentifier: Assembly-CSharp::PartPrefabCatalog
   _entries:
+  - _key: 1
+    _prefab: {fileID: 370892442198955768, guid: cd9c30150eb95554fa633671dcd61e31, type: 3}
+  - _key: 2
+    _prefab: {fileID: 370892442198955768, guid: d6ed538e9e696784f83c302368e6a87c, type: 3}
+  - _key: 3
+    _prefab: {fileID: 370892442198955768, guid: 754c0d6c1b62b6c459b00f54ebba6b57, type: 3}
   - _key: 4
     _prefab: {fileID: 370892442198955768, guid: fc97d5e703186cc4eb268ba18d057764, type: 3}
+  - _key: 10001
+    _prefab: {fileID: 370892442198955768, guid: b9ad5e0b27d1e7f4dbbe971263c3c297, type: 3}
+  - _key: 10002
+    _prefab: {fileID: 370892442198955768, guid: cd9c30150eb95554fa633671dcd61e31, type: 3}

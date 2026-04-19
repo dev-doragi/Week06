@@ -134,14 +134,14 @@ public class PlacementManager : Singleton<PlacementManager>
     }
 
     #region Generator Add / Subtract
-    public void AddGenerator()
+    public void AddGenerator(int count)
     {
-        _generatorCount++;
+        _generatorCount += count;
     }
 
-    public void SubtractGenerator()
+    public void SubtractGenerator(int count)
     {
-        _generatorCount--;
+        _generatorCount -= count;
     }
 
     public void AddSpellGenerator()
