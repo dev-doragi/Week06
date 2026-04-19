@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 
 
 // 스토어 타입
@@ -49,7 +47,7 @@ public class StoreManager : Singleton<StoreManager>
 
     // 현제 열린 스토어 상태
     [Header("Current Store State")]
-    [SerializeField] private ShopItemCategory _currentStore;
+    [SerializeField] private ShopItemCategory _currentStore = ShopItemCategory.AttackStore;
 
     [Header("Debug Check")]
     [SerializeField] bool _showDebug = true;
@@ -59,18 +57,22 @@ public class StoreManager : Singleton<StoreManager>
     protected override void Init()
     {
 
-        if (_showDebug) Debug.Log("Store System Initialized via Singleton Base");
+        if (_showDebug) Debug.Log("[StoreManager] : Store System Initialized via Singleton Base");
         // Set default page
-        AttackUnitStoreButton(); 
+        RefreshStoreUI();
+    }
 
+    void Start()
+    {
         GenerateBuyButtons();
     }
-    
 
 
     #region 구매 버튼
     private void GenerateBuyButtons()
-    {
+    {   
+        if (_showDebug) Debug.Log("[StoreManager]: Generating Button");
+
         ProcessStoreItems(_database.attackItems, _attackStore.transform);
         ProcessStoreItems(_database.defenseItems, _defenceStore.transform);
         ProcessStoreItems(_database.buildItems, _buildStore.transform);
@@ -98,28 +100,31 @@ public class StoreManager : Singleton<StoreManager>
     {
         GameObject newButton = Instantiate(_buttonPrefab, targetPage);
 
-        if (newButton.TryGetComponent(out ShopButton script))
+        if (!newButton.TryGetComponent(out ShopButton script))
         {
-            Sprite iconSprite = null;
-
-            if (_gridManager != null && _gridManager.partDic != null)
-            {
-                if (_gridManager.partDic.TryGetValue(data.partKey, out PartData partInfo))
-                {
-                    iconSprite = partInfo.Icon;
-                }
-                else
-                {
-                    Debug.LogWarning($"[StoreManager] Key {data.partKey} not found in GridManager dictionary!");
-                }
-            }
-
-            script.Setup(data, iconSprite);
-            return script; // return here if found
+            Debug.LogWarning("[StoreManager] No ShopButton component found on prefab!");
+            return null;
         }
 
-        Debug.LogWarning($"[StoreManager] No ShopButton component found on prefab!");
-        return null; // return null if component missing
+        script.Setup(data, TryGetIconSprite(data.partKey));
+        return script;
+    }
+
+    private Sprite TryGetIconSprite(int partKey)
+    {
+        if (_gridManager?.partDic == null)
+        {
+            Debug.LogWarning("[StoreManager]: partDic is missing");
+            return null;
+        } 
+
+        if (!_gridManager.partDic.TryGetValue(partKey, out PartData partInfo))
+        {
+            Debug.LogWarning($"[StoreManager] Key {partKey} not found in GridManager dictionary!");
+            return null;
+        }
+
+        return partInfo.Icon;
     }
 
     // 구매 버튼 클리시 해당 코드 실행
@@ -191,7 +196,7 @@ public class StoreManager : Singleton<StoreManager>
     private void SwitchStore(ShopItemCategory targetStore)
     {
         RectTransform newContent = null;
-        Debug.Log(targetStore);
+        if (_showDebug) Debug.Log("[StoreManager]: Current Store " + targetStore);
 
         // 불려진 스토어 제외 모두 비활성화
         if (_attackStore != null)
@@ -221,8 +226,6 @@ public class StoreManager : Singleton<StoreManager>
             _supportStore.SetActive(isActive);
             if (isActive) newContent = _supportStore.GetComponent<RectTransform>();
         }
-
-        if (_showDebug) Debug.Log($"[StoreManager] : Opening  + {targetStore}");
         
 
         // 스크롤 상태 강제로 1 로 리셋
@@ -231,8 +234,6 @@ public class StoreManager : Singleton<StoreManager>
             _scrollRect.content = newContent;
             _scollbar.value = 1f;
             Canvas.ForceUpdateCanvases();
-
-            if (_showDebug) Debug.Log("[StoreManager] : Reseting Scroll");
         }
     }
     #endregion
