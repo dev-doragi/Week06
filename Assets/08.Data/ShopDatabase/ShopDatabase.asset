@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: ShopDatabase
   m_EditorClassIdentifier: Assembly-CSharp::ShopDataBase
   attackItems:
-  - {fileID: 11400000, guid: aced02b75811ec64f9807b464c760af6, type: 2}
+  - {fileID: 11400000, guid: 611ee3f7b83a6ea40bf406c331754bd2, type: 2}
+  - {fileID: 11400000, guid: a61ae424df105ce40b0f37c71c5914e3, type: 2}
+  - {fileID: 11400000, guid: 486976f89fd98874da3bfc759660301c, type: 2}
   defenseItems:
   - {fileID: 11400000, guid: c0c564239d339be48b03d9dc7e15fca2, type: 2}
   - {fileID: 11400000, guid: 355faeb22b60bbc468681e67f792c522, type: 2}
   - {fileID: 11400000, guid: 84fcf2bca51853d439f255d0bd6cf676, type: 2}
   buildItems:
   - {fileID: 11400000, guid: 10a32a92682693448aa995c3279ede27, type: 2}
-  supportItems: []
+  supportItems:
+  - {fileID: 11400000, guid: a991a154ad94b384c9306fbd87eb4ffe, type: 2}
+  - {fileID: 11400000, guid: affd58c2641ba8043ae0c0349f239c83, type: 2}
+  - {fileID: 11400000, guid: fa27277f2b027274c9477e82bd3da1b2, type: 2}
