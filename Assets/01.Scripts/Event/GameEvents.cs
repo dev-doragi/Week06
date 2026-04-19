@@ -149,3 +149,9 @@ public struct ScrollEvent
 
 // 일시정지 이벤트
 public struct PausePressedEvent { }
+
+public struct WaveCountdownEvent
+{
+    public float RemainingTime;
+    public bool IsActive; // UI를 켜고 끄기 위한 플래그
+}
