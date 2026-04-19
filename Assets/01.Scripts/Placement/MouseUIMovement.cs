@@ -61,7 +61,7 @@ public class MouseUIMovement
         // Flip facing direction
         if (Mathf.Abs(moveDirection.x) > 0.01f)
         {
-            float facingX = moveDirection.x >= 0f ? -1f : 1f;
+            float facingX = moveDirection.x >= 0f ? 1f : -1f;
             rectTransform.localScale = new Vector3(
                 Mathf.Abs(rectTransform.localScale.x) * facingX,
                 rectTransform.localScale.y,
