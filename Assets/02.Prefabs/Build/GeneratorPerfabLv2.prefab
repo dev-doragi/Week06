@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 770896137080461547}
   - component: {fileID: 3686318113067880817}
   m_Layer: 0
-  m_Name: GeneratorPerfabLv1
+  m_Name: GeneratorPerfabLv2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,4 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df39d4fb506ceb0409ed4c69bb711717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GeneratorConnector
-  addCount: 3
+  addCount: 7
