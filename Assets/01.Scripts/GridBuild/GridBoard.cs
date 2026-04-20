@@ -120,6 +120,7 @@ public class GridBoard : MonoBehaviour
         if (currentWheelCount + targets.Count > maxWheelCount)
             return false;
 
+
         return true;
     }
 
@@ -277,6 +278,8 @@ public class GridBoard : MonoBehaviour
         int wheelCount = GetWheelCount();
         int newBlockCells = newPartData.Shape.Count;
         int maxSupport = wheelCount * supportPerWheel;
+
+        PlacementManager.Instance._placeableUI.ReFreshPlaceableUI(currentBlockCount, maxSupport);
 
         return currentBlockCount + newBlockCells <= maxSupport;
     }
