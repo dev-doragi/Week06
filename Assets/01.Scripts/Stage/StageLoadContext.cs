@@ -8,7 +8,7 @@ public static class StageLoadContext
     private static int _stageIndex = -1;
     private static bool _isTutorial = false;
 
-    public static bool HasValue => _stageIndex != -1;
+    public static bool HasValue => _stageIndex != -1 || _isTutorial;
     public static bool IsTutorial => _isTutorial;
 
     public static void SetStageTutorial()
@@ -25,9 +25,18 @@ public static class StageLoadContext
 
     public static int GetStageIndex()
     {
-        int value = HasValue ? _stageIndex : 0;
+        int value = _stageIndex != -1 ? _stageIndex : 0;
+        _stageIndex = -1;
+        // 튜토리얼 플래그는 명시적으로 Clear()가 호출되기 전까지 유지
+        return value;
+    }
+
+    /// <summary>
+    /// 튜토리얼이 종료되면 명시적으로 호출하여 컨텍스트를 초기화합니다.
+    /// </summary>
+    public static void Clear()
+    {
         _stageIndex = -1;
         _isTutorial = false;
-        return value;
     }
 }

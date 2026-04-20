@@ -124,7 +124,7 @@ public class StoreManager : Singleton<StoreManager>
         Sprite Icon = _partRuntimeSpawner.RatImage(partKey);
         if (Icon == null)
         {
-            Debug.LogError("Dont find partKey in PartPrefab Catalog");
+            Debug.LogError($"PartPrefab Catalog에서 partKey {partKey}번을 찾을 수 없습니다!");
             return null;
         }
 
