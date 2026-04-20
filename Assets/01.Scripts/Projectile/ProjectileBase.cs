@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -61,5 +61,11 @@ public abstract class ProjectileBase : MonoBehaviour
         {
             PoolManager.Instance.Despawn(gameObject);
         }
+    }
+    public void SpawnBullet(string _bulletName)
+    {
+        //트리거는 충돌 지점을 구할 수 없어 수동으로 x좌표를 -.5f
+        Vector3 spawnPos = new Vector3(transform.position.x - .5f, transform.position.y, transform.position.z);
+        GameObject spawned = PoolManager.Instance.Spawn(_bulletName, spawnPos, Quaternion.identity);
     }
 }

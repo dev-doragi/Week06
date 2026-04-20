@@ -1,15 +1,17 @@
 ﻿
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
-public class ShopButton : MonoBehaviour
+public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {    
     public ShopItemData _itemData;
     [SerializeField] private TMPro.TextMeshProUGUI _priceText;
     [SerializeField] private Button _myButton;
     [SerializeField] private Image _shadeimage;
     [SerializeField] private Image _mouseIcon;
-
     private bool _isLocked = false; // Temp code
 
     void Start()
@@ -63,5 +65,43 @@ public class ShopButton : MonoBehaviour
         }
 
         StoreManager.Instance.SelectUnit(_itemData);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        string name, description, status = "";
+       
+        if (!GridManager.instance.partDic.TryGetValue(_itemData.partKey, out PartData _partData))
+            return;
+
+        name = $"{_partData.PartName}";
+
+        description = "A";
+        if(_partData.UnitRoleType == UnitRoleType.None || _partData.UnitRoleType == UnitRoleType.Support)
+        {
+
+            status = $"건물 체력: {_partData.Hp}\n";
+            foreach (var sup in _partData.SupportStat.Effects)
+            {
+                status  += sup.Description + "\n";
+            }
+            
+        }
+        else if (_partData.UnitRoleType == UnitRoleType.Attack)
+        {
+            status = $"건물 체력: {_partData.Hp}\n공격력: {_partData.AttackDamage}\n공격 속도: {_partData.AttackSpeed}";
+        }
+        else if (_partData.UnitRoleType == UnitRoleType.Defense)
+        {
+            status = $"건물 체력: {_partData.Hp}\n방어력: {_partData.DefenseRate * 100}\n충돌 데미지: {_partData.CollisionPower}\n";
+        }
+
+        StoreManager.Instance.Hover(true, name, description, status);
+
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        StoreManager.Instance.Hover(false);
     }
 }

@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 617657012964432329}
-  - component: {fileID: -6457782285032918317}
+  - component: {fileID: 5379687539267333834}
   - component: {fileID: 72424632588780625}
   - component: {fileID: 6573814761933286817}
   m_Layer: 0
-  m_Name: RifleBullet
+  m_Name: MultipleBombProjectile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 1663197027144848900}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6457782285032918317
+--- !u!114 &5379687539267333834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,12 +44,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3864161175262882670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88308fd2e1409184a967ab9f3936d1b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 467d52a387e8cb74abf1e60e34fe00f5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RifleBullet
+  m_EditorClassIdentifier: Assembly-CSharp::BombProjectile
   _lifeTime: 5
+  _explodeOnTriggerEnter: 1
   _bullet: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
-  _bulletCount: 1
+  _bulletCount: 20
 --- !u!58 &72424632588780625
 CircleCollider2D:
   m_ObjectHideFlags: 0

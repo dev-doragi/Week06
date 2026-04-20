@@ -363,7 +363,7 @@ public class GridBoard : MonoBehaviour
 
         return count;
     }
-    
+
     #endregion
 
 
@@ -373,21 +373,159 @@ public class GridBoard : MonoBehaviour
     public List<PlacedPart> GetDisconnectedParts()
     {
         HashSet<PlacedPart> allParts = GetAllParts();
-        HashSet<PlacedPart> connectedParts = GetPartsConnectedToCore();
+        HashSet<PlacedPart> removed = new HashSet<PlacedPart>();
 
-        List<PlacedPart> disconnected = new();
+        bool changed = true;
 
-        foreach (var part in allParts)
+        while (changed)
         {
-            if (part == null) continue;
+            changed = false;
 
-            if (!connectedParts.Contains(part))
-                disconnected.Add(part);
+            HashSet<PlacedPart> connectedParts = GetPartsConnectedToCore(removed);
+
+            foreach (var part in allParts)
+            {
+                if (part == null || removed.Contains(part))
+                    continue;
+
+                // 1. 코어와 연결 안 되어 있으면 제거 대상
+                if (!connectedParts.Contains(part))
+                {
+                    removed.Add(part);
+                    changed = true;
+                    continue;
+                }
+
+                // 2. 코어와 연결되어 있어도 공격형인데 아래 지지가 없으면 제거 대상
+                if (IsUnsupportedAttackPart(part, removed))
+                {
+                    removed.Add(part);
+                    changed = true;
+                }
+            }
         }
 
-        return disconnected;
+        return new List<PlacedPart>(removed);
     }
+    private bool IsUnsupportedAttackPart(PlacedPart part, HashSet<PlacedPart> removed)
+    {
+        if (part == null || part.data == null)
+            return false;
 
+        if (!IsAttackPart(part.data))
+            return false;
+
+        foreach (var cell in part.occupiedCells)
+        {
+            Vector2Int below = cell + Vector2Int.down;
+
+            if (!IsInside(below))
+                continue;
+
+            PlacedPart belowPart = GetCell(below);
+
+            if (belowPart == null)
+                continue;
+
+            if (removed != null && removed.Contains(belowPart))
+                continue;
+
+            if (belowPart != part)
+                return false;
+        }
+
+        return true;
+    }
+    // 코어를 시작점으로 현재 연결되어 있는 모든 파츠를 찾는 함수
+    public HashSet<PlacedPart> GetPartsConnectedToCore()
+    {
+        return GetPartsConnectedToCore(null);
+    }
+    private HashSet<PlacedPart> GetPartsConnectedToCore(HashSet<PlacedPart> removed)
+    {
+        HashSet<PlacedPart> connectedParts = new HashSet<PlacedPart>();
+        Queue<PlacedPart> queue = new Queue<PlacedPart>();
+
+        int targetCoreKey = boardOwner == BoardOwnerType.Player ? CORE_KEY : ENEMY_CORE_KEY;
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                PlacedPart part = GetCell(new Vector2Int(x, y));
+
+                if (part == null)
+                    continue;
+
+                if (removed != null && removed.Contains(part))
+                    continue;
+
+                if (part.data != null && part.data.Key == targetCoreKey)
+                {
+                    if (connectedParts.Add(part))
+                        queue.Enqueue(part);
+                }
+            }
+        }
+
+        while (queue.Count > 0)
+        {
+            PlacedPart currentPart = queue.Dequeue();
+            HashSet<PlacedPart> neighbors = GetAdjacentParts(currentPart, removed);
+
+            foreach (var neighbor in neighbors)
+            {
+                if (neighbor == null)
+                    continue;
+
+                if (connectedParts.Add(neighbor))
+                    queue.Enqueue(neighbor);
+            }
+        }
+
+        return connectedParts;
+    }
+    // 특정 파츠와 상하좌우로 인접한 다른 파츠들을 반환하는 함수
+    public HashSet<PlacedPart> GetAdjacentParts(PlacedPart part)
+    {
+        return GetAdjacentParts(part, null);
+    }
+    private HashSet<PlacedPart> GetAdjacentParts(PlacedPart part, HashSet<PlacedPart> removed)
+    {
+        HashSet<PlacedPart> result = new HashSet<PlacedPart>();
+
+        if (part == null)
+            return result;
+
+        Vector2Int[] dirs =
+        {
+        Vector2Int.up,
+        Vector2Int.down,
+        Vector2Int.left,
+        Vector2Int.right
+    };
+
+        foreach (var cell in part.occupiedCells)
+        {
+            foreach (var dir in dirs)
+            {
+                Vector2Int next = cell + dir;
+                if (!IsInside(next))
+                    continue;
+
+                PlacedPart nextPart = GetCell(next);
+                if (nextPart == null || nextPart == part)
+                    continue;
+
+                if (removed != null && removed.Contains(nextPart))
+                    continue;
+
+                result.Add(nextPart);
+            }
+        }
+
+        return result;
+    }
     // 현재 보드에 존재하는 모든 고유 파츠를 수집해서 반환하는 함수
     public HashSet<PlacedPart> GetAllParts()
     {
@@ -400,75 +538,6 @@ public class GridBoard : MonoBehaviour
                 PlacedPart part = GetCell(new Vector2Int(x, y));
                 if (part != null)
                     result.Add(part);
-            }
-        }
-
-        return result;
-    }
-
-    // 코어를 시작점으로 현재 연결되어 있는 모든 파츠를 찾는 함수
-    public HashSet<PlacedPart> GetPartsConnectedToCore()
-    {
-        HashSet<PlacedPart> connectedParts = new();
-        Queue<PlacedPart> queue = new();
-
-        int targetCoreKey = boardOwner == BoardOwnerType.Player ? CORE_KEY : ENEMY_CORE_KEY;
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                PlacedPart part = GetCell(new Vector2Int(x, y));
-                if (part != null && part.data != null && part.data.Key == targetCoreKey)
-                {
-                    if (connectedParts.Add(part))
-                        queue.Enqueue(part);
-                }
-            }
-        }
-
-        while (queue.Count > 0)
-        {
-            PlacedPart currentPart = queue.Dequeue();
-            HashSet<PlacedPart> neighbors = GetAdjacentParts(currentPart);
-
-            foreach (var neighbor in neighbors)
-            {
-                if (neighbor == null) continue;
-
-                if (connectedParts.Add(neighbor))
-                    queue.Enqueue(neighbor);
-            }
-        }
-
-        return connectedParts;
-    }
-
-    // 특정 파츠와 상하좌우로 인접한 다른 파츠들을 반환하는 함수
-    public HashSet<PlacedPart> GetAdjacentParts(PlacedPart part)
-    {
-        HashSet<PlacedPart> result = new();
-
-        if (part == null) return result;
-
-        Vector2Int[] dirs =
-        {
-            Vector2Int.up,
-            Vector2Int.down,
-            Vector2Int.left,
-            Vector2Int.right
-        };
-
-        foreach (var cell in part.occupiedCells)
-        {
-            foreach (var dir in dirs)
-            {
-                Vector2Int next = cell + dir;
-                if (!IsInside(next)) continue;
-
-                PlacedPart nextPart = GetCell(next);
-                if (nextPart != null && nextPart != part)
-                    result.Add(nextPart);
             }
         }
 

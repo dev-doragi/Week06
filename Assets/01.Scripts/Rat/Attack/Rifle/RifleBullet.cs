@@ -1,7 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RifleBullet : ProjectileBase
 {
+    [SerializeField] GameObject _bullet;
     private RatController _attacker;
     private RatController _primaryTarget;
     private RatController _impactTarget;
@@ -168,7 +169,7 @@ public class RifleBullet : ProjectileBase
 
         // 주요 라인: 총알도 발사자의 현재 스탯 기준으로 공격 데미지를 계산한다.
         RatDamageCalculator.ApplyAttackDamage(_attacker, hitTarget);
-
+        SpawnBullet(_bullet.name);
         Despawn();
     }
 
@@ -185,4 +186,6 @@ public class RifleBullet : ProjectileBase
 
         base.Despawn();
     }
+
+
 }

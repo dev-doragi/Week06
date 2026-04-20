@@ -505,6 +505,7 @@ MonoBehaviour:
   _myButton: {fileID: 8241749585038118694}
   _shadeimage: {fileID: 3190320478016874896}
   _mouseIcon: {fileID: 343839156714760594}
+  _hoverDescriptionImage: {fileID: 0}
 --- !u!1 &8772267707461171234
 GameObject:
   m_ObjectHideFlags: 0

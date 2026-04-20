@@ -6564,6 +6564,7 @@ MonoBehaviour:
   _database: {fileID: 11400000, guid: 4468569168910a94bbde2ca4788b1ffb, type: 2}
   _gridManager: {fileID: 0}
   _buildManager: {fileID: 0}
+  _partRuntimeSpawner: {fileID: 0}
   _buttonPrefab: {fileID: 8372869544996038778, guid: 903bea5d3ac826940a6760c03ead218a, type: 3}
   _attackStore: {fileID: 2553605419535253063}
   _defenceStore: {fileID: 819364118148580974}
