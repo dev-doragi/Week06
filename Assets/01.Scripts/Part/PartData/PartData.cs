@@ -33,6 +33,7 @@ public class PartData
 
     public int SupportRangeRadius;
     public string SupportEffectsRaw;
+    public string Description;
 
     public bool IsWheelBuilding => IsBuilding && BuildingType == BuildingType.Wheel;
     public bool IsCoreBuilding => IsBuilding && BuildingType == BuildingType.Core;

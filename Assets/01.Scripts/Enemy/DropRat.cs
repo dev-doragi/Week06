@@ -24,7 +24,10 @@ public class DropRat : MonoBehaviour
             sr.sprite = _running;
             move = true;
         }
-        if (collision.gameObject.GetComponentInParent<GridBoard>().boardOwner == GridBoard.BoardOwnerType.Player)
+        GridBoard gridBoard = collision.gameObject.GetComponentInChildren<GridBoard>();
+        if (gridBoard == null)
+            return;
+        if (gridBoard.boardOwner == GridBoard.BoardOwnerType.Player)
         {
             PlacementManager.Instance.AddMouseCount(2);
             PoolManager.Instance.Despawn(gameObject);

@@ -16,6 +16,6 @@ MonoBehaviour:
   partKey: 10001
   category: 2
   description: 
-  cost: 150
+  cost: 5
   tier: 0
   isLocked: 1
