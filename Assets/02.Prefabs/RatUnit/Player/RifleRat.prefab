@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RifleDirectAttackPerformer
   _bulletPoolName: RifleBullet
-  _spawnPoint: {fileID: 0}
+  _spawnPoint: {fileID: 3887884342779039399}
   _travelTime: 0.2
 --- !u!61 &7889095822756387493
 BoxCollider2D:

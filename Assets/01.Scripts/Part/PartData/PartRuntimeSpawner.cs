@@ -4,6 +4,14 @@ public class PartRuntimeSpawner : MonoBehaviour
 {
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
 
+    public Sprite RatImage(int Key)
+    {
+        if (!_partPrefabCatalog.TryGetPrefab(Key, out GameObject prefab) || prefab == null)
+        {
+            return null;
+        }
+        return prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+    }
     public GameObject SpawnRuntime(
         PartData partData,
         PlacedPart placedPart,

@@ -300,7 +300,10 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
             Debug.LogError($"{name}: ApplyDirectDamage 실패 - RatStatRuntime이 Null입니다.");
             return;
         }
-
+        if (_partData.Key == 10001 || _partData.Key == 20001)
+        {
+            return;
+        }
         _ratStatRuntime.ApplyDirectDamage(damage);
     }
 

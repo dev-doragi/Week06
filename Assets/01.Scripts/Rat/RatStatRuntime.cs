@@ -6,6 +6,7 @@ public class RatStatRuntime : MonoBehaviour
     [SerializeField] private PartData _partData;
 
     private float _currentHp;
+    private float _colorValue =1;
 
     //public PartData PartData => _partData;
     public float CurrentHp => _currentHp;
@@ -66,6 +67,11 @@ public class RatStatRuntime : MonoBehaviour
         }
 
         _currentHp -= damage;
+
+        _colorValue = 0.5f + ((_currentHp / _partData.Hp) / 2f);
+        Color color = new Color(1f, _colorValue, _colorValue, 1f);
+        SetColor(color);
+
         if (_currentHp < 0f)
         {
             _currentHp = 0f;
@@ -77,7 +83,14 @@ public class RatStatRuntime : MonoBehaviour
             OnDead?.Invoke();
         }
     }
-
+    public void SetColor(Color color)
+    {
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.color = color;
+        }
+    }
     public void RecoverHp(float amount)
     {
         if (_partData == null)

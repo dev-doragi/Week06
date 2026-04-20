@@ -43,7 +43,7 @@ public class BasePartSpreadsheetImporter : OdinEditorWindow
     [Tooltip("Sprite 파일명을 담고 있는 string 필드 이름 (예: SpriteName)")]
     public string spriteNameFieldName = "SpriteName";
 
-    [MenuItem("Tools/Defense Part Spreadsheet Importer")]
+    [MenuItem("Tools/Part Spreadsheet Importer")]
     private static void OpenWindow()
     {
         GetWindow<BasePartSpreadsheetImporter>().Show();
