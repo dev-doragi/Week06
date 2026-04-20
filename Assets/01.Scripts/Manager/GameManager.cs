@@ -46,7 +46,8 @@ public class GameManager : Singleton<GameManager>
 
     private void OnStageCleared(StageClearedEvent evt)
     {
-        ChangeState(GameState.GameClear);
+        if (StageManager.Instance != null && StageManager.Instance.IsFinalStage)
+            ChangeState(GameState.GameClear);
     }
 
     private void OnStageFailed(StageFailedEvent evt)

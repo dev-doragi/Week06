@@ -19,6 +19,7 @@ MonoBehaviour:
     - cd6e33790873a1a4eba6822ebb5c6de1
     - 8775bc3d0f1e14d47b5fe9594c42bbed
     - 6f1a3c8707107a0468573887f0de4e6a
+    - 62242931b7f73374db8ef43ec14069e3
     values:
     - goDatas_byGlobalId:
         keys: []
@@ -75,5 +76,18 @@ MonoBehaviour:
     - goDatas_byGlobalId:
         keys: []
         values: []
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-62242931b7f73374db8ef43ec14069e3-6706275324794512630-0
+        - globalObjectIdString: GlobalObjectId_V1-2-62242931b7f73374db8ef43ec14069e3-1666367830-0
+        values:
+        - colorIndex: 6
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 7
+          iconNameOrGuid: Settings Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
   bookmarks: []
   bookmarkedScenePaths: []

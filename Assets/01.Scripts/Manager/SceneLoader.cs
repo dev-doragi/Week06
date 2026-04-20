@@ -33,6 +33,19 @@ public class SceneLoader : Singleton<SceneLoader>
         SceneManager.LoadScene(_inGameSceneName);
     }
 
+    public void ReloadCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == _inGameSceneName)
+        {
+            int currentStageIndex = StageManager.Instance.CurrentStageIndex;
+            StageLoadContext.SetStageIndex(currentStageIndex);
+        }
+
+        SceneManager.LoadScene(currentSceneName);
+    }
+
     public void Quit()
     {
         Application.Quit();
