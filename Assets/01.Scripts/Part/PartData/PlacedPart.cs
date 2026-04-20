@@ -264,7 +264,12 @@ public class PlacedPart : SerializedMonoBehaviour
             cellRenderers.Add(sr);
             if (ghost)
             {
-                sr.sprite = icon;
+                // 고스트일 때는 마우스가 가리키는 기준 셀(origin)에만 아이콘 표시
+                if (cell == origin)
+                    sr.sprite = icon != null ? icon : data.Icon;
+                else
+                    sr.sprite = null;
+
                 continue;
             }
 
