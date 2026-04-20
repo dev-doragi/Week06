@@ -1181,7 +1181,6 @@ MonoBehaviour:
   _partRuntimeSpawner: {fileID: 606322906}
   _teamType: 1
   _partPrefabCatalog: {fileID: 11400000, guid: 5454b68abc720bf4cb40a67c5ab9e78d, type: 2}
-  _spawnRuntimePrefab: 1
   supportRangeHighlightRoot: {fileID: 0}
   supportRangeHighlightSprite: {fileID: 0}
   supportRangeHighlightColor: {r: 0.2, g: 0.6, b: 1, a: 0.2}
@@ -1852,6 +1851,22 @@ PrefabInstance:
       propertyPath: _uiPoolRoot
       value: 
       objectReference: {fileID: 962719246}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[4].Prefab
+      value: 
+      objectReference: {fileID: 3864161175262882670, guid: 6fe515c846348534a951d3149217c65b, type: 3}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[4].MaxSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[4].InitialSize
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4034118272206485099, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
