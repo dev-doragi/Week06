@@ -9,6 +9,7 @@ public class DropRat : MonoBehaviour
     [SerializeField] private Sprite _running;
     [SerializeField] private float _knockBackPower = 4f;
     [SerializeField] private float _moveSpeed = 1f;
+    [SerializeField] private Animator _anim;
 
     private bool move = false;
     private void OnEnable()
@@ -21,7 +22,7 @@ public class DropRat : MonoBehaviour
     {
         if (collision.gameObject.layer == 15)
         {
-            sr.sprite = _running;
+            _anim.SetTrigger("Run");
             move = true;
         }
         GridBoard gridBoard = collision.gameObject.GetComponentInChildren<GridBoard>();

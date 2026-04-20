@@ -71,6 +71,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
   _placedPart: {fileID: 0}
   _teamType: 1
 --- !u!114 &7190570916434124814
@@ -105,6 +106,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
 --- !u!114 &708847909670867676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +135,7 @@ MonoBehaviour:
   _attackPerformerComponent: {fileID: -1060541625467356928}
   _arcAttackPerformerComponent: {fileID: 0}
   _directAttackPerformerComponent: {fileID: -1060541625467356928}
-  anim: {fileID: 7060826574197365913}
+  anim: {fileID: 0}
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +220,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4571249116488789809}
   - component: {fileID: 5705709815536790131}
-  - component: {fileID: 7060826574197365913}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -300,25 +301,3 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &7060826574197365913
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3656004365845845777}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78e0c945edee88649a50976531354055, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

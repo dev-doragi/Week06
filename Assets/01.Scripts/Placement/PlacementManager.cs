@@ -68,13 +68,14 @@ public class PlacementManager : Singleton<PlacementManager>
     private bool _isAnimating = false;
     private bool _isFull = false;
     private int usedMouse;
+    private StageManager _stageManager;
 
 
     void Start()
     {
         SpawnMouseAtPoint(_currentMouseCount);
         UpdateDisplay();
-
+        _stageManager = StageManager.Instance;
         if (_uiContainer != null) _anchoredPosition = _uiContainer.anchoredPosition;
 
 
@@ -85,14 +86,17 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void Update()
     {
-        if(_generatorCount > 0)
+        if(_stageManager.CurrentState == InGameState.WavePlaying)
         {
-            HandleAdding();
-        }
-        usedMouse = _spellmapCount + subPerSpell;
-        if (usedMouse > 0)
-            HandleSubtracting();
+            if (_generatorCount > 0)
+            {
+                HandleAdding();
+            }
+            usedMouse = _spellmapCount + subPerSpell;
+            if (usedMouse > 0)
+                HandleSubtracting();
 
+        }
         //ProcessAltarMouseDrain();
     }
 
