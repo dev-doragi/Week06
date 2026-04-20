@@ -90,7 +90,11 @@ public class GameFlowManager : Singleton<GameFlowManager>
                 break;
 
             case InGameState.StageCleared:
-                EventBus.Instance.Publish(new StageClearedEvent { StageIndex = _stageManager.CurrentStageIndex });
+                // 발행 단계에서도 튜토리얼 모드인 경우 실제 클리어 이벤트를 전파하지 않음
+                if (!StageLoadContext.IsTutorial)
+                {
+                    EventBus.Instance.Publish(new StageClearedEvent { StageIndex = _stageManager.CurrentStageIndex });
+                }
                 break;
         }
     }

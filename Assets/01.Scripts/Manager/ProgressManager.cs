@@ -13,34 +13,67 @@ public class ProgressManager : Singleton<ProgressManager>
 {
     private const string PREF_KEY = "ClearedStages_v1";
 
-    // 내부 저장: 클리어된 스테이지 인덱스 집합
     private readonly HashSet<int> _clearedStages = new HashSet<int>();
-
     public IReadOnlyCollection<int> ClearedStages => _clearedStages;
-
-    // 가장 높은 클리어 인덱스(없으면 -1)
     public int HighestClearedStage { get; private set; } = -1;
+    // 튜토리얼 완료 여부 (튜토리얼 보상으로 첫 스테이지만 해금할 때 사용)
+    private bool _tutorialCompleted = false;
 
     protected override void Init()
     {
-        LoadFromPrefs();
+        // Do not load from persistent storage. Progress is kept in-memory only
+        // so that each run starts with a fresh state.
+        _clearedStages.Clear();
+        HighestClearedStage = -1;
+        _tutorialCompleted = false;
     }
 
     private void OnEnable()
     {
         if (EventBus.Instance == null) return;
         EventBus.Instance.Subscribe<StageClearedEvent>(OnStageCleared);
+
+        // 튜토리얼 완료 이벤트 수신 추가
+        EventBus.Instance.Subscribe<TutorialCompletedEvent>(OnTutorialCompleted);
     }
 
     private void OnDisable()
     {
         if (EventBus.Instance == null) return;
         EventBus.Instance.Unsubscribe<StageClearedEvent>(OnStageCleared);
+        EventBus.Instance.Unsubscribe<TutorialCompletedEvent>(OnTutorialCompleted);
     }
 
     private void OnStageCleared(StageClearedEvent evt)
     {
+        // Do not treat tutorial runs as real stage clears.
+        // If StageLoadContext indicates we're in tutorial mode, ignore these events.
+        if (StageLoadContext.IsTutorial)
+        {
+            Debug.Log($"[ProgressManager] Ignoring StageClearedEvent for Stage {evt.StageIndex} during tutorial.");
+            return;
+        }
+
         MarkStageCleared(evt.StageIndex);
+    }
+
+    private void OnTutorialCompleted(TutorialCompletedEvent evt)
+    {
+        // 튜토리얼 완료 시에는 "튜토리얼 보상으로 첫 스테이지 해금"을
+        // 클리어 처리와 구분하여 별도 플래그로 관리합니다.
+        // 일반적인 경우 RewardStageIndex == 0 이며, 이때는 실제로 클리어로
+        // 기록하지 않고 튜토리얼 플래그만 설정합니다.
+        if (evt.RewardStageIndex == 0)
+        {
+            _tutorialCompleted = true;
+            Debug.Log("[ProgressManager] Tutorial completed. Stage 0 unlocked.");
+            EventBus.Instance?.Publish(new StageProgressUpdatedEvent { HighestCleared = HighestClearedStage });
+        }
+        else if (evt.RewardStageIndex > 0)
+        {
+            // 만약 튜토리얼 보상이 0이 아닌 다른 스테이지라면 기존 동작대로 클리어 처리
+            MarkStageCleared(evt.RewardStageIndex);
+        }
     }
 
     /// <summary>
@@ -54,72 +87,37 @@ public class ProgressManager : Singleton<ProgressManager>
         {
             HighestClearedStage = Math.Max(HighestClearedStage, stageIndex);
             SaveToPrefs();
-            Debug.Log($"[ProgressManager] Stage {stageIndex} marked cleared. HighestClearedStage={HighestClearedStage}");
             EventBus.Instance?.Publish(new StageProgressUpdatedEvent { HighestCleared = HighestClearedStage });
         }
     }
 
     /// <summary>
     /// 지정된 스테이지가 해금되어 있는지 판정합니다.
-    /// 규칙: stage 0은 항상 해금. 그 외 스테이지 i는 i <= HighestClearedStage + 1 이면 해금.
+    /// 규칙:
+    /// - stage 0: 튜토리얼 완료(혹은 명시적으로 클리어 처리) 시 해금됩니다.
+    /// - 그 외 스테이지 i: i <= HighestClearedStage + 1 이면 해금됩니다.
     /// </summary>
     public bool IsStageUnlocked(int stageIndex)
     {
-        if (stageIndex <= 0) return true;
+        if (stageIndex < 0) return false;
+
+        // Stage 0은 기본으로 해금되지 않음. TutorialCompletedEvent로 MarkStageCleared(0)가 호출되어야 해금된다.
+        if (stageIndex == 0)
+        {
+            return _tutorialCompleted || _clearedStages.Contains(0);
+        }
+
         return stageIndex <= (HighestClearedStage + 1);
     }
 
     private void LoadFromPrefs()
     {
-        _clearedStages.Clear();
-        HighestClearedStage = -1;
-
-        string raw = PlayerPrefs.GetString(PREF_KEY, string.Empty);
-        if (string.IsNullOrWhiteSpace(raw)) return;
-
-        try
-        {
-            var parts = raw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var p in parts)
-            {
-                if (int.TryParse(p, out int idx))
-                {
-                    _clearedStages.Add(idx);
-                    HighestClearedStage = Math.Max(HighestClearedStage, idx);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"[ProgressManager] LoadFromPrefs 실패: {ex.Message}");
-            _clearedStages.Clear();
-            HighestClearedStage = -1;
-        }
-
-        Debug.Log($"[ProgressManager] Loaded cleared stages ({_clearedStages.Count}) Highest={HighestClearedStage}");
+        // Persistence disabled: do nothing. Progress is transient for each session.
     }
 
     private void SaveToPrefs()
     {
-        try
-        {
-            if (_clearedStages.Count == 0)
-            {
-                PlayerPrefs.DeleteKey(PREF_KEY);
-            }
-            else
-            {
-                // 정렬해서 저장
-                var sorted = _clearedStages.OrderBy(i => i);
-                string raw = string.Join(",", sorted);
-                PlayerPrefs.SetString(PREF_KEY, raw);
-            }
-            PlayerPrefs.Save();
-        }
-        catch (Exception ex)
-        {
-            Debug.LogWarning($"[ProgressManager] SaveToPrefs 실패: {ex.Message}");
-        }
+        // Persistence disabled: do nothing.
     }
 
     /// <summary>
@@ -130,9 +128,8 @@ public class ProgressManager : Singleton<ProgressManager>
     {
         _clearedStages.Clear();
         HighestClearedStage = -1;
-        PlayerPrefs.DeleteKey(PREF_KEY);
-        PlayerPrefs.Save();
-        Debug.Log("[ProgressManager] Cleared all progress (reset).");
+        _tutorialCompleted = false;
+        // Do not touch PlayerPrefs — progress should not be persisted across runs.
         EventBus.Instance?.Publish(new StageProgressUpdatedEvent { HighestCleared = HighestClearedStage });
     }
 }
