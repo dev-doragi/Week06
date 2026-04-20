@@ -1215,6 +1215,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3714944679785544487, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
   m_PrefabInstance: {fileID: 706314077}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &706314079 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7786248919400629001, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+  m_PrefabInstance: {fileID: 706314077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &729804565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,11 +1966,11 @@ PrefabInstance:
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _poolRoot
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1138065602}
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _uiPoolRoot
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 706314079}
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _globalPools.Array.size
       value: 9
