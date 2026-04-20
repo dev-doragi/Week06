@@ -31,6 +31,8 @@ MonoBehaviour:
     _prefab: {fileID: 370892442198955768, guid: 2545bd67d648b6f419d1016f868a18a0, type: 3}
   - _key: 9
     _prefab: {fileID: 370892442198955768, guid: 649d47fa2227110478172d581d5ed5a5, type: 3}
+  - _key: 10
+    _prefab: {fileID: 4280719370787094377, guid: 8c4c6dd5f070a144cb526b26f032f7f9, type: 3}
   - _key: 101
     _prefab: {fileID: 370892442198955768, guid: 4d543eac3402ba840a5321117cbf96c1, type: 3}
   - _key: 102

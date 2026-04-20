@@ -186,7 +186,7 @@ MonoBehaviour:
       Data: 0.2
     - Name: Cost
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: Icon
       Entry: 6
       Data: 
@@ -280,7 +280,7 @@ MonoBehaviour:
       Data: 0.3
     - Name: Cost
       Entry: 3
-      Data: 3
+      Data: 5
     - Name: Icon
       Entry: 6
       Data: 
@@ -468,7 +468,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 2
+      Data: 4
     - Name: Icon
       Entry: 6
       Data: 
@@ -562,7 +562,7 @@ MonoBehaviour:
       Data: 0.2
     - Name: Cost
       Entry: 3
-      Data: 4
+      Data: 6
     - Name: Icon
       Entry: 6
       Data: 
@@ -686,7 +686,7 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:10
+      Data: Attack:AttackDamage:Percent:0.2
     - Name: 
       Entry: 8
       Data: 
@@ -874,7 +874,7 @@ MonoBehaviour:
       Data: 2
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:10
+      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:1
     - Name: 
       Entry: 8
       Data: 

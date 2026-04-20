@@ -20,7 +20,7 @@ MonoBehaviour:
     - 8775bc3d0f1e14d47b5fe9594c42bbed
     - 6f1a3c8707107a0468573887f0de4e6a
     - 62242931b7f73374db8ef43ec14069e3
-    - d5ce36be49650044fa9475fcfdf4bf32
+    - 16507efdcab10da45aa0ea0b100effc5
     values:
     - goDatas_byGlobalId:
         keys: []
@@ -92,8 +92,8 @@ MonoBehaviour:
           isColorRecursive: 0
     - goDatas_byGlobalId:
         keys:
-        - globalObjectIdString: GlobalObjectId_V1-2-d5ce36be49650044fa9475fcfdf4bf32-6706275324794512630-0
-        - globalObjectIdString: GlobalObjectId_V1-2-d5ce36be49650044fa9475fcfdf4bf32-1666367830-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16507efdcab10da45aa0ea0b100effc5-6706275324794512630-0
+        - globalObjectIdString: GlobalObjectId_V1-2-16507efdcab10da45aa0ea0b100effc5-1666367830-0
         values:
         - colorIndex: 6
           iconNameOrGuid: Settings Icon

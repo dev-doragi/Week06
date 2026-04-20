@@ -105,25 +105,27 @@ public class PartData
     public bool IsAttackUnit => IsUnit && UnitRoleType == UnitRoleType.Attack;
     public bool IsDefenseUnit => IsUnit && UnitRoleType == UnitRoleType.Defense;
     public bool IsSupportUnit => IsUnit && UnitRoleType == UnitRoleType.Support;
+    public bool IsSupportBuilding => IsBuilding && HasSupportDefinition;
+    public bool IsSupportProvider => IsSupportUnit || IsSupportBuilding;
 
     // ------------------------------------------------------------
     // 실제 기능 판정
     // ------------------------------------------------------------
     public bool CanUseAttack => IsAttackUnit;
     public bool CanUseCollision => IsDefenseUnit;
-    public bool CanUseSupport => IsSupportUnit;
+    public bool CanUseSupport => IsSupportProvider;
 
     public bool IsArcAttack => IsAttackUnit && TrajectoryType == AttackTrajectoryType.Arc;
     public bool IsDirectAttack => IsAttackUnit && TrajectoryType == AttackTrajectoryType.Direct;
     public bool IsAreaAttack => IsAttackUnit && AttackRangeRadius > 0;
     public bool IsSingleTargetAttack => IsAttackUnit && AttackRangeRadius <= 0;
-
-    // ------------------------------------------------------------
-    // 기존 호환성용
-    // ------------------------------------------------------------
-    public bool HasAttackStat => IsAttackUnit;
-    public bool HasDefenseStat => IsDefenseUnit;
-    public bool HasSupportStat => IsSupportUnit;
+    public bool HasSupportDefinition
+    {
+        get
+        {
+            return SupportRangeRadius > 0 && !string.IsNullOrWhiteSpace(SupportEffectsRaw);
+        }
+    }
 
     public bool IsValid()
     {
@@ -223,6 +225,21 @@ public class PartData
         {
             if (!ValidateBuilding())
             {
+                return false;
+            }
+        }
+
+        if (HasSupportDefinition)
+        {
+            if (IsUnit && UnitRoleType != UnitRoleType.Support)
+            {
+                Debug.LogError($"{PartName}: Unit인데 Support 데이터가 있으나 UnitRoleType이 Support가 아닙니다.");
+                return false;
+            }
+
+            if (!IsUnit && !IsBuilding)
+            {
+                Debug.LogError($"{PartName}: Support 데이터가 있으나 Unit/Building 어느 쪽도 아닙니다.");
                 return false;
             }
         }
@@ -366,6 +383,24 @@ public class PartData
 
     private bool ValidateBuilding()
     {
+        if (!IsBuilding)
+        {
+            return true;
+        }
+
+        if (UnitRoleType != UnitRoleType.None)
+        {
+            Debug.LogError($"{PartName}: Building인데 UnitRoleType이 설정되어 있습니다.");
+            return false;
+        }
+
+        if (BuildingType == BuildingType.None)
+        {
+            Debug.LogError($"{PartName}: Building인데 BuildingType이 None입니다.");
+            return false;
+        }
+
+        // building은 공격형/방어형 전용 스탯을 가지면 안 됨
         if (AttackDamage != 0f ||
             AttackSpeed != 0f ||
             AttackRangeRadius != 0 ||
@@ -373,28 +408,18 @@ public class PartData
             TrajectoryType != AttackTrajectoryType.None ||
             PenetrationRate != 0f)
         {
-            Debug.LogError($"{PartName}: Building은 공격 스탯을 가질 수 없습니다.");
+            Debug.LogError($"{PartName}: Building인데 Attack 전용 스탯이 설정되어 있습니다.");
             return false;
         }
 
         if (CollisionPower != 0f)
         {
-            Debug.LogError($"{PartName}: Building은 CollisionPower를 가질 수 없습니다.");
+            Debug.LogError($"{PartName}: Building인데 Defense 전용 스탯(CollisionPower)이 설정되어 있습니다.");
             return false;
         }
 
-        if (SupportRangeRadius != 0)
-        {
-            Debug.LogError($"{PartName}: Building은 SupportRangeRadius를 가질 수 없습니다.");
-            return false;
-        }
-
-        if (!string.IsNullOrWhiteSpace(SupportEffectsRaw))
-        {
-            Debug.LogError($"{PartName}: Building은 SupportEffectsRaw를 가질 수 없습니다.");
-            return false;
-        }
-
+        // 주요 라인: building의 support 정의는 허용
+        // 단, 위에서 hasSupportRange != hasSupportEffects 검증으로 불완전 데이터는 차단됨
         return true;
     }
 

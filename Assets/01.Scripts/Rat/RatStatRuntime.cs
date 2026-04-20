@@ -156,7 +156,7 @@ public class RatStatRuntime : MonoBehaviour
 
     public bool CanUseSupport()
     {
-        return IsSupportUnit();
+        return _partData != null && _partData.CanUseSupport;
     }
 
     public bool TryGetAttackStat(out PartAttackStatData attackStat)
@@ -219,7 +219,7 @@ public class RatStatRuntime : MonoBehaviour
             return false;
         }
 
-        if (!_partData.IsSupportUnit)
+        if (!_partData.CanUseSupport)
         {
             return false;
         }
@@ -227,7 +227,7 @@ public class RatStatRuntime : MonoBehaviour
         supportStat = _partData.SupportStat;
         if (supportStat == null)
         {
-            Debug.LogError($"{name}: Support 유닛인데 SupportStat이 Null입니다.");
+            Debug.LogError($"{name}: Support provider인데 SupportStat이 Null입니다.");
             return false;
         }
 

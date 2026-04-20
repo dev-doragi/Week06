@@ -39,8 +39,16 @@ public class PlacementManager : Singleton<PlacementManager>
     [SerializeField] private int _generatorCount = 0;
     [SerializeField] private int _spellmapCount = 0;
 
-    public int SpellMapCount => _spellmapCount;
+    [SerializeField] private int _alterMouseCostPerSecond = 1;
+    [SerializeField] private float _mouseDrainInterval = 1f;
 
+    private int _altarCount;
+    private float _mouseDrainTimer;
+    private bool _altarSupportEnabled = true;
+
+    public int SpellMapCount => _spellmapCount;
+    public bool IsAltarSupportEnabled => _altarSupportEnabled;
+    public int TotalAltarMouseDrainPerSecond => _altarCount * _alterMouseCostPerSecond;
 
     [Header("Rates")]
     [SerializeField] private int subPerSpell = 0;
@@ -84,6 +92,8 @@ public class PlacementManager : Singleton<PlacementManager>
         usedMouse = _spellmapCount + subPerSpell;
         if (usedMouse > 0)
             HandleSubtracting();
+
+        ProcessAltarMouseDrain();
     }
 
     private void HandleAdding()
@@ -127,7 +137,7 @@ public class PlacementManager : Singleton<PlacementManager>
             if (! ((usedMouse) > _currentMouseCount))
             {
                 _subGaugeProgress = 0f;
-                SubtractMouseCount(usedMouse); 
+                SubtractMouseCount(usedMouse);
                 BuffIsEnabled = true;
             }
             else
@@ -157,9 +167,57 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void SubtractSpellGenerator(int count)
     {
-        _spellmapCount-= count;
+        _spellmapCount -= count;
     }
 
+    #endregion
+
+
+    #region Altar
+    public void AddAltar()
+    {
+        _altarCount++;
+    }
+
+    public void RemoveAltar()
+    {
+        _altarCount = Mathf.Max(0, _altarCount - 1);
+    }
+
+    private void ProcessAltarMouseDrain()
+    {
+        if (_altarCount <= 0)
+        {
+            _mouseDrainTimer = 0f;
+            _altarSupportEnabled = true;
+            return;
+        }
+
+        _mouseDrainTimer += Time.deltaTime;
+        if (_mouseDrainTimer < _mouseDrainInterval)
+        {
+            return;
+        }
+
+        _mouseDrainTimer -= _mouseDrainInterval;
+
+        int drainAmount = TotalAltarMouseDrainPerSecond;
+        if (drainAmount <= 0)
+        {
+            _altarSupportEnabled = true;
+            return;
+        }
+
+        if (_currentMouseCount < drainAmount)
+        {
+            // 주요 라인: mouse가 부족하면 이번 틱에는 소비하지 않고 제단 버프를 비활성화한다.
+            _altarSupportEnabled = false;
+            return;
+        }
+
+        SubtractMouseCount(drainAmount);
+        _altarSupportEnabled = true;
+    }
     #endregion
 
 
