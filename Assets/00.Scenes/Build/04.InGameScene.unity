@@ -488,6 +488,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: _mousePrefab
+      value: 
+      objectReference: {fileID: 1377566797}
+    - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _maxSpawnCount
       value: 3000
       objectReference: {fileID: 0}
@@ -1082,10 +1086,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7708086569398768804, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1567701742}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
 --- !u!1 &706314078 stripped
 GameObject:
@@ -1464,23 +1465,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1567701740 stripped
+--- !u!1 &1377566797 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 7708086569398768804, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5052435276292345144, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
   m_PrefabInstance: {fileID: 706314077}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1567701742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1567701740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03af14605741d9d4d903f13ad2dbfc7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReBuildUI
 --- !u!1001 &1605670387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1507,7 +1496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3741046494702156819, guid: f96973fc6f75e6149bd0bb3efb52d28f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 3741046494702156819, guid: f96973fc6f75e6149bd0bb3efb52d28f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1926,6 +1915,10 @@ PrefabInstance:
       propertyPath: _globalPools.Array.size
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[2].Prefab
+      value: 
+      objectReference: {fileID: 1377566797}
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _globalPools.Array.data[4].Prefab
       value: 

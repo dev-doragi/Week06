@@ -1941,7 +1941,7 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 20
+      Data: 18
     - Name: AttackSpeed
       Entry: 4
       Data: 0.4
@@ -2062,7 +2062,7 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.05|Attack:AttackSpeed:Flat:2
+      Data: Attack:AttackDamage:Percent:0.05|Attack:AttackSpeed:Flat:0.7
     - Name: Description
       Entry: 1
       Data: 
@@ -2159,7 +2159,7 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Defense:DefenseRate:Percent:1|Attack:AttackDamage:Flat:2|Attack:AttackSpeed:Flat:0.5
+      Data: Defense:DefenseRate:Percent:1|Attack:AttackDamage:Flat:1|Attack:AttackSpeed:Flat:0.5
     - Name: Description
       Entry: 1
       Data: 
@@ -2268,7 +2268,7 @@ MonoBehaviour:
       Data: 2
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:1|Defense:DefenseRate:Percent:1.5|Attack:PenetrationRate:Flat:0.2
+      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:0.5|Defense:DefenseRate:Percent:1|Attack:PenetrationRate:Flat:0.2
     - Name: Description
       Entry: 1
       Data: 
