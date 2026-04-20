@@ -21,7 +21,6 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private TeamType _teamType = TeamType.Player;
 
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
-    [SerializeField] private bool _spawnRuntimePrefab = true;
 
     [SerializeField] private Transform supportRangeHighlightRoot;
     [SerializeField] private Sprite supportRangeHighlightSprite;

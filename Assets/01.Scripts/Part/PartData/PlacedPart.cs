@@ -12,8 +12,6 @@ public class PlacedPart : SerializedMonoBehaviour
     public int rotation;
     public List<Vector2Int> occupiedCells = new();
 
-    [SerializeField] private float _collisionDamage = 5;
-
     private readonly List<SpriteRenderer> cellRenderers = new();
     private readonly List<BoxCollider2D> cellCols = new();
 
@@ -265,13 +263,15 @@ public class PlacedPart : SerializedMonoBehaviour
             cellObj.transform.localScale = new Vector3(gridRenderer.cellSize, gridRenderer.cellSize, 1f);
             cellRenderers.Add(sr);
             if (ghost)
+            {
                 sr.sprite = icon;
                 continue;
+            }
+
 
             BoxCollider2D boxCol = cellObj.AddComponent<BoxCollider2D>();
             boxCol.size = new Vector2(.95f, .95f);
             cellObj.AddComponent<PartCell>();
-            cellObj.GetComponent<PartCell>().collisionDamage = _collisionDamage;
             cellCols.Add(boxCol);
         }
     }

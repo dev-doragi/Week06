@@ -6,7 +6,6 @@ public class EnemyMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float returnSpeed = 3f;
-    [SerializeField] private float collisionDamage = 40f;
 
     private float originPosX;
     private bool isReturning = false;
@@ -41,5 +40,6 @@ public class EnemyMove : MonoBehaviour
         {
             isReturning = true;
         }
+
     }
 }
