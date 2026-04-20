@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RifleBullet
   _lifeTime: 5
+  _bullet: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
+  _bulletCount: 1
 --- !u!58 &72424632588780625
 CircleCollider2D:
   m_ObjectHideFlags: 0

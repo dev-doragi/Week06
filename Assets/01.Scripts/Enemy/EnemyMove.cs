@@ -21,7 +21,7 @@ public class EnemyMove : MonoBehaviour
     {
         if (isReturning)
         {
-            rigid.linearVelocity = Vector2.right * moveSpeed;
+            rigid.linearVelocity = Vector2.right * returnSpeed;
 
             if(transform.position.x >= originPosX)
             {
@@ -30,7 +30,7 @@ public class EnemyMove : MonoBehaviour
         }
         else
         {
-            rigid.linearVelocity = Vector2.left * returnSpeed;
+            rigid.linearVelocity = Vector2.left * moveSpeed;
         }
     }
 

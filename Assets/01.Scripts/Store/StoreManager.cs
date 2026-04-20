@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 
 // 스토어 타입
@@ -20,6 +21,7 @@ public class StoreManager : Singleton<StoreManager>
     [SerializeField] private ShopDataBase _database;
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private BuildManager _buildManager;
+    [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
     [SerializeField] private GameObject _buttonPrefab;
 
     // 각 타입에 따른 스토어
@@ -53,7 +55,9 @@ public class StoreManager : Singleton<StoreManager>
     [Header("Debug Check")]
     [SerializeField] bool _showDebug = true;
 
-
+    [Header("Hover")]
+    [SerializeField] GameObject _hoverImage;
+    [SerializeField] Canvas _canvas;
 
     protected override void Init()
     {
@@ -67,7 +71,6 @@ public class StoreManager : Singleton<StoreManager>
     {
         GenerateBuyButtons();
     }
-
 
     #region 구매 버튼
     private void GenerateBuyButtons()
@@ -117,15 +120,15 @@ public class StoreManager : Singleton<StoreManager>
         {
             Debug.LogWarning("[StoreManager]: partDic is missing");
             return null;
-        } 
-
-        if (!_gridManager.partDic.TryGetValue(partKey, out PartData partInfo))
+        }
+        Sprite Icon = _partRuntimeSpawner.RatImage(partKey);
+        if (Icon == null)
         {
-            Debug.LogWarning($"[StoreManager] Key {partKey} not found in GridManager dictionary!");
+            Debug.LogError("Dont find partKey in PartPrefab Catalog");
             return null;
         }
 
-        return partInfo.Icon;
+        return Icon;
     }
 
     // 구매 버튼 클리시 해당 코드 실행
@@ -190,6 +193,7 @@ public class StoreManager : Singleton<StoreManager>
     {
         SwitchStore(_currentStore);
         UpdateTabColors(_currentStore);
+        _hoverImage.SetActive(false);
     }
 
 
@@ -238,5 +242,34 @@ public class StoreManager : Singleton<StoreManager>
         }
     }
     #endregion
+
+    public void Hover(bool active, string name = "", string description = "", string status = "")
+    {
+        RectTransform hoverRect = _hoverImage.GetComponent<RectTransform>();
+        RectTransform parentRect = hoverRect.parent as RectTransform;
+
+        hoverRect.pivot = new Vector2(0f, 1f);
+        hoverRect.anchorMin = new Vector2(0.5f, 0.5f);
+        hoverRect.anchorMax = new Vector2(0.5f, 0.5f);
+
+        Vector2 mouseScreen = Mouse.current.position.ReadValue();
+
+        Vector2 localPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parentRect,
+            mouseScreen,
+            _canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : _canvas.worldCamera,
+            out localPos
+        );
+
+        hoverRect.anchoredPosition = localPos;
+
+        DescriptionText _descriptionText = _hoverImage.GetComponent<DescriptionText>();
+        _descriptionText._name.text = name;
+        _descriptionText._description.text = description;
+        _descriptionText._status.text = status;
+
+        _hoverImage.SetActive(active);
+    }
 }
 

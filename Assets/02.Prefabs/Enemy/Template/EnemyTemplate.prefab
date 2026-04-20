@@ -144,7 +144,6 @@ MonoBehaviour:
   _partRuntimeSpawner: {fileID: 0}
   _teamType: 1
   _partPrefabCatalog: {fileID: 0}
-  _spawnRuntimePrefab: 1
   supportRangeHighlightRoot: {fileID: 0}
   supportRangeHighlightSprite: {fileID: 0}
   supportRangeHighlightColor: {r: 0.2, g: 0.6, b: 1, a: 0.2}
@@ -187,6 +186,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 878483f8365d0da46bdfac9b58066ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMove
-  moveSpeed: 2
+  moveSpeed: 0.5
   returnSpeed: 3
-  collisionDamage: 40

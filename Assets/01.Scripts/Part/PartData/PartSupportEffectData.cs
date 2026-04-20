@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -8,12 +8,12 @@ public class PartSupportEffectData
     [SerializeField] private SupportStatType _targetStatType;
     [SerializeField] private ModifierType _modifierType;
     [SerializeField] private float _value;
-
+    [SerializeField] private string _description;
     public SupportTargetRoleType TargetRoleType => _targetRoleType;
     public SupportStatType TargetStatType => _targetStatType;
     public ModifierType ModifierType => _modifierType;
     public float Value => _value;
-
+    public string Description => _description;
     public PartSupportEffectData(
         SupportTargetRoleType targetRoleType,
         SupportStatType targetStatType,
@@ -28,5 +28,33 @@ public class PartSupportEffectData
         _modifierType = modifierType;
         // 증가 수치 저장
         _value = value;
+        // 효과 텍스트
+        _description = EffectDescription();
+    }
+
+    public string EffectDescription()
+    {
+        string description = "";
+        if (_targetRoleType == SupportTargetRoleType.Attack)
+            description += "공격 쥐의 ";
+        else if (_targetRoleType == SupportTargetRoleType.Defense)
+            description += "방어 쥐의 ";
+        else if (_targetRoleType == SupportTargetRoleType.All)
+            description += "모든 쥐의 ";
+        if (_targetStatType == SupportStatType.AttackSpeed)
+            description += "공격 속도를 ";
+        else if (_targetStatType == SupportStatType.AttackDamage)
+            description += "공격력을 ";
+        else if (_targetStatType == SupportStatType.DefenseRate)
+            description += "방어력을 ";
+        else if (_targetStatType == SupportStatType.PenetrationRate)
+            description += "관통력을 ";
+        if (_value >= 1)
+            description += $"{_value} ";
+        else if (_value < 1)
+            description += $"{_value * 100}% ";
+        description += "증가시킵니다. ";
+
+        return description;
     }
 }

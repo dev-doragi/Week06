@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class RatStatRuntime : MonoBehaviour
 {
@@ -14,7 +16,9 @@ public class RatStatRuntime : MonoBehaviour
     public float DefenseRate => _partData != null ? _partData.CommonStat.DefenseRate : 0f;
     public bool IsDead => _currentHp <= 0f;
 
-    public event Action<float, float> OnHpChanged;
+    private Coroutine _runningCo;
+
+    public event Action<float, float> OnHpChanged; //이거 이벤트 안 쓰고 있는거 아닌가요?
     public event Action OnDead;
 
     private void Awake()
@@ -68,9 +72,16 @@ public class RatStatRuntime : MonoBehaviour
 
         _currentHp -= damage;
 
+
         _colorValue = 0.5f + ((_currentHp / _partData.Hp) / 2f);
         Color color = new Color(1f, _colorValue, _colorValue, 1f);
-        SetColor(color);
+        if (_runningCo != null)
+        {
+            StopCoroutine( _runningCo );
+            _runningCo = null;
+        }
+        _runningCo = StartCoroutine(HitPeedBack(color));
+
 
         if (_currentHp < 0f)
         {
@@ -91,6 +102,24 @@ public class RatStatRuntime : MonoBehaviour
             sr.color = color;
         }
     }
+    IEnumerator HitPeedBack(Color color)
+    {
+        Color hitColor = color;
+        float h, s, v;
+        Color.RGBToHSV(hitColor, out h, out s, out v);
+
+        v = .75f;
+        hitColor = Color.HSVToRGB(h, s, v);
+        SetColor(hitColor);
+        yield return new WaitForSeconds(.05f);
+        SetColor(color);
+        yield return new WaitForSeconds(.05f);
+        SetColor(hitColor);
+        yield return new WaitForSeconds(.05f);
+        SetColor(color);
+        yield break;
+    }
+
     public void RecoverHp(float amount)
     {
         if (_partData == null)
