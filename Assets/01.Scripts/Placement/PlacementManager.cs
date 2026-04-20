@@ -127,7 +127,7 @@ public class PlacementManager : Singleton<PlacementManager>
             if (! ((usedMouse) > _currentMouseCount))
             {
                 _subGaugeProgress = 0f;
-                SubtractMouseCount(usedMouse); 
+                SubtractMouseCount(usedMouse);
                 BuffIsEnabled = true;
             }
             else
@@ -157,7 +157,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void SubtractSpellGenerator(int count)
     {
-        _spellmapCount-= count;
+        _spellmapCount -= count;
     }
 
     #endregion

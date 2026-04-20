@@ -150,7 +150,10 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
 
     public bool CanUseAttack() => IsAttackUnit();
     public bool CanUseCollision() => IsDefenseUnit();
-    public bool CanUseSupport() => IsSupportUnit();
+    public bool CanUseSupport()
+    {
+        return PartData != null && PartData.CanUseSupport;
+    }
 
     public bool IsArcAttack()
     {

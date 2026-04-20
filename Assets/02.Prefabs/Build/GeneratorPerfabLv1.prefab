@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5540073442022061086
+--- !u!1 &4069730091198359596
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1287438264526735116}
-  - component: {fileID: 1566096901459484280}
+  - component: {fileID: 4512780848762698432}
+  - component: {fileID: 4834139162232440434}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -17,29 +17,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1287438264526735116
+--- !u!4 &4512780848762698432
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5540073442022061086}
+  m_GameObject: {fileID: 4069730091198359596}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8890942723008482327}
+  m_Father: {fileID: 770896137080461547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1566096901459484280
+--- !u!212 &4834139162232440434
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5540073442022061086}
+  m_GameObject: {fileID: 4069730091198359596}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9547169, g: 0.12069061, b: 0.7859393, a: 1}
+  m_Color: {r: 0.71233386, g: 0.7207546, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &7570076967832051949
+--- !u!1 &4280719370787094377
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,123 +99,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8890942723008482327}
-  - component: {fileID: 2957806490872565241}
-  - component: {fileID: 323602256104323686}
-  - component: {fileID: 7071122668235031631}
-  - component: {fileID: 1609212166258689005}
+  - component: {fileID: 770896137080461547}
+  - component: {fileID: 3686318113067880817}
   m_Layer: 0
-  m_Name: SpellMapPrefab
+  m_Name: GeneratorPerfabLv1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8890942723008482327
+--- !u!4 &770896137080461547
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570076967832051949}
+  m_GameObject: {fileID: 4280719370787094377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1287438264526735116}
+  - {fileID: 4512780848762698432}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2957806490872565241
+--- !u!114 &3686318113067880817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570076967832051949}
+  m_GameObject: {fileID: 4280719370787094377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85840652b4e06b047918a00097fd9c3f, type: 3}
+  m_Script: {fileID: 11500000, guid: df39d4fb506ceb0409ed4c69bb711717, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpellMapConnector
+  m_EditorClassIdentifier: Assembly-CSharp::GeneratorConnector
   addCount: 1
---- !u!114 &323602256104323686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570076967832051949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea2ae8e192a8344eb834d43ab9ffd30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatController
-  _partData:
-    Key: 0
-    PartName: 
-    PartCategory: 0
-    UnitRoleType: 0
-    BuildingType: 0
-    Shape: []
-    Hp: 0
-    DefenseRate: 0
-    Cost: 0
-    Icon: {fileID: 0}
-    AttackDamage: 0
-    AttackSpeed: 0
-    AttackRangeRadius: 0
-    AttackDistance: 0
-    TrajectoryType: 0
-    PenetrationRate: 0
-    CollisionPower: 0
-    SupportRangeRadius: 0
-    SupportEffectsRaw: 
-  _placedPart: {fileID: 0}
-  _teamType: 0
---- !u!114 &7071122668235031631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570076967832051949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 643dfa8ccc02c3441be54fdb93199ad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatStatRuntime
-  _partData:
-    Key: 0
-    PartName: 
-    PartCategory: 0
-    UnitRoleType: 0
-    BuildingType: 0
-    Shape: []
-    Hp: 0
-    DefenseRate: 0
-    Cost: 0
-    Icon: {fileID: 0}
-    AttackDamage: 0
-    AttackSpeed: 0
-    AttackRangeRadius: 0
-    AttackDistance: 0
-    TrajectoryType: 0
-    PenetrationRate: 0
-    CollisionPower: 0
-    SupportRangeRadius: 0
-    SupportEffectsRaw: 
---- !u!114 &1609212166258689005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7570076967832051949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac161fff3808fbc439bb6c85c19b4c0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatSupportHandler
-  _useAutoSupport: 1

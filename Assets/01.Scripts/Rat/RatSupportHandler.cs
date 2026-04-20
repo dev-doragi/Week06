@@ -45,7 +45,15 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
-        if (!_ratController.IsSupportUnit())
+        PartData partData = _ratController.PartData;
+        if (partData == null)
+        {
+            Debug.LogError($"{name}: CanProvideSupport 실패 - PartData가 없습니다.");
+            return false;
+        }
+
+        // 주요 라인: 이제 지원 제공자는 지원형 유닛 + 지원형 빌딩을 모두 포함한다.
+        if (!partData.CanUseSupport)
         {
             return false;
         }
@@ -63,7 +71,7 @@ public class RatSupportHandler : MonoBehaviour
 
         if (!_ratController.TryGetSupportStat(out _))
         {
-            Debug.LogError($"{name}: Support 유닛인데 SupportStat을 가져오지 못했습니다.");
+            Debug.LogError($"{name}: Support provider인데 SupportStat을 가져오지 못했습니다.");
             return false;
         }
 
@@ -112,6 +120,7 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
+        // 주요 라인: 현재 지원 수혜 대상은 기존과 동일하게 Unit만 허용한다.
         if (!target.IsUnit())
         {
             return false;
