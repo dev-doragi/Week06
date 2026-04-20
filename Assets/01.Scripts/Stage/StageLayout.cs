@@ -13,6 +13,9 @@ public class StageLayout : MonoBehaviour
 
     private GameObject _currentEnemySiege;
 
+    // 추가: 외부에서 현재 스폰된 적(공성병기)을 읽을 수 있게 공개
+    public GameObject CurrentEnemySiege => _currentEnemySiege;
+
     private void Awake()
     {
         if (_enemySiegePoint == null)

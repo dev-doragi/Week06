@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: "\uC18C\uCD1D\uBCD1"
   partKey: 4
   category: 0
-  cost: 2
+  description: 
+  cost: 20
   tier: 0
   isLocked: 1

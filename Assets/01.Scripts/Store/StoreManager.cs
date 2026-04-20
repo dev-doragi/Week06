@@ -124,7 +124,7 @@ public class StoreManager : Singleton<StoreManager>
         Sprite Icon = _partRuntimeSpawner.RatImage(partKey);
         if (Icon == null)
         {
-            Debug.LogError("Dont find partKey in PartPrefab Catalog");
+            Debug.LogError($"PartPrefab Catalog에서 partKey {partKey}번을 찾을 수 없습니다!");
             return null;
         }
 
@@ -132,12 +132,12 @@ public class StoreManager : Singleton<StoreManager>
     }
 
     // 구매 버튼 클리시 해당 코드 실행
-    public void SelectUnit(ShopItemData data)
+    public void SelectUnit(RunShopItemData data)
     {
         //PlacementManager.Instance.AddMouseCount(data.cost); 이거 왜 있는건가요?
 
         if (_showDebug) Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
-        _buildManager.SelectPart(data.partKey);
+        _buildManager.SelectPart(data.partKey, data, true);
     }
     #endregion
 

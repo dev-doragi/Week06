@@ -37,6 +37,8 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     public TeamType TeamType => _teamType;
     public PlacedPart PlacedPart => _placedPart;
 
+    public bool IsTutorialEnemy { get; set; } = false;
+
     private void Awake()
     {
         // 주요 라인: 같은 GameObject 내부 컴포넌트는 Awake에서 캐싱한다.
@@ -371,17 +373,33 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     private void HandleDead()
     {
         _placedPart.Break();
-        if(_ratAttackHandler != null)
+        if (_ratAttackHandler != null)
             _ratAttackHandler.enabled = false;
-        if (_partData.BuildingType == BuildingType.Core)
-            EventBus.Instance.Publish(new BaseDestroyedEvent());
-        if(_partData.BuildingType == BuildingType.EnemyCore)
+
+        // 튜토리얼 모드에서는 IsTutorialEnemy 플래그 세팅 타이밍에 따라
+        // 처치 이벤트가 누락될 수 있으므로(스폰 직후 즉시 사망 등)
+        // EnemyCore 사망을 튜토리얼 처치로 안정적으로 처리한다.
+        if (StageLoadContext.IsTutorial)
         {
-            for (int i = 0; i < 50; i++)
+            if (_partData != null && _partData.BuildingType == BuildingType.EnemyCore)
+            {
+                EventBus.Instance?.Publish(new TutorialEnemyDefeatedEvent());
+            }
+            return;
+        }
+
+        if (_partData.BuildingType == BuildingType.EnemyCore)
+        {
+            int addRat = StageManager.Instance.CurrentWaveIndex * 15 + StageManager.Instance.CurrentStageIndex * 20;
+            for (int i = 0; i < 25 + addRat; i++)
             {
                 GameObject spawned = PoolManager.Instance.Spawn("DropRat", transform.position, Quaternion.identity);
             }
             EventBus.Instance.Publish(new EnemyDefeatedEvent());
+        }
+        else if (_partData.BuildingType == BuildingType.Core)
+        {
+            EventBus.Instance.Publish(new BaseDestroyedEvent());
         }
     }
 }

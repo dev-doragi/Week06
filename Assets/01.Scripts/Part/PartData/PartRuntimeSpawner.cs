@@ -8,8 +8,10 @@ public class PartRuntimeSpawner : MonoBehaviour
     {
         if (!_partPrefabCatalog.TryGetPrefab(Key, out GameObject prefab) || prefab == null)
         {
+            
             return null;
         }
+        Debug.Log(prefab.name);
         return prefab.GetComponentInChildren<SpriteRenderer>().sprite;
     }
     public GameObject SpawnRuntime(

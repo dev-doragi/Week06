@@ -175,3 +175,6 @@ public struct TutorialCompletedEvent
 {
     public int RewardStageIndex; // 완료 후 진행할 스테이지
 }
+
+// GameEvents.cs 맨 아랫부분에 추가
+public struct TutorialEnemyDefeatedEvent { }

@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RifleBullet
   _lifeTime: 5
   _bullet: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
-  _bulletCount: 1
 --- !u!58 &72424632588780625
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +193,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: e4234bbd8d792f744845cb51037a4ff6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f372b12c728d514fae6018a7e2fee7e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
