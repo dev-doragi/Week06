@@ -23,7 +23,7 @@ public class RatAttackHandler : MonoBehaviour
     private IAttackPerformer _fallbackAttackPerformer;
     private IAttackPerformer _arcAttackPerformer;
     private IAttackPerformer _directAttackPerformer;
-
+    private IAttackPerformer attackPerformer;
     public bool UseAutoAttack => _useAutoAttack;
     public RatController CurrentTarget => _currentTarget;
 
@@ -110,7 +110,6 @@ public class RatAttackHandler : MonoBehaviour
         {
             return;
         }
-
         if (!TryAttack(_currentTarget))
         {
             InvalidateTargetIfNeeded(_currentTarget);
@@ -159,7 +158,7 @@ public class RatAttackHandler : MonoBehaviour
             return false;
         }
 
-        IAttackPerformer attackPerformer = ResolveAttackPerformer();
+        attackPerformer = ResolveAttackPerformer();
         if (attackPerformer == null)
         {
             Debug.LogError($"{name}: TryAttack 실패 - TrajectoryType에 맞는 공격 실행기가 없습니다.");
@@ -201,24 +200,29 @@ public class RatAttackHandler : MonoBehaviour
         {
             if (!IsTargetInAttackDistance(target, attackStat.AttackDistance))
                 return false;
-            if (!PlacementManager.Instance.SubtractMouseCount(1))
-                return false;
-        }
-        
 
-        bool launched = attackPerformer.TryPerformAttack(_ratController, target);
-        if (!launched)
-        {
-            return false;
         }
-        anim.SetTrigger("OnAttack");
+        anim.SetBool("OnAttack", true);
 
-        _lastAttackTime = Time.time;
-        _currentTarget = target;
 
         return true;
     }
+    public void AnimAttack()
+    {
+        if (_ratController.TeamType == TeamType.Player)
+        {
+            if (!PlacementManager.Instance.SubtractMouseCount(1))
+                return;
+        }
 
+        bool launched = attackPerformer.TryPerformAttack(_ratController, _currentTarget);
+        if (!launched)
+        {
+            return;
+        }
+        anim.SetBool("OnAttack", false);
+        _lastAttackTime = Time.time;
+    }
     public bool HasValidCurrentTarget()
     {
         if (_currentTarget == null)

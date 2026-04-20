@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 7f5619f8e649f0d4d8809220d5e08e28
+guid: 7a176a1f8adb42e46bc36c59b7858520
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2132995636211010893
-    second: Wipper_0
-  - first:
-      213: -8440165483005212548
-    second: Wipper_1
-  - first:
-      213: 1696394255486085444
-    second: Wipper_2
+      213: -5620155193319629329
+    second: Lock_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -78,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -106,67 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Wipper_0
+      name: Lock_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b23f2c15c31662e0800000000000000
-      internalID: -2132995636211010893
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wipper_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c7806fb06328eda80800000000000000
-      internalID: -8440165483005212548
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wipper_2
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.25, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 449e245669dca8710800000000000000
-      internalID: 1696394255486085444
+      spriteID: feddd97e0a23102b0800000000000000
+      internalID: -5620155193319629329
       vertices: []
       indices: 
       edges: []
@@ -183,13 +133,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Wipper_0: -2132995636211010893
-      Wipper_1: -8440165483005212548
-      Wipper_2: 1696394255486085444
+      Lock_0: -5620155193319629329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

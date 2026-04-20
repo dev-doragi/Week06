@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.9219, y: -0.14145, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1663197027144848900}
@@ -50,7 +50,7 @@ MonoBehaviour:
   _lifeTime: 5
   _explodeOnTriggerEnter: 1
   _bullet: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
-  _bulletCount: 20
+  _bulletCount: 6
 --- !u!58 &72424632588780625
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: e4234bbd8d792f744845cb51037a4ff6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 954f82d3df64ae0418e4ae90953bb238, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

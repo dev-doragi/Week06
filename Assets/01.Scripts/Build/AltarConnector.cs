@@ -65,7 +65,7 @@ public class AltarConnector : MonoBehaviour
             return;
         }
 
-        _placementManager.SubtractGenerator(1);
+        _placementManager.SubtractGenerator(10);
         _isRegistered = false;
     }
 }

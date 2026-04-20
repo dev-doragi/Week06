@@ -46,8 +46,6 @@ public class PlacementManager : Singleton<PlacementManager>
     private float _mouseDrainTimer;
     private bool _altarSupportEnabled = true;
 
-    private bool _isWavePlaying;
-
     public int SpellMapCount => _spellmapCount;
     public bool IsAltarSupportEnabled => _altarSupportEnabled;
     public int TotalAltarMouseDrainPerSecond => _altarCount * _alterMouseCostPerSecond;
@@ -55,7 +53,7 @@ public class PlacementManager : Singleton<PlacementManager>
     [Header("Rates")]
     [SerializeField] private int subPerSpell = 0;
     [SerializeField] private float _mouseGenTime = 0.3f;
-    [SerializeField] private float _mouseSubTime = 0.5f;
+    [SerializeField] private float _mouseSubTime = 0.2f;
     [SerializeField] private float _addGaugeProgress = 0f;
     [SerializeField] private float _subGaugeProgress = 0f;
 
@@ -70,13 +68,14 @@ public class PlacementManager : Singleton<PlacementManager>
     private bool _isAnimating = false;
     private bool _isFull = false;
     private int usedMouse;
+    private StageManager _stageManager;
 
 
     void Start()
     {
         SpawnMouseAtPoint(_currentMouseCount);
         UpdateDisplay();
-
+        _stageManager = StageManager.Instance;
         if (_uiContainer != null) _anchoredPosition = _uiContainer.anchoredPosition;
 
 
@@ -87,34 +86,17 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void Update()
     {
-        if (_isWavePlaying && _generatorCount > 0)
+        if(_stageManager.CurrentState == InGameState.WavePlaying)
         {
-            HandleAdding();
-        }
-        else
-        {
-            _addGaugeProgress = 0f;
-            if (_addGauge != null)
+            if (_generatorCount > 0)
             {
-                _addGauge.value = 0f;
+                HandleAdding();
             }
-        }
+            usedMouse = _spellmapCount + subPerSpell;
+            if (usedMouse > 0)
+                HandleSubtracting();
 
-        usedMouse = _spellmapCount + subPerSpell;
-        if (usedMouse > 0 && _isWavePlaying)
-        {
-            HandleSubtracting();
         }
-        else
-        {
-            _subGaugeProgress = 0f;
-            if (_subGauge != null)
-            {
-                _subGauge.value = 0f;
-            }
-        }
-
-
         //ProcessAltarMouseDrain();
     }
 
@@ -169,36 +151,6 @@ public class PlacementManager : Singleton<PlacementManager>
         }
         // 3. Update Visuals LAST so the UI reflects the logic above immediately
         _subGauge.value = _subGaugeProgress;
-    }
-
-    private void OnEnable()
-    {
-        if (EventBus.Instance != null)
-        {
-            EventBus.Instance.Subscribe<InGameStateChangedEvent>(OnInGameStateChanged);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (EventBus.Instance != null)
-        {
-            EventBus.Instance.Unsubscribe<InGameStateChangedEvent>(OnInGameStateChanged);
-        }
-    }
-
-    private void OnInGameStateChanged(InGameStateChangedEvent evt)
-    {
-        _isWavePlaying = evt.NewState == InGameState.WavePlaying;
-
-        if (!_isWavePlaying)
-        {
-            _addGaugeProgress = 0f;
-            if (_addGauge != null)
-            {
-                _addGauge.value = 0f;
-            }
-        }
     }
 
     #region Generator Add / Subtract
@@ -298,7 +250,6 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public bool SubtractMouseCount(int amount)
     {
-        Debug.Log("@@@");
         if (_currentMouseCount < amount)
         {
             PlayDenyAction(true);

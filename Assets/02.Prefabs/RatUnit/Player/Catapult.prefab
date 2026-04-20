@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94192004054344545b38516c90c5af25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombArcAttackPerformer
-  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: 505fb045b62793b4fbe5a353aa61bc1a, type: 3}
+  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: ebe94175bba21624a8c8e2a70e02ddc2, type: 3}
   _spawnPoint: {fileID: 3887884342779039399}
   _arcHeight: 2.5
   _travelTime: 0.6
@@ -174,12 +174,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed7555f3c3033b342b7f78db18dd1db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombDirectAttackPerformer
-  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: 505fb045b62793b4fbe5a353aa61bc1a, type: 3}
+  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: ebe94175bba21624a8c8e2a70e02ddc2, type: 3}
   _spawnPoint: {fileID: 3887884342779039399}
   _travelTime: 0.35
 --- !u!61 &8582743420408720198
@@ -219,10 +219,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
