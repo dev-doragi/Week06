@@ -92,7 +92,7 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
 
             status = $"건물 체력: {_partData.Hp}\n";
-            if (_partData.SupportStat.Effects != null)
+            if (_partData.SupportStat != null)
             {
                 foreach (var sup in _partData.SupportStat.Effects)
                 {
@@ -128,7 +128,6 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _itemData.cost *= 2;
             RefreshUI();
-            HandlePurchase();
         }
 
     }

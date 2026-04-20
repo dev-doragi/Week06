@@ -137,7 +137,7 @@ public class StoreManager : Singleton<StoreManager>
         //PlacementManager.Instance.AddMouseCount(data.cost); 이거 왜 있는건가요?
 
         if (_showDebug) Debug.Log("[StoreManager]: Selected part key: " + data.partKey);
-        _buildManager.SelectPart(data.partKey, data);
+        _buildManager.SelectPart(data.partKey, data, true);
     }
     #endregion
 

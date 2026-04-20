@@ -37,10 +37,13 @@ public class BuildManager : MonoBehaviour
     private Sprite _ghostSprite;
 
     private bool haveMouse;
+    private bool clickShopButton;
     private int cost;
+    private RunShopItemData itemData;
 
     private void Start()
     {
+        clickShopButton = false;
         if (VehicleCache.HasSavedData) return;
 
         if (enemyBuild)
@@ -69,12 +72,13 @@ public class BuildManager : MonoBehaviour
 
         if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
+            clickShopButton = false;
             ClearSelection();
             TryRemovePart();
         }
     }
 
-    public void SelectPart(int key, RunShopItemData _itemData = null)
+    public void SelectPart(int key, RunShopItemData _itemData = null, bool clickShop = false)
     {
         ClearSupportRangeHighlights();
 
@@ -103,7 +107,8 @@ public class BuildManager : MonoBehaviour
         if (_itemData == null)
             cost = 0;
         else
-            cost = _itemData.cost;
+            itemData = _itemData;
+        clickShopButton = clickShop;
         CreateGhost();
         ShowPlaceableCells();
     }
@@ -170,9 +175,12 @@ public class BuildManager : MonoBehaviour
         {
             return false;
         }
+        if (clickShopButton)
+        {
+            if (!PlacementManager.Instance.SubtractMouseCount(itemData.cost))
+                return false;
+        }
 
-        if (!PlacementManager.Instance.SubtractMouseCount(cost))
-            return false;
 
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
         if (partObj == null) return false;
@@ -188,9 +196,7 @@ public class BuildManager : MonoBehaviour
         }
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
         TrySpawnRuntimePrefab(partData, placedPart);
-
-        EventBus.Instance?.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos }); // 이벤트 발행
-
+        EventBus.Instance?.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos });
         ShowPlaceableCells();
         return true;
     }
