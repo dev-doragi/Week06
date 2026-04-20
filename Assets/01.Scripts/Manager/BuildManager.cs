@@ -41,8 +41,9 @@ public class BuildManager : MonoBehaviour
     {
         if (VehicleCache.HasSavedData) return;
 
-        if(enemyBuild)
-            SpawnEnemyBase();
+        if (enemyBuild)
+            //SpawnEnemyBase();
+            return;
         else
             SpawnBase();
     }
@@ -213,18 +214,20 @@ public class BuildManager : MonoBehaviour
         Vector2Int gridPos = GetMouseGridPosition();
 
         if (!board.IsInside(gridPos)) return;
-        if (board.boardOwner != GridBoard.BoardOwnerType.Player)
-            return;
+
+        //if (board.boardOwner != GridBoard.BoardOwnerType.Player)
+        //    return;
         PlacedPart targetPart = board.GetCell(gridPos);
         if (targetPart.PartKey == 10001 || targetPart.PartKey == 10002)
             return;
+
         if (targetPart == null) return;
+
         if (board.HasPartAbove(targetPart))
         {
             Debug.LogWarning("위에 파츠가 있어서 제거할 수 없습니다.");
             return;
         }
-
         RemovePartAndCollapse(targetPart);
     }
 
@@ -238,10 +241,12 @@ public class BuildManager : MonoBehaviour
     private void RemovePartAndCollapse(PlacedPart targetPart)
     {
         if (targetPart == null) return;
+        Debug.Log("@@@");
 
         GridBoard targetBoard = targetPart.GetComponentInParent<GridBoard>();
         if (targetBoard == null)
             return;
+        Debug.Log("@@@");
 
         targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
