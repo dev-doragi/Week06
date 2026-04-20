@@ -134,4 +134,10 @@ public class UIManager : Singleton<UIManager>
         if (_inGamePanel != null) _inGamePanel.SetActive(true);
         StageManager.Instance.LoadNextStage();
     }
+
+    public void OnGoToStageSelectClicked()
+    {
+        HideAllPanels();
+        SceneLoader.Instance.GoToStageSelect();
+    }
 }

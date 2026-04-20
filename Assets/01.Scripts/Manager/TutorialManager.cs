@@ -37,6 +37,13 @@ public class TutorialStep
 [DefaultExecutionOrder(-90)]
 public class TutorialManager : Singleton<TutorialManager>
 {
+    private const float CAMERA_DEFAULT_SIZE = 10f;
+    private const float CAMERA_DEFAULT_POS_Z = -10f;
+    private const int DEFENSE_PART_MIN = 1;
+    private const int DEFENSE_PART_MAX = 3;
+    private const int ATTACK_PART_MIN = 4;
+    private const int ATTACK_PART_MAX = 6;
+
     [Header("UI References")]
     [SerializeField] private GameObject _dialogPanel;
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -44,7 +51,7 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private Image _portraitImage;
     [SerializeField] private RectTransform _highlighter;
     [SerializeField] private Button _clickButton;
-    [SerializeField] private GameObject _postPanel;  // ← 추가
+    [SerializeField] private GameObject _postPanel;
 
     [Header("Settings")]
     [SerializeField] private float _typingSpeed = 0.05f;
@@ -52,8 +59,8 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private TutorialStep[] _steps;
 
     [Header("Highlighter Pulse Effect")]
-    [SerializeField] private float _pulseScale = 1.1f; // 얼마나 커질지 (1.1 = 110%)
-    [SerializeField] private float _pulseSpeed = 4.0f; // 깜빡임 속도
+    [SerializeField] private float _pulseScale = 1.1f;
+    [SerializeField] private float _pulseSpeed = 4.0f;
 
     [Header("Debug & Manual Start")]
     [SerializeField] private bool _startOnAwake = true;
@@ -73,8 +80,7 @@ public class TutorialManager : Singleton<TutorialManager>
     private Vector2 _highlighterBaseSize = Vector2.zero;
     private Vector2 _clickButtonOriginalAnchoredPos = Vector2.zero;
     private Coroutine _dialogCameraCoroutine = null;
-    private bool _isDialogCameraLocked = false;
-    private float _dialogCamOriginalSize = 10f;
+    private float _dialogCamOriginalSize = CAMERA_DEFAULT_SIZE;
     private Vector3 _dialogCamOriginalPos = Vector3.zero;
 
     private void OnEnable()
@@ -103,13 +109,8 @@ public class TutorialManager : Singleton<TutorialManager>
     private IEnumerator ShowAttackPlacementTutorialRoutine(int partKey)
     {
         _isShowing = true;
-
-        // 빌드/입력 차단
-        // Visual highlights left by BuildManager are informational; no need to force-clear here.
-        BuildManager build = FindAnyObjectByType<BuildManager>();
         InputReader.Instance?.SetInputBlocked(true);
 
-        // 기존 다이얼로그 패널 재사용: 간단한 메시지 표시
         if (_dialogPanel != null)
         {
             _dialogPanel.SetActive(true);
@@ -210,23 +211,12 @@ public class TutorialManager : Singleton<TutorialManager>
             yield return StartCoroutine(ShowDialogRoutine(_steps[_currentStep]));
         }
 
-        // 종료 정리
-        _isShowing = false;
-        StopHighlighterPulse();
-        if (_dialogPanel != null) _dialogPanel.SetActive(false);
-        if (_highlighter != null) _highlighter.gameObject.SetActive(false);
-        InputReader.Instance?.SetInputBlocked(false);
-        Time.timeScale = 1f;
+        CleanupTutorial();
 
-        // ✅ 완료 패널 띄우기
         if (_postPanel != null)
         {
             _postPanel.SetActive(true);
         }
-
-        // (카메라는 각 다이얼로그 시작 시 고정되므로 별도 해제 불필요)
-
-        Debug.Log("[TutorialManager] 튜토리얼 완료 패널 활성화!");
     }
 
     private IEnumerator ShowDialogRoutine(TutorialStep step)
@@ -246,10 +236,9 @@ public class TutorialManager : Singleton<TutorialManager>
 
         if (_nameText != null) _nameText.text = step.SpeakerName;
 
-        // 다이얼로그 시작 시 카메라를 기본 위치/사이즈로 트윈(단, CameraMove 실습 단계는 제외)
         if (step.Condition != TutorialCondition.CameraMove)
         {
-            if (_dialogCameraCoroutine != null) StopCoroutine(_dialogCameraCoroutine);
+            StopDialogCameraCoroutine();
             _dialogCameraCoroutine = StartCoroutine(DialogCameraLockRoutine(0.25f));
         }
 
@@ -322,14 +311,9 @@ public class TutorialManager : Singleton<TutorialManager>
             while (!_moveNext) yield return null;
         }
 
-        // 단계 종료 시 다이얼로그 복귀
         StopHighlighterPulse();
-        // 다이얼로그 카메라 잠금 해제
-        if (_dialogCameraCoroutine != null)
-        {
-            StopCoroutine(_dialogCameraCoroutine);
-            _dialogCameraCoroutine = null;
-        }
+        StopDialogCameraCoroutine();
+
         if (step.MoveDialogUp && _dialogPanel != null)
         {
             if (_dialogMoveCoroutine != null) StopCoroutine(_dialogMoveCoroutine);
@@ -338,7 +322,6 @@ public class TutorialManager : Singleton<TutorialManager>
         }
     }
 
-    // --- 하이라이트 펄스(Grow/Shrink) 효과 ---
     private void StartHighlighterPulse()
     {
         if (_pulseCoroutine != null) StopCoroutine(_pulseCoroutine);
@@ -358,7 +341,6 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         while (true)
         {
-            // Sin파를 이용해 커졌다 작아졌다 하는 값 계산 (0~1 범위)
             float t = (Mathf.Sin(Time.unscaledTime * _pulseSpeed) + 1f) / 2f;
             if (_highlighter != null)
             {
@@ -368,72 +350,56 @@ public class TutorialManager : Singleton<TutorialManager>
         }
     }
 
-    // --- 카메라 고정 코루틴 ---
-    private IEnumerator LockCameraCoroutine()
+    private void StopDialogCameraCoroutine()
     {
-        Camera mainCam = Camera.main;
-        if (mainCam == null) yield break;
+        if (_dialogCameraCoroutine != null)
+        {
+            StopCoroutine(_dialogCameraCoroutine);
+            _dialogCameraCoroutine = null;
+        }
+    }
 
-        // 즉시 목표값으로 보간하지 말고 부드럽게 이동
-        float duration = 0.3f;
+    private void CleanupTutorial()
+    {
+        _isShowing = false;
+        StopHighlighterPulse();
+        if (_dialogPanel != null) _dialogPanel.SetActive(false);
+        if (_highlighter != null) _highlighter.gameObject.SetActive(false);
+        InputReader.Instance?.SetInputBlocked(false);
+        Time.timeScale = 1f;
+    }
+
+    private IEnumerator MoveDialogUpRoutine(float offset, float duration)
+    {
+        if (_dialogPanel == null) yield break;
+
+        var rt = _dialogPanel.GetComponent<RectTransform>();
+        Vector2 start = rt.anchoredPosition;
+        Vector2 target = start + new Vector2(0f, offset);
+        Vector2 buttonOffset = new Vector2(0f, offset);
+
         float elapsed = 0f;
-        float startSize = mainCam.orthographicSize;
-        Vector3 startPos = mainCam.transform.position;
-        float targetSize = 10f;
-        Vector3 targetPos = new Vector3(0f, 0f, -10f);
-
-        // 입력 차단 동안 카메라 이동을 수행
-        InputReader.Instance?.SetInputBlocked(true);
-
-        // 보간이 끝나면 카메라 잠금 상태 해제
-        _isResettingCamera = true;
-
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            mainCam.orthographicSize = Mathf.Lerp(startSize, targetSize, t);
-            mainCam.transform.position = Vector3.Lerp(startPos, targetPos, t);
-            yield return null;
-        }
+            rt.anchoredPosition = Vector2.Lerp(start, target, t);
 
-        mainCam.orthographicSize = targetSize;
-        mainCam.transform.position = targetPos;
-
-        // 고정 상태 유지 (루프에서 대기) until coroutine stopped
-        while (true)
-        {
-            yield return null;
-        }
-    }
-
-    // --- 다이얼로그 이동 코루틴 ---
-    private IEnumerator MoveDialogUpRoutine(float offset, float duration)
-    {
-        if (_dialogPanel == null) yield break;
-        var rt = _dialogPanel.GetComponent<RectTransform>();
-        Vector2 start = rt.anchoredPosition;
-        Vector2 target = start + new Vector2(0f, offset);
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            rt.anchoredPosition = Vector2.Lerp(start, target, Mathf.Clamp01(elapsed / duration));
-            // ClickButton(풀스크린 클릭 버튼)도 같이 이동시키기
             if (_clickButton != null)
             {
                 var cbRt = _clickButton.GetComponent<RectTransform>();
                 if (cbRt != null)
-                    cbRt.anchoredPosition = Vector2.Lerp(_clickButtonOriginalAnchoredPos, _clickButtonOriginalAnchoredPos + new Vector2(0f, offset), Mathf.Clamp01(elapsed / duration));
+                    cbRt.anchoredPosition = Vector2.Lerp(_clickButtonOriginalAnchoredPos, _clickButtonOriginalAnchoredPos + buttonOffset, t);
             }
             yield return null;
         }
+
         rt.anchoredPosition = target;
         if (_clickButton != null)
         {
             var cbRt = _clickButton.GetComponent<RectTransform>();
             if (cbRt != null)
-                cbRt.anchoredPosition = _clickButtonOriginalAnchoredPos + new Vector2(0f, offset);
+                cbRt.anchoredPosition = _clickButtonOriginalAnchoredPos + buttonOffset;
         }
     }
 
@@ -468,73 +434,61 @@ public class TutorialManager : Singleton<TutorialManager>
     // --- 실습 이벤트 핸들러 ---
     private void OnCameraZoomed(ScrollEvent e)
     {
-        // _isResettingCamera가 false일 때만 진행도를 올림 (참조 발생!)
-        if (_isShowing && !_isResettingCamera && _steps != null && _currentStep >= 0 && _currentStep < _steps.Length && _steps[_currentStep].Condition == TutorialCondition.CameraMove)
-        {
-            _currentProgress += 0.2f;
-            CheckCondition();
-        }
+        if (!IsCurrentStepCondition(TutorialCondition.CameraMove)) return;
+
+        _currentProgress += 0.2f;
+        CheckCondition();
     }
 
     private void OnCameraDragged(RightClickEvent e)
     {
-        // 여기도 마찬가지로 리셋 중이 아닐 때만 체크
-        if (_isShowing && !_isResettingCamera && _steps != null && _currentStep >= 0 && _currentStep < _steps.Length && _steps[_currentStep].Condition == TutorialCondition.CameraMove && e.IsStarted)
-        {
-            _currentProgress += 0.1f;
-            CheckCondition();
-        }
+        if (!IsCurrentStepCondition(TutorialCondition.CameraMove) || !e.IsStarted) return;
+
+        _currentProgress += 0.1f;
+        CheckCondition();
     }
 
     private void OnPartPlaced(PartPlacedEvent e)
     {
-        // 안전 검사
-        if (!_isShowing) return;
-        if (_steps == null || _currentStep < 0 || _currentStep >= _steps.Length) return;
+        if (!IsCurrentStepCondition(TutorialCondition.PartPlacement)) return;
+
         var step = _steps[_currentStep];
-        if (step.Condition != TutorialCondition.PartPlacement) return;
+        if (!IsPartKeyMatchingGroup(e.PartKey, step.RequiredGroup, step.RequiredPartKeys)) return;
 
-        // 리셋 중이면 무시
-        if (_isResettingCamera) return;
+        _currentProgress += 1.0f;
+        CheckCondition();
+    }
 
-        // RequiredGroup 처리 (Any/Defense/Attack/Custom)
-        switch (step.RequiredGroup)
+    private bool IsCurrentStepCondition(TutorialCondition condition)
+    {
+        if (!_isShowing || _isResettingCamera) return false;
+        if (_steps == null || _currentStep < 0 || _currentStep >= _steps.Length) return false;
+        return _steps[_currentStep].Condition == condition;
+    }
+
+    private bool IsPartKeyMatchingGroup(int partKey, RequiredPartGroup group, int[] customKeys)
+    {
+        switch (group)
         {
             case RequiredPartGroup.Any:
-                _currentProgress += 1.0f;
-                CheckCondition();
-                break;
+                return true;
 
             case RequiredPartGroup.Defense:
-                if (e.PartKey == 1 || e.PartKey == 2 || e.PartKey == 3)
-                {
-                    _currentProgress += 1.0f;
-                    CheckCondition();
-                }
-                break;
+                return partKey >= DEFENSE_PART_MIN && partKey <= DEFENSE_PART_MAX;
 
             case RequiredPartGroup.Attack:
-                if (e.PartKey == 4 || e.PartKey == 5 || e.PartKey == 6)
-                {
-                    _currentProgress += 1.0f;
-                    CheckCondition();
-                }
-                break;
+                return partKey >= ATTACK_PART_MIN && partKey <= ATTACK_PART_MAX;
 
             case RequiredPartGroup.Custom:
-                if (step.RequiredPartKeys != null && step.RequiredPartKeys.Length > 0)
+                if (customKeys == null || customKeys.Length == 0) return false;
+                foreach (var key in customKeys)
                 {
-                    foreach (var key in step.RequiredPartKeys)
-                    {
-                        if (key == e.PartKey)
-                        {
-                            _currentProgress += 1.0f;
-                            CheckCondition();
-                            break;
-                        }
-                    }
+                    if (key == partKey) return true;
                 }
-                break;
+                return false;
+
+            default:
+                return false;
         }
     }
 
@@ -543,7 +497,6 @@ public class TutorialManager : Singleton<TutorialManager>
         if (_currentProgress >= _steps[_currentStep].RequiredAmount) _conditionMet = true;
     }
 
-    // --- 카메라 리셋 코루틴 ---
     private IEnumerator ResetCameraRoutine(float duration)
     {
         Camera mainCam = Camera.main;
@@ -551,7 +504,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
         float startSize = mainCam.orthographicSize;
         Vector3 startPos = mainCam.transform.position;
-        Vector3 targetPos = new Vector3(0f, 0f, -10f);
+        Vector3 targetPos = new Vector3(0f, 0f, CAMERA_DEFAULT_POS_Z);
         float elapsed = 0f;
 
         InputReader.Instance?.SetInputBlocked(true);
@@ -560,12 +513,12 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            mainCam.orthographicSize = Mathf.Lerp(startSize, 10f, t);
+            mainCam.orthographicSize = Mathf.Lerp(startSize, CAMERA_DEFAULT_SIZE, t);
             mainCam.transform.position = Vector3.Lerp(startPos, targetPos, t);
             yield return null;
         }
 
-        mainCam.orthographicSize = 10f;
+        mainCam.orthographicSize = CAMERA_DEFAULT_SIZE;
         mainCam.transform.position = targetPos;
         InputReader.Instance?.SetInputBlocked(false);
         _isResettingCamera = false;
@@ -576,29 +529,24 @@ public class TutorialManager : Singleton<TutorialManager>
         Camera mainCam = Camera.main;
         if (mainCam == null) yield break;
 
-        // 저장
         _dialogCamOriginalSize = mainCam.orthographicSize;
         _dialogCamOriginalPos = mainCam.transform.position;
 
         float elapsed = 0f;
-        float targetSize = 10f;
-        Vector3 targetPos = new Vector3(0f, 0f, -10f);
-
-        _isDialogCameraLocked = true;
+        Vector3 targetPos = new Vector3(0f, 0f, CAMERA_DEFAULT_POS_Z);
 
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            mainCam.orthographicSize = Mathf.Lerp(_dialogCamOriginalSize, targetSize, t);
+            mainCam.orthographicSize = Mathf.Lerp(_dialogCamOriginalSize, CAMERA_DEFAULT_SIZE, t);
             mainCam.transform.position = Vector3.Lerp(_dialogCamOriginalPos, targetPos, t);
             yield return null;
         }
 
-        mainCam.orthographicSize = targetSize;
+        mainCam.orthographicSize = CAMERA_DEFAULT_SIZE;
         mainCam.transform.position = targetPos;
 
-        // 유지 상태: 대기 until coroutine stopped
         while (true) yield return null;
     }
 }

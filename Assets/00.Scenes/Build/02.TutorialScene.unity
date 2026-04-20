@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 211248945}
   - component: {fileID: 211248944}
   m_Layer: 5
-  m_Name: ResumeButtonText
+  m_Name: GoToStageButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3777,7 +3777,7 @@ MonoBehaviour:
     ShouldPause: 0
     BlockInput: 0
     Condition: 1
-    RequiredAmount: 3
+    RequiredAmount: 4
   - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
     Message: "\uC88C\uCE21 \uC0C1\uC810\uC5D0\uC11C \uD655\uBCF4\uD55C \uD3EC\uB85C
       \uC950\uB4E4\uC744 \uC18C\uBAA8\uD558\uC5EC \uC720\uB2DB\uC744 \uACF5\uC131\uBCD1\uAE30
@@ -3892,7 +3892,7 @@ MonoBehaviour:
     PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
     TargetUI: {fileID: 98197203}
     RequiredPartKeys: 0a0000000b0000000c0000000d000000
-    RequiredGroup: 3
+    RequiredGroup: 0
     MoveDialogUp: 0
     MoveOffset: 300
     MoveDuration: 0.5
@@ -4110,7 +4110,7 @@ GameObject:
   - component: {fileID: 2084522029}
   - component: {fileID: 2084522028}
   m_Layer: 5
-  m_Name: ResumeButton
+  m_Name: GoToStageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4182,7 +4182,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 838902597}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: OnNextStageClicked
+        m_MethodName: OnGoToStageSelectClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
