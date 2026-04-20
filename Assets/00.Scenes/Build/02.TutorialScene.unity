@@ -731,6 +731,143 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201383907}
   m_CullTransparentMesh: 1
+--- !u!1 &209032210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 209032211}
+  - component: {fileID: 209032213}
+  - component: {fileID: 209032212}
+  m_Layer: 5
+  m_Name: SkipButtonText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &209032211
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209032210}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 612489110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 2.5, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &209032212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209032210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: SKIP
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
+  m_sharedMaterial: {fileID: 517332483471463887, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 33
+  m_fontSizeBase: 33
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &209032213
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209032210}
+  m_CullTransparentMesh: 1
 --- !u!1 &211248942
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,6 +1050,143 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1666367831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &346498612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346498613}
+  - component: {fileID: 346498615}
+  - component: {fileID: 346498614}
+  m_Layer: 5
+  m_Name: ProgressText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &346498613
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346498612}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 459816317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.0001, y: 440}
+  m_SizeDelta: {x: 597.0341, y: 66.9984}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &346498614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346498612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Quest Progress (0/n)
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
+  m_sharedMaterial: {fileID: 517332483471463887, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 50
+  m_fontSizeBase: 50
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &346498615
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346498612}
+  m_CullTransparentMesh: 1
 --- !u!1 &369748074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1356,82 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4948404678315833380, guid: 7f953126d4a2f754c93f361c2c536d85, type: 3}
   m_PrefabInstance: {fileID: 425045091}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &459816316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 459816317}
+  - component: {fileID: 459816319}
+  - component: {fileID: 459816318}
+  m_Layer: 5
+  m_Name: QuestPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &459816317
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459816316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 346498613}
+  m_Father: {fileID: 1914906244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &459816318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459816316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &459816319
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459816316}
+  m_CullTransparentMesh: 1
 --- !u!1 &461989640 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1446269300260419024, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
@@ -1369,6 +1719,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abf7234779bee84ea3051bd791c96e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartRuntimeSpawner
+--- !u!1 &612489109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 612489110}
+  - component: {fileID: 612489113}
+  - component: {fileID: 612489112}
+  - component: {fileID: 612489114}
+  m_Layer: 5
+  m_Name: SkipButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &612489110
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612489109}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 209032211}
+  m_Father: {fileID: 1914906244}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -20, y: -20}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &612489112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612489109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: eb8b261dab1710448b36e32fb579c69a, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &612489113
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612489109}
+  m_CullTransparentMesh: 1
+--- !u!114 &612489114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612489109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882eee4f0f8a8a843b61d6c45baab0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialSkipButton
+  _holdDuration: 1.5
+  _fillImage: {fileID: 612489112}
 --- !u!1 &634853749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,8 +2858,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 567.45, y: 489}
-  m_SizeDelta: {x: 742.0292, y: 742.0292}
+  m_AnchoredPosition: {x: 511.53, y: 489}
+  m_SizeDelta: {x: 593.75, y: 906.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830944935
 MonoBehaviour:
@@ -2440,7 +2881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3677,6 +4118,8 @@ RectTransform:
   - {fileID: 1426566960}
   - {fileID: 726527593}
   - {fileID: 1596338308}
+  - {fileID: 612489110}
+  - {fileID: 459816317}
   m_Father: {fileID: 706314079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3742,15 +4185,17 @@ MonoBehaviour:
   _highlighter: {fileID: 740014861}
   _clickButton: {fileID: 726527596}
   _postPanel: {fileID: 1596338307}
+  _placementProgressPanel: {fileID: 459816316}
+  _placementProgressText: {fileID: 346498614}
   _typingSpeed: 0.025
   _cameraResetDuration: 1
   _steps:
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC801\uB4E4\uC774 \uC544\uAD70 \uCF54\uC5B4\uB97C \uB178\uB9AC\uACE0
       \uACF5\uACA9\uD574 \uC635\uB2C8\uB2E4. \uC950 \uBD80\uB300\uB97C \uBC30\uCE58\uD558\uC5EC
       \uCF54\uC5B4\uAC00 \uD30C\uAD34\uB418\uC9C0 \uC54A\uB3C4\uB85D \uBC29\uC5B4\uD574\uC57C
       \uD569\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 0}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3761,13 +4206,38 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
-    Message: "\uB9C8\uC6B0\uC2A4 \uC6B0\uD074\uB9AD \uB4DC\uB798\uADF8\uB85C \uD654\uBA74\uC744
-      \uC774\uB3D9\uD558\uACE0, \uD720 \uC2A4\uD06C\uB864\uC744 \uC774\uC6A9\uD574
-      \uC804\uC7A5\uC744 \uD655\uB300\uD558\uAC70\uB098 \uCD95\uC18C\uD560 \uC218
-      \uC788\uC2B5\uB2C8\uB2E4. \uCE74\uBA54\uB77C\uB97C \uC790\uC720\uB86D\uAC8C
-      \uC6C0\uC9C1\uC5EC \uBCF4\uC138\uC694."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
+    Message: "\uD720 \uC2A4\uD06C\uB864\uC744 \uC774\uC6A9\uD574 \uC804\uC7A5\uC744
+      \uD655\uB300\uD558\uACE0, \uB9C8\uC6B0\uC2A4 \uC6B0\uD074\uB9AD \uB4DC\uB798\uADF8\uB85C
+      \uD654\uBA74\uC744 \uC774\uB3D9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
+    TargetUI: {fileID: 0}
+    RequiredPartKeys: 
+    RequiredGroup: 0
+    MoveDialogUp: 0
+    MoveOffset: 300
+    MoveDuration: 0.5
+    ShouldPause: 0
+    BlockInput: 0
+    Condition: 0
+    RequiredAmount: 1
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
+    Message: "\uD55C \uBC88 \uC790\uC720\uB86D\uAC8C \uCE74\uBA54\uB77C\uB97C \uC774\uB3D9\uD574\uBCF4\uC138\uC694.
+      <br>\n(\uC2A4\uD06C\uB864: \uD655\uB300 / \uC6B0\uD074\uB9AD \uB4DC\uB798\uADF8:
+      \uC774\uB3D9)"
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 0}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3778,12 +4248,18 @@ MonoBehaviour:
     BlockInput: 0
     Condition: 1
     RequiredAmount: 4
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 0
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC88C\uCE21 \uC0C1\uC810\uC5D0\uC11C \uD655\uBCF4\uD55C \uD3EC\uB85C
       \uC950\uB4E4\uC744 \uC18C\uBAA8\uD558\uC5EC \uC720\uB2DB\uC744 \uACF5\uC131\uBCD1\uAE30
       \uC704\uC5D0 \uBC30\uCE58\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uD30C\uCE20\uB9C8\uB2E4
       \uC5ED\uD560\uC774 \uB2E4\uB985\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 2084308003}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3794,13 +4270,19 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC720\uB2DB\uC740 \uACF5\uACA9, \uBC29\uC5B4, \uC9C0\uC6D0\uC758 \uC138
       \uAC00\uC9C0 \uC5ED\uD560\uC744 \uC218\uD589\uD569\uB2C8\uB2E4. \uBC29\uC5B4
       \uC720\uB2DB\uC740 \uCCB4\uB825\uC774 \uB192\uACE0 \uC801\uACFC \uCDA9\uB3CC
       \uC2DC \uB300\uBBF8\uC9C0\uB97C \uC8FC\uBBC0\uB85C \uCD5C\uC804\uBC29\uC5D0
       \uBC30\uCE58\uD558\uB294 \uAC83\uC774 \uC720\uB9AC\uD569\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 1745759103}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3811,10 +4293,16 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uAE30 \uC704\uD574 \uBC29\uC5B4
-      \uD30C\uCE20\uB97C \uC124\uCE58\uD574 \uBCF4\uC138\uC694."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+      \uC720\uB2DB\uC744 \uC124\uCE58\uD574 \uBCF4\uC138\uC694."
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 979765336}
     RequiredPartKeys: 00000000
     RequiredGroup: 1
@@ -3825,12 +4313,18 @@ MonoBehaviour:
     BlockInput: 0
     Condition: 2
     RequiredAmount: 5
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 0
+    PlacementLabel: "\uBC29\uC5B4 \uC720\uB2DB \uC124\uCE58\uD558\uAE30"
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uC558\uC9C0\uB9CC, \uC774\uB294
       \uC77C\uC2DC\uC801\uC778 \uC218\uB2E8\uC77C \uBFD0\uC785\uB2C8\uB2E4. \uC801\uC758
       \uCF54\uC5B4\uB97C \uD30C\uAD34\uD574\uC57C \uC804\uD22C\uC5D0\uC11C \uC2B9\uB9AC\uD560
       \uC218 \uC788\uC2B5\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 634853750}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3841,10 +4335,16 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 1
+    PortraitMoveOffset: -1000
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uACF5\uACA9 \uC720\uB2DB\uC740 \uD654\uB825 \uAC04\uC12D\uC744 \uB9C9\uAE30
       \uC704\uD574 \uC11C\uB85C \uBD99\uC5EC\uC11C \uBC30\uCE58\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 1745759103}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3855,10 +4355,16 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
-    Message: "\uC774\uC81C \uACF5\uACA9 \uD30C\uCE20\uB97C \uC120\uD0DD\uD574 \uBCF4\uB4DC
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
+    Message: "\uC774\uC81C \uACF5\uACA9 \uC720\uB2DB\uC744 \uC120\uD0DD\uD574 \uBCF4\uB4DC
       \uC704\uC5D0 \uC9C1\uC811 \uBC30\uCE58\uD574 \uBCF4\uC138\uC694."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 43292718}
     RequiredPartKeys: 
     RequiredGroup: 2
@@ -3869,13 +4375,19 @@ MonoBehaviour:
     BlockInput: 0
     Condition: 2
     RequiredAmount: 3
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 0
+    PlacementLabel: "\uACF5\uACA9 \uC720\uB2DB \uC124\uCE58\uD558\uAE30"
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC804\uD22C \uC911 \uC720\uB2DB\uB4E4\uC740 \uC790\uB3D9\uC73C\uB85C
       \uACF5\uACA9\uD558\uBA70, \uACF5\uACA9 \uC2DC\uB9C8\uB2E4 \uC950\uB97C \uC18C\uBAA8\uD569\uB2C8\uB2E4.
       \uC950\uAC00 \uC804\uBD80 \uC18C\uBAA8\uB418\uBA74 \uACF5\uACA9\uC744 \uD560
       \uC218 \uC5C6\uC73C\uBBC0\uB85C \uC0DD\uC131\uAE30\uB97C \uD1B5\uD574 \uC950\uB4E4\uC744
       \uC9C0\uC18D\uC801\uC73C\uB85C '\uC0DD\uC0B0'\uD574\uC57C \uD569\uB2C8\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 1426566960}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3886,10 +4398,16 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC548\uC815\uC801\uC778 \uBCF4\uAE09\uC744 \uC704\uD574 \uC0DD\uC131\uAE30\uB97C
       \uBC30\uCE58\uD574 \uBD05\uC2DC\uB2E4."
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 98197203}
     RequiredPartKeys: 0a0000000b0000000c0000000d000000
     RequiredGroup: 0
@@ -3900,11 +4418,17 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 2
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 0
+    PlacementLabel: "\uC0DD\uC131\uAE30 \uBC30\uCE58\uD558\uAE30"
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC804\uD22C\uB97C \uB9C8\uCE58\uBA74 \uACF5\uC131\uBCD1\uAE30\uB294
       \uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C\uB3C4 \uADF8\uB300\uB85C
       \uC720\uC9C0\uB429\uB2C8\uB2E4. "
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 0}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3915,11 +4439,17 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-  - SpeakerName: "\uD29C\uD1A0\uB9AC\uC5BC\uC9F1"
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC544\uAD70\uC758 \uCF54\uC5B4\uB97C \uC9C0\uD0A4\uBA70 \uB3D9\uC2DC\uC5D0
       \uC801\uC758 \uCF54\uC5B4\uB97C \uD30C\uAD34\uD558\uC5EC \uD3EC\uB85C\uB85C
       \uC7A1\uC544\uB4E4\uC774\uC138\uC694!"
-    PortraitSprite: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 0}
     RequiredPartKeys: 
     RequiredGroup: 0
@@ -3930,6 +4460,12 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
+    AutoAdvanceDelay: 3
+    PlacementLabel: 
+    MovePortraitLeft: 0
+    PortraitMoveOffset: 150
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
   _pulseScale: 1.05
   _pulseSpeed: 4
   _startOnAwake: 1

@@ -32,6 +32,16 @@ public class TutorialStep
     [Header("Action Conditions")]
     public TutorialCondition Condition = TutorialCondition.None;
     public float RequiredAmount = 1.0f;
+    [Tooltip("If > 0, dialog will auto-advance after this many seconds (unscaled). Set 0 to disable.")]
+    public float AutoAdvanceDelay = 3.0f;
+
+    public string PlacementLabel; // optional: PartPlacement 스텝에서 인스펙터로 표시 이름을 덮어쓸 때 사용
+
+    [Header("Portrait Motion")]
+    public bool MovePortraitLeft = false; // 이 단계에서 포트레이트를 왼쪽으로 이동시킬지
+    public float PortraitMoveOffset = 150f; // 왼쪽으로 이동할 거리(px)
+    public float PortraitMoveDuration = 0.5f; // 이동 애니메이션 시간(초)
+    public RectTransform PortraitTarget; // optional: 이동할 RectTransform 위치를 지정하면 그 좌표로 이동
 }
 
 [DefaultExecutionOrder(-90)]
@@ -52,6 +62,11 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private RectTransform _highlighter;
     [SerializeField] private Button _clickButton;
     [SerializeField] private GameObject _postPanel;
+
+    // 배치 진행도 UI: 튜토리얼 스텝이 PartPlacement 일 때 사용
+    [Header("Placement Progress UI")]
+    [SerializeField] private GameObject _placementProgressPanel; // 전체 패널(Show/Hide 용)
+    [SerializeField] private TextMeshProUGUI _placementProgressText; // "공격 유닛 n개 배치하기 (0/n)" 텍스트
 
     [Header("Settings")]
     [SerializeField] private float _typingSpeed = 0.05f;
@@ -76,12 +91,19 @@ public class TutorialManager : Singleton<TutorialManager>
     private bool _isResettingCamera = false;
     private Coroutine _dialogMoveCoroutine = null;
     private Coroutine _pulseCoroutine = null;
+    private Coroutine _portraitMoveCoroutine = null;
     private Vector2 _dialogOriginalAnchoredPos = Vector2.zero;
     private Vector2 _highlighterBaseSize = Vector2.zero;
     private Vector2 _clickButtonOriginalAnchoredPos = Vector2.zero;
+    private Vector2 _portraitOriginalAnchoredPos = Vector2.zero;
+    private bool _portraitOriginalCached = false;
     private Coroutine _dialogCameraCoroutine = null;
     private float _dialogCamOriginalSize = CAMERA_DEFAULT_SIZE;
     private Vector3 _dialogCamOriginalPos = Vector3.zero;
+
+    // 현재 PartPlacement 스텝의 요구 개수와 라벨 캐시
+    private int _currentStepRequiredCount = 0;
+    private string _currentPlacementLabel = "";
 
     private void OnEnable()
     {
@@ -151,6 +173,8 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         if (_dialogPanel != null) _dialogPanel.SetActive(false);
         if (_highlighter != null) _highlighter.gameObject.SetActive(false);
+        if (_placementProgressPanel != null) _placementProgressPanel.SetActive(false);
+        if (_placementProgressText != null) _placementProgressText.gameObject.SetActive(false);
 
         // ClickButton 원위치 저장
         if (_clickButton != null)
@@ -223,6 +247,8 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         _currentProgress = 0f;
         _conditionMet = false;
+        _currentStepRequiredCount = 0;
+        _currentPlacementLabel = "";
 
         Time.timeScale = step.ShouldPause ? 0f : 1f;
         InputReader.Instance?.SetInputBlocked(step.BlockInput);
@@ -255,6 +281,39 @@ public class TutorialManager : Singleton<TutorialManager>
             bool hasPortrait = step.PortraitSprite != null;
             _portraitImage.gameObject.SetActive(hasPortrait);
             if (hasPortrait) _portraitImage.sprite = step.PortraitSprite;
+
+            var portraitRt = _portraitImage.GetComponent<RectTransform>();
+            if (portraitRt != null)
+            {
+                // 최초에만 원위치 캐시
+                if (!_portraitOriginalCached)
+                {
+                    _portraitOriginalAnchoredPos = portraitRt.anchoredPosition;
+                    _portraitOriginalCached = true;
+                }
+
+                if (step.MovePortraitLeft || step.PortraitTarget != null)
+                {
+                    StopPortraitMove();
+                    Vector2 targetAnchored;
+                    if (step.PortraitTarget != null)
+                    {
+                        targetAnchored = step.PortraitTarget.anchoredPosition;
+                    }
+                    else
+                    {
+                        targetAnchored = _portraitOriginalAnchoredPos + new Vector2(-Mathf.Abs(step.PortraitMoveOffset), 0f);
+                    }
+
+                    _portraitMoveCoroutine = StartCoroutine(MovePortraitToRoutine(portraitRt, targetAnchored, step.PortraitMoveDuration));
+                }
+                else
+                {
+                    // 복귀 애니메이션
+                    StopPortraitMove();
+                    StartCoroutine(MovePortraitBackRoutine(portraitRt, step.PortraitMoveDuration));
+                }
+            }
         }
 
         // 하이라이터 설정 및 펄스 시작
@@ -292,6 +351,40 @@ public class TutorialManager : Singleton<TutorialManager>
         _isTyping = false;
         _moveNext = false;
 
+        // PartPlacement 전용: 진행도 UI 초기화 및 표시
+        if (step.Condition == TutorialCondition.PartPlacement)
+        {
+            // 요구 개수는 RequiredAmount 기준(정수 기대)
+            _currentStepRequiredCount = Mathf.Max(1, Mathf.CeilToInt(step.RequiredAmount));
+
+            // 라벨은 인스펙터에서 덮어쓸 수 있도록 우선 사용하고, 없으면 그룹 기준 자동 생성
+            if (!string.IsNullOrWhiteSpace(step.PlacementLabel))
+            {
+                _currentPlacementLabel = step.PlacementLabel;
+            }
+            else
+            {
+                switch (step.RequiredGroup)
+                {
+                    case RequiredPartGroup.Attack:
+                        _currentPlacementLabel = "공격 유닛";
+                        break;
+                    case RequiredPartGroup.Defense:
+                        _currentPlacementLabel = "방어 유닛";
+                        break;
+                    case RequiredPartGroup.Custom:
+                        _currentPlacementLabel = "선택 유닛";
+                        break;
+                    default:
+                        _currentPlacementLabel = "유닛";
+                        break;
+                }
+            }
+
+            ShowPlacementProgressPanel(true);
+            UpdatePlacementProgressUI();
+        }
+
         // 실습 조건 처리
         if (step.Condition != TutorialCondition.None)
         {
@@ -308,11 +401,40 @@ public class TutorialManager : Singleton<TutorialManager>
         }
         else
         {
-            while (!_moveNext) yield return null;
+            if (step.AutoAdvanceDelay > 0f)
+            {
+                float elapsed = 0f;
+                while (!_moveNext && elapsed < step.AutoAdvanceDelay)
+                {
+                    elapsed += Time.unscaledDeltaTime;
+                    yield return null;
+                }
+
+                if (!_moveNext) _moveNext = true;
+            }
+            else
+            {
+                while (!_moveNext) yield return null;
+            }
         }
 
         StopHighlighterPulse();
         StopDialogCameraCoroutine();
+
+        // Portrait가 이동해있다면 스텝 종료 시 원위치로 복귀시키고 다음 다이얼로그가 뜨기 전에 완료 대기
+        if (_portraitImage != null && _portraitOriginalCached)
+        {
+            var portraitRt = _portraitImage.GetComponent<RectTransform>();
+            if (portraitRt != null)
+            {
+                StopPortraitMove();
+                // Use current step's portrait duration for return
+                yield return StartCoroutine(MovePortraitBackRoutine(portraitRt, step.PortraitMoveDuration));
+            }
+        }
+
+        // PartPlacement UI 숨김
+        ShowPlacementProgressPanel(false);
 
         if (step.MoveDialogUp && _dialogPanel != null)
         {
@@ -326,6 +448,23 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         if (_pulseCoroutine != null) StopCoroutine(_pulseCoroutine);
         _pulseCoroutine = StartCoroutine(HighlighterPulseRoutine());
+    }
+
+    private void StartPortraitMove(RectTransform portraitRt, float offset, float duration)
+    {
+        if (portraitRt == null) return;
+        if (_portraitMoveCoroutine != null) StopCoroutine(_portraitMoveCoroutine);
+        Vector2 targetAnchored = portraitRt.anchoredPosition + new Vector2(-Mathf.Abs(offset), 0f);
+        _portraitMoveCoroutine = StartCoroutine(MovePortraitToRoutine(portraitRt, targetAnchored, duration));
+    }
+
+    private void StopPortraitMove()
+    {
+        if (_portraitMoveCoroutine != null)
+        {
+            StopCoroutine(_portraitMoveCoroutine);
+            _portraitMoveCoroutine = null;
+        }
     }
 
     private void StopHighlighterPulse()
@@ -350,6 +489,44 @@ public class TutorialManager : Singleton<TutorialManager>
         }
     }
 
+    private IEnumerator MovePortraitToRoutine(RectTransform portraitRt, Vector2 targetAnchored, float duration)
+    {
+        if (portraitRt == null) yield break;
+
+        Vector2 start = portraitRt.anchoredPosition;
+        Vector2 target = targetAnchored;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            portraitRt.anchoredPosition = Vector2.Lerp(start, target, t);
+            yield return null;
+        }
+
+        portraitRt.anchoredPosition = target;
+    }
+
+    private IEnumerator MovePortraitBackRoutine(RectTransform portraitRt, float duration)
+    {
+        if (portraitRt == null) yield break;
+
+        Vector2 current = portraitRt.anchoredPosition;
+        Vector2 target = _portraitOriginalAnchoredPos; // use cached original position
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            portraitRt.anchoredPosition = Vector2.Lerp(current, target, t);
+            yield return null;
+        }
+
+        portraitRt.anchoredPosition = target;
+    }
+
     private void StopDialogCameraCoroutine()
     {
         if (_dialogCameraCoroutine != null)
@@ -365,6 +542,18 @@ public class TutorialManager : Singleton<TutorialManager>
         StopHighlighterPulse();
         if (_dialogPanel != null) _dialogPanel.SetActive(false);
         if (_highlighter != null) _highlighter.gameObject.SetActive(false);
+        if (_placementProgressPanel != null) _placementProgressPanel.SetActive(false);
+        if (_placementProgressText != null) _placementProgressText.gameObject.SetActive(false);
+        // 포트레이트 위치 복귀
+        if (_portraitImage != null && _portraitOriginalCached)
+        {
+            var portraitRt = _portraitImage.GetComponent<RectTransform>();
+            if (portraitRt != null)
+            {
+                StopPortraitMove();
+                StartCoroutine(MovePortraitBackRoutine(portraitRt, 0.25f));
+            }
+        }
         InputReader.Instance?.SetInputBlocked(false);
         Time.timeScale = 1f;
     }
@@ -456,6 +645,7 @@ public class TutorialManager : Singleton<TutorialManager>
         if (!IsPartKeyMatchingGroup(e.PartKey, step.RequiredGroup, step.RequiredPartKeys)) return;
 
         _currentProgress += 1.0f;
+        UpdatePlacementProgressUI();
         CheckCondition();
     }
 
@@ -494,6 +684,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private void CheckCondition()
     {
+        if (_steps == null || _currentStep < 0 || _currentStep >= _steps.Length) return;
         if (_currentProgress >= _steps[_currentStep].RequiredAmount) _conditionMet = true;
     }
 
@@ -548,5 +739,25 @@ public class TutorialManager : Singleton<TutorialManager>
         mainCam.transform.position = targetPos;
 
         while (true) yield return null;
+    }
+
+    // --- Placement progress UI helpers ---
+    private void ShowPlacementProgressPanel(bool show)
+    {
+        if (_placementProgressPanel != null)
+            _placementProgressPanel.SetActive(show);
+        if (_placementProgressText != null)
+            _placementProgressText.gameObject.SetActive(show);
+    }
+
+    private void UpdatePlacementProgressUI()
+    {
+        if (_placementProgressText == null) return;
+        int current = Mathf.FloorToInt(_currentProgress);
+        int required = Mathf.Max(1, _currentStepRequiredCount);
+        if (!string.IsNullOrWhiteSpace(_currentPlacementLabel))
+            _placementProgressText.text = $"{_currentPlacementLabel} ({current}/{required})";
+        else
+            _placementProgressText.text = $"({current}/{required})";
     }
 }
