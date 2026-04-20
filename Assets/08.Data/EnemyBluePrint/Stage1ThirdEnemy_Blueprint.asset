@@ -38,13 +38,13 @@ MonoBehaviour:
   - partKey: 102
     origin: {x: 2, y: 2}
     rotation: 0
-  - partKey: 108
+  - partKey: 104
     origin: {x: 3, y: 2}
     rotation: 0
-  - partKey: 101
+  - partKey: 107
     origin: {x: 4, y: 2}
     rotation: 0
-  - partKey: 101
+  - partKey: 105
     origin: {x: 5, y: 2}
     rotation: 0
   - partKey: 102
@@ -53,15 +53,15 @@ MonoBehaviour:
   - partKey: 101
     origin: {x: 2, y: 3}
     rotation: 0
-  - partKey: 101
+  - partKey: 102
     origin: {x: 3, y: 3}
     rotation: 0
-  - partKey: 105
+  - partKey: 102
     origin: {x: 4, y: 3}
     rotation: 0
-  - partKey: 101
+  - partKey: 102
     origin: {x: 5, y: 3}
     rotation: 0
-  - partKey: 104
-    origin: {x: 6, y: 3}
+  - partKey: 103
+    origin: {x: 2, y: 4}
     rotation: 0

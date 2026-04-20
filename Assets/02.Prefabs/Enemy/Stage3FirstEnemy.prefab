@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1841373260828688345
+--- !u!1001 &5376409982397442606
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 04fe35d4ef3e8894f92e1bf350fbc24a, type: 2}
     - target: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_Name
-      value: Stage3SecondEnemy
+      value: Stage3FirstEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 4424045994550478800, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_LocalPosition.x

@@ -15,10 +15,10 @@ MonoBehaviour:
   blueprintName: Stage2SecondEnemy
   placements:
   - partKey: 20001
-    origin: {x: 1, y: 0}
+    origin: {x: 2, y: 0}
     rotation: 0
   - partKey: 20001
-    origin: {x: 2, y: 0}
+    origin: {x: 3, y: 0}
     rotation: 0
   - partKey: 20001
     origin: {x: 4, y: 0}
@@ -27,50 +27,59 @@ MonoBehaviour:
     origin: {x: 5, y: 0}
     rotation: 0
   - partKey: 102
-    origin: {x: 1, y: 1}
-    rotation: 0
-  - partKey: 102
     origin: {x: 2, y: 1}
     rotation: 0
-  - partKey: 20002
+  - partKey: 102
     origin: {x: 3, y: 1}
     rotation: 0
-  - partKey: 102
-    origin: {x: 5, y: 1}
-    rotation: 0
-  - partKey: 102
-    origin: {x: 1, y: 2}
+  - partKey: 20002
+    origin: {x: 4, y: 1}
     rotation: 0
   - partKey: 102
     origin: {x: 2, y: 2}
     rotation: 0
-  - partKey: 102
+  - partKey: 104
     origin: {x: 3, y: 2}
     rotation: 0
-  - partKey: 102
+  - partKey: 108
     origin: {x: 4, y: 2}
     rotation: 0
-  - partKey: 102
+  - partKey: 104
     origin: {x: 5, y: 2}
     rotation: 0
-  - partKey: 104
-    origin: {x: 1, y: 3}
-    rotation: 0
-  - partKey: 108
-    origin: {x: 2, y: 3}
-    rotation: 0
-  - partKey: 107
-    origin: {x: 3, y: 3}
+  - partKey: 102
+    origin: {x: 6, y: 2}
     rotation: 0
   - partKey: 102
+    origin: {x: 2, y: 3}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 3, y: 3}
+    rotation: 0
+  - partKey: 107
     origin: {x: 4, y: 3}
     rotation: 0
-  - partKey: 105
+  - partKey: 102
     origin: {x: 5, y: 3}
     rotation: 0
-  - partKey: 104
+  - partKey: 102
     origin: {x: 2, y: 4}
     rotation: 0
   - partKey: 105
+    origin: {x: 3, y: 4}
+    rotation: 0
+  - partKey: 102
     origin: {x: 4, y: 4}
+    rotation: 0
+  - partKey: 105
+    origin: {x: 5, y: 4}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 6, y: 4}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 3, y: 5}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 5, y: 5}
     rotation: 0

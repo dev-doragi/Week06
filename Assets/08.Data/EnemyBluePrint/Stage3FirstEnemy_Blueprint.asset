@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e335d714721704c8f7be74eb04bc6f, type: 3}
   m_Name: Stage3FirstEnemy_Blueprint
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBlueprintSO
-  blueprintName: Stage3SecondEnemy
+  blueprintName: Stage3FirstEnemy
   placements:
   - partKey: 20001
     origin: {x: 1, y: 0}
@@ -21,13 +21,13 @@ MonoBehaviour:
     origin: {x: 2, y: 0}
     rotation: 0
   - partKey: 20001
+    origin: {x: 3, y: 0}
+    rotation: 0
+  - partKey: 20001
     origin: {x: 4, y: 0}
     rotation: 0
   - partKey: 20001
     origin: {x: 5, y: 0}
-    rotation: 0
-  - partKey: 20001
-    origin: {x: 6, y: 0}
     rotation: 0
   - partKey: 103
     origin: {x: 1, y: 1}
@@ -38,13 +38,10 @@ MonoBehaviour:
   - partKey: 102
     origin: {x: 3, y: 1}
     rotation: 0
-  - partKey: 102
+  - partKey: 20002
     origin: {x: 4, y: 1}
     rotation: 0
-  - partKey: 20002
-    origin: {x: 5, y: 1}
-    rotation: 0
-  - partKey: 103
+  - partKey: 102
     origin: {x: 1, y: 2}
     rotation: 0
   - partKey: 103
@@ -53,48 +50,51 @@ MonoBehaviour:
   - partKey: 102
     origin: {x: 3, y: 2}
     rotation: 0
-  - partKey: 102
+  - partKey: 105
     origin: {x: 4, y: 2}
     rotation: 0
   - partKey: 103
     origin: {x: 5, y: 2}
     rotation: 0
-  - partKey: 102
-    origin: {x: 6, y: 2}
-    rotation: 0
-  - partKey: 102
+  - partKey: 103
     origin: {x: 1, y: 3}
     rotation: 0
-  - partKey: 106
+  - partKey: 105
     origin: {x: 2, y: 3}
     rotation: 0
   - partKey: 109
     origin: {x: 3, y: 3}
     rotation: 0
+  - partKey: 103
+    origin: {x: 5, y: 3}
+    rotation: 0
   - partKey: 102
     origin: {x: 1, y: 4}
     rotation: 0
   - partKey: 107
+    origin: {x: 2, y: 4}
+    rotation: 0
+  - partKey: 102
     origin: {x: 3, y: 4}
     rotation: 0
-  - partKey: 102
+  - partKey: 105
     origin: {x: 4, y: 4}
     rotation: 0
-  - partKey: 105
-    origin: {x: 1, y: 5}
-    rotation: 0
-  - partKey: 108
-    origin: {x: 2, y: 5}
-    rotation: 0
-  - partKey: 105
-    origin: {x: 3, y: 5}
+  - partKey: 103
+    origin: {x: 5, y: 4}
     rotation: 0
   - partKey: 102
+    origin: {x: 2, y: 5}
+    rotation: 0
+  - partKey: 106
+    origin: {x: 3, y: 5}
+    rotation: 0
+  - partKey: 108
     origin: {x: 4, y: 5}
     rotation: 0
-  - partKey: 103
-    origin: {x: 2, y: 6}
+  - partKey: 102
+    origin: {x: 3, y: 6}
     rotation: 0
-  - partKey: 105
+  - partKey: 102
     origin: {x: 4, y: 6}
     rotation: 0
