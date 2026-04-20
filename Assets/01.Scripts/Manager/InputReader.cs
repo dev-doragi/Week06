@@ -22,6 +22,9 @@ public class InputReader : Singleton<InputReader>
     // 튜토리얼/모달용 입력 차단 플래그
     private bool _isTutorialBlocked = false;
 
+    // 외부에서 현재 입력이 차단되어 있는지 확인할 수 있게 함
+    public bool IsInputBlocked => _isTutorialBlocked;
+
     protected override void Init()
     {
         _playerInput = GetComponent<PlayerInput>();

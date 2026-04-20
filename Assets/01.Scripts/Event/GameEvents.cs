@@ -162,6 +162,15 @@ public struct PartPlacedEvent
     public UnityEngine.Vector2Int GridPos;
 }
 
+// 튜토리얼: 공격 유닛 배치 설명 요청
+public struct AttackPlacementTutorialRequestedEvent
+{
+    public int PartKey;
+}
+
+// 튜토리얼 종료 알림
+public struct AttackPlacementTutorialEndedEvent { }
+
 public struct TutorialCompletedEvent
 {
     public int RewardStageIndex; // 완료 후 진행할 스테이지

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 // 실습 종류 정의
 public enum TutorialCondition { None, CameraMove, PartPlacement }
@@ -84,7 +85,53 @@ public class TutorialManager : Singleton<TutorialManager>
             EventBus.Instance.Subscribe<ScrollEvent>(OnCameraZoomed);
             EventBus.Instance.Subscribe<RightClickEvent>(OnCameraDragged);
             EventBus.Instance.Subscribe<PartPlacedEvent>(OnPartPlaced);
+            // 튜토리얼: 공격 배치 모드 진입 요청 구독
+            EventBus.Instance.Subscribe<AttackPlacementTutorialRequestedEvent>(OnAttackPlacementTutorialRequested);
         }
+    }
+
+    // 공격 배치 튜토리얼 요청 처리
+    private void OnAttackPlacementTutorialRequested(AttackPlacementTutorialRequestedEvent evt)
+    {
+        // 이미 다이얼로그가 보이는 중이면 무시
+        if (_isShowing) return;
+        if (!StageLoadContext.IsTutorial) return;
+
+        StartCoroutine(ShowAttackPlacementTutorialRoutine(evt.PartKey));
+    }
+
+    private IEnumerator ShowAttackPlacementTutorialRoutine(int partKey)
+    {
+        _isShowing = true;
+
+        // 빌드/입력 차단
+        // Visual highlights left by BuildManager are informational; no need to force-clear here.
+        BuildManager build = FindAnyObjectByType<BuildManager>();
+        InputReader.Instance?.SetInputBlocked(true);
+
+        // 기존 다이얼로그 패널 재사용: 간단한 메시지 표시
+        if (_dialogPanel != null)
+        {
+            _dialogPanel.SetActive(true);
+            if (_nameText != null) _nameText.text = "설치 규칙";
+            if (_dialogText != null)
+                _dialogText.text = "공격 유닛은 공중에 설치할 수 없습니다.\n공격 유닛끼리는 서로 인접해서 배치할 수 없습니다.\n가능한 타일에만 배치하세요.\n(확인 클릭)";
+        }
+
+        UnityAction temp = () => { _moveNext = true; };
+        if (_clickButton != null) _clickButton.onClick.AddListener(temp);
+
+        _moveNext = false;
+        while (!_moveNext) yield return null;
+
+        if (_clickButton != null) _clickButton.onClick.RemoveListener(temp);
+        if (_dialogPanel != null) _dialogPanel.SetActive(false);
+
+        InputReader.Instance?.SetInputBlocked(false);
+        _moveNext = false;
+        _isShowing = false;
+
+        EventBus.Instance?.Publish(new AttackPlacementTutorialEndedEvent());
     }
 
     private void OnDisable()
@@ -95,6 +142,7 @@ public class TutorialManager : Singleton<TutorialManager>
             EventBus.Instance.Unsubscribe<ScrollEvent>(OnCameraZoomed);
             EventBus.Instance.Unsubscribe<RightClickEvent>(OnCameraDragged);
             EventBus.Instance.Unsubscribe<PartPlacedEvent>(OnPartPlaced);
+            EventBus.Instance.Unsubscribe<AttackPlacementTutorialRequestedEvent>(OnAttackPlacementTutorialRequested);
         }
     }
 
