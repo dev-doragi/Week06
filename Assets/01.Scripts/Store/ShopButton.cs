@@ -4,15 +4,26 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {    
-    public ShopItemData _itemData;
+    public RunShopItemData _itemData;
     [SerializeField] private TMPro.TextMeshProUGUI _priceText;
     [SerializeField] private Button _myButton;
     [SerializeField] private Image _shadeimage;
     [SerializeField] private Image _mouseIcon;
     private bool _isLocked = false; // Temp code
+
+    private void OnEnable()
+    {
+        EventBus.Instance.Subscribe<PartPlacedEvent>(OnPartPlaced);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Instance.Unsubscribe<PartPlacedEvent>(OnPartPlaced);
+    }
 
     void Start()
     {
@@ -25,7 +36,7 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void Setup(ShopItemData itemData , Sprite Icon)
     {
         
-        _itemData = itemData;
+        _itemData = new RunShopItemData(itemData);
         
         if (Icon != null)
         {
@@ -76,15 +87,21 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         name = $"{_partData.PartName}";
 
-        description = "A";
+        description = $"{_partData.Description}";
         if(_partData.UnitRoleType == UnitRoleType.None || _partData.UnitRoleType == UnitRoleType.Support)
         {
 
             status = $"건물 체력: {_partData.Hp}\n";
-            foreach (var sup in _partData.SupportStat.Effects)
+            if (_partData.SupportStat != null)
             {
-                status  += sup.Description + "\n";
+                foreach (var sup in _partData.SupportStat.Effects)
+                {
+
+                    status += sup.Description + "\n";
+                }
             }
+                
+
             
         }
         else if (_partData.UnitRoleType == UnitRoleType.Attack)
@@ -103,5 +120,37 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         StoreManager.Instance.Hover(false);
+    }
+
+    private void OnPartPlaced(PartPlacedEvent e)
+    {
+        if(e.PartKey == 10001 && e.PartKey == _itemData.partKey)
+        {
+            _itemData.cost *= 2;
+            RefreshUI();
+        }
+
+    }
+}
+
+
+public class RunShopItemData
+{
+    public string displayName;
+    public int partKey;
+    public ShopItemCategory category;
+    public string description;
+    public int cost;
+    public ItemTier tier;
+    public bool isLocked;
+    public RunShopItemData(ShopItemData dataSO)
+    {
+        displayName = dataSO.displayName;
+        partKey = dataSO.partKey;
+        category = dataSO.category;
+        description = dataSO.description;
+        cost = dataSO.cost;
+        tier = dataSO.tier;
+        isLocked = dataSO.isLocked;
     }
 }

@@ -86,13 +86,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 150
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.3
     - Name: Cost
       Entry: 3
-      Data: 1
+      Data: 10
     - Name: Icon
       Entry: 6
       Data: 
@@ -123,6 +123,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uB9D0 \uC548 \uB4E3\uB294 \uC544\uC774\uB294, \uC5EC\uAE30\uC11C
+        \uC870\uAE08\uB9CC \uC6B8\uAC8C \uD558\uB834.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -180,13 +184,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 200
     - Name: DefenseRate
       Entry: 4
-      Data: 0.2
+      Data: 0.4
     - Name: Cost
       Entry: 3
-      Data: 3
+      Data: 30
     - Name: Icon
       Entry: 6
       Data: 
@@ -210,13 +214,17 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 20
+      Data: 25
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC5EC\uB7FF\uC774 \uD568\uAED8 \uAC07\uD788\uBA74, \uC678\uB85C\uC6C0\uB3C4
+        \uB35C\uD558\uACA0\uC9C0?\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -274,13 +282,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 200
+      Data: 300
     - Name: DefenseRate
       Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: Cost
       Entry: 3
-      Data: 5
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -304,13 +312,17 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 30
+      Data: 40
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uAF49 \uCC44\uC6CC \uB123\uC5B4\uC57C \uD574, \uADF8\uB798\uC57C
+        \uB0B4 \uD488\uC774 \uADF8\uB9AC\uC6CC\uC9C8 \uD14C\uB2C8\uAE4C.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -368,28 +380,28 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 140
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 2
+      Data: 20
     - Name: Icon
       Entry: 6
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 5
     - Name: AttackSpeed
       Entry: 4
       Data: 2
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: AttackDistance
       Entry: 4
-      Data: 5
+      Data: 6
     - Name: TrajectoryType
       Entry: 3
       Data: 1
@@ -398,13 +410,17 @@ MonoBehaviour:
       Data: 0.4
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uCC29\uD55C \uC544\uC774\uB294 \uC3D8\uACE0, \uB098\uC05C \uC544\uC774\uB294
+        \uB9DE\uC544\uC57C\uC9C0.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -462,13 +478,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 90
+      Data: 110
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.05
     - Name: Cost
       Entry: 3
-      Data: 4
+      Data: 40
     - Name: Icon
       Entry: 6
       Data: 
@@ -477,13 +493,13 @@ MonoBehaviour:
       Data: 3
     - Name: AttackSpeed
       Entry: 4
-      Data: 2.2
+      Data: 1.8
     - Name: AttackRangeRadius
       Entry: 3
       Data: 1
     - Name: AttackDistance
       Entry: 4
-      Data: 4
+      Data: 5
     - Name: TrajectoryType
       Entry: 3
       Data: 2
@@ -492,13 +508,17 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uB9D0 \uC548 \uB4E3\uB294 \uC544\uC774\uC5D0\uAC90, \uD2B9\uBCC4\uD55C
+        \uC120\uBB3C\uC744 \uB2EC\uC544\uC8FC\uB834.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -556,13 +576,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 200
     - Name: DefenseRate
       Entry: 4
-      Data: 0.2
+      Data: 0.15
     - Name: Cost
       Entry: 3
-      Data: 6
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -577,7 +597,7 @@ MonoBehaviour:
       Data: 2
     - Name: AttackDistance
       Entry: 4
-      Data: 8
+      Data: 9
     - Name: TrajectoryType
       Entry: 3
       Data: 2
@@ -593,6 +613,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uBB36\uC5B4\uC11C \uB358\uC838\uBC84\uB824, \uADF8\uAC8C \uC800
+        \uC544\uC774\uB4E4\uC5D0\uAC90 \uB354 \uC798 \uC5B4\uC6B8\uB824.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -656,7 +680,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 3
+      Data: 30
     - Name: Icon
       Entry: 6
       Data: 
@@ -686,7 +710,11 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.05|Attack:AttackSpeed:Flat:2
+      Data: Attack:AttackDamage:Percent:0.05|Attack:AttackSpeed:Percent:0.6
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uAC8C\uC73C\uB978 \uC544\uC774\uB294, \uB9E4\uC12D\uAC8C \uD0C0\uC77C\uB7EC\uC918\uC57C
+        \uD574.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -744,13 +772,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 110
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.05
     - Name: Cost
       Entry: 3
-      Data: 3
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -780,7 +808,11 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Defense:DefenseRate:Percent:1|Attack:AttackDamage:Flat:2|Attack:AttackSpeed:Flat:0.5
+      Data: Defense:DefenseRate:Percent:1|Attack:AttackDamage:Flat:2|Attack:AttackSpeed:Percent:0.3
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uAE30\uB3C4\uD574\uB77C, \uC6B0\uB9AC \uC544\uC774\uB4E4\uC774
+        \uB354 \uC608\uBED0\uC9C8 \uC218 \uC788\uAC8C.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -850,13 +882,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 175
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.15
     - Name: Cost
       Entry: 3
-      Data: 5
+      Data: 100
     - Name: Icon
       Entry: 6
       Data: 
@@ -887,6 +919,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:1|Defense:DefenseRate:Percent:1.5|Attack:PenetrationRate:Flat:0.2
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC870\uAE08 \uBC14\uCE58\uB834, \uB354 \uC544\uB984\uB2F5\uAC8C
+        \uAC15\uD574\uC9C8 \uD14C\uB2C8\uAE4C.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -944,13 +980,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 120
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 4
+      Data: 20
     - Name: Icon
       Entry: 6
       Data: 
@@ -981,6 +1017,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC544\uC774\uB4E4\uC740 \uB9CE\uC744\uC218\uB85D \uC88B\uC544,
+        \uC804\uBD80 \uB0B4 \uAC83\uC774\uC796\uC544.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -1050,13 +1090,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 195
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 9
+      Data: 40
     - Name: Icon
       Entry: 6
       Data: 
@@ -1087,6 +1127,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC544\uC774\uB4E4\uC740 \uB9CE\uC744\uC218\uB85D \uC88B\uC544,
+        \uC804\uBD80 \uB0B4 \uAC83\uC774\uC796\uC544.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -1168,13 +1212,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 200
+      Data: 270
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 15
+      Data: 80
     - Name: Icon
       Entry: 6
       Data: 
@@ -1205,6 +1249,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC544\uC774\uB4E4\uC740 \uB9CE\uC744\uC218\uB85D \uC88B\uC544,
+        \uC804\uBD80 \uB0B4 \uAC83\uC774\uC796\uC544.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -1298,13 +1346,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 250
+      Data: 370
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 24
+      Data: 150
     - Name: Icon
       Entry: 6
       Data: 
@@ -1335,6 +1383,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC544\uC774\uB4E4\uC740 \uB9CE\uC744\uC218\uB85D \uC88B\uC544,
+        \uC804\uBD80 \uB0B4 \uAC83\uC774\uC796\uC544.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -1392,13 +1444,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 150
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.3
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 10
     - Name: Icon
       Entry: 6
       Data: 
@@ -1427,6 +1479,9 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1486,13 +1541,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 200
     - Name: DefenseRate
       Entry: 4
-      Data: 0.2
+      Data: 0.4
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 30
     - Name: Icon
       Entry: 6
       Data: 
@@ -1516,11 +1571,14 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 20
+      Data: 25
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1580,13 +1638,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 200
+      Data: 300
     - Name: DefenseRate
       Entry: 4
-      Data: 0.3
+      Data: 0.5
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -1610,11 +1668,14 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 30
+      Data: 40
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1674,28 +1735,28 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 140
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 20
     - Name: Icon
       Entry: 6
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 5
     - Name: AttackSpeed
       Entry: 4
       Data: 2
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: AttackDistance
       Entry: 4
-      Data: 5
+      Data: 6
     - Name: TrajectoryType
       Entry: 3
       Data: 1
@@ -1704,11 +1765,14 @@ MonoBehaviour:
       Data: 0.4
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1768,13 +1832,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 90
+      Data: 110
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.05
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 40
     - Name: Icon
       Entry: 6
       Data: 
@@ -1783,13 +1847,13 @@ MonoBehaviour:
       Data: 3
     - Name: AttackSpeed
       Entry: 4
-      Data: 2.2
+      Data: 1.8
     - Name: AttackRangeRadius
       Entry: 3
       Data: 1
     - Name: AttackDistance
       Entry: 4
-      Data: 4
+      Data: 5
     - Name: TrajectoryType
       Entry: 3
       Data: 2
@@ -1798,11 +1862,14 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 0
     - Name: SupportRangeRadius
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1862,13 +1929,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 200
     - Name: DefenseRate
       Entry: 4
-      Data: 0.2
+      Data: 0.15
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -1883,7 +1950,7 @@ MonoBehaviour:
       Data: 2
     - Name: AttackDistance
       Entry: 4
-      Data: 8
+      Data: 9
     - Name: TrajectoryType
       Entry: 3
       Data: 2
@@ -1897,6 +1964,9 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -1962,7 +2032,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 30
     - Name: Icon
       Entry: 6
       Data: 
@@ -1992,7 +2062,10 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2
+      Data: Attack:AttackDamage:Percent:0.05|Attack:AttackSpeed:Flat:2
+    - Name: Description
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2050,13 +2123,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 110
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.05
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -2086,7 +2159,10 @@ MonoBehaviour:
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Defense:DefenseRate:Precent:2
+      Data: Defense:DefenseRate:Percent:1|Attack:AttackDamage:Flat:2|Attack:AttackSpeed:Flat:0.5
+    - Name: Description
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2156,13 +2232,13 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 175
     - Name: DefenseRate
       Entry: 4
-      Data: 0.1
+      Data: 0.15
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 100
     - Name: Icon
       Entry: 6
       Data: 
@@ -2192,7 +2268,10 @@ MonoBehaviour:
       Data: 2
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:1
+      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:1|Defense:DefenseRate:Percent:1.5|Attack:PenetrationRate:Flat:0.2
+    - Name: Description
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2285,6 +2364,9 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -2381,6 +2463,9 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2444,7 +2529,7 @@ MonoBehaviour:
       Data: 0
     - Name: Cost
       Entry: 3
-      Data: 0
+      Data: 150
     - Name: Icon
       Entry: 6
       Data: 
@@ -2475,6 +2560,10 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: "\u201C\uC9C0\uCE60 \uB54C\uAE4C\uC9C0 \uB6F0\uAC8C \uD574, \uADF8\uB7EC\uBA74
+        \uB9D0\uB3C4 \uC798 \uB4E3\uAC8C \uB418\uAC70\uB4E0.\u201D"
     - Name: 
       Entry: 8
       Data: 
@@ -2581,6 +2670,9 @@ MonoBehaviour:
     - Name: SupportEffectsRaw
       Entry: 1
       Data: 
+    - Name: Description
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -2673,6 +2765,9 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 
@@ -2779,6 +2874,9 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: Description
       Entry: 1
       Data: 
     - Name: 

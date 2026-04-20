@@ -300,7 +300,6 @@ public class PlacedPart : SerializedMonoBehaviour
 
     public void Break()
     {
-        Debug.Log($"[Break] {name} / frame={Time.frameCount}");
         BuildManager _buildManager = GetComponentInParent<GridBoard>()._buildManager;
         _buildManager.BrokenPart(this);
     }

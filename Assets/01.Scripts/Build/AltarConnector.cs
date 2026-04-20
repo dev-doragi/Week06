@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AltarConnector : MonoBehaviour
 {
@@ -49,7 +49,7 @@ public class AltarConnector : MonoBehaviour
             return;
         }
 
-        _placementManager.AddAltar();
+        _placementManager.AddSpellGenerator(1);
         _isRegistered = true;
     }
 
@@ -65,7 +65,7 @@ public class AltarConnector : MonoBehaviour
             return;
         }
 
-        _placementManager.RemoveAltar();
+        _placementManager.SubtractGenerator(1);
         _isRegistered = false;
     }
 }
