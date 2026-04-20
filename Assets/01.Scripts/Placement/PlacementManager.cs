@@ -30,6 +30,8 @@ public class PlacementManager : Singleton<PlacementManager>
     [SerializeField] private float _shakeDuration = 0.3f;
     [SerializeField] private float _shakeAmount = 10f;
 
+    [Header("Mouse Count")]
+    public ShowPlaceAble _placeableUI;
 
     [Header("Mouse Count")]
     public int CurrentMouse => _currentMouseCount;
@@ -57,7 +59,7 @@ public class PlacementManager : Singleton<PlacementManager>
     [SerializeField] private float _addGaugeProgress = 0f;
     [SerializeField] private float _subGaugeProgress = 0f;
 
-    [Header("Rates")]
+    [Header("Gauge Rates")]
     [SerializeField] private Slider _addGauge;
     [SerializeField] private Slider _subGauge;
 
@@ -82,6 +84,7 @@ public class PlacementManager : Singleton<PlacementManager>
         _UISprite.canvasRenderer.SetAlpha(0f);
         _UISprite.color = _denyColor;
 
+        _placeableUI = GetComponent<ShowPlaceAble>();
     }
 
     private void Update()
