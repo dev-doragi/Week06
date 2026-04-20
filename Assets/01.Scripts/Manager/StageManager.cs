@@ -54,7 +54,7 @@ public class StageManager : Singleton<StageManager>
     public void LoadNextStage()
     {
         int nextIndex = CurrentStageIndex + 1;
-
+        Debug.Log(nextIndex);
         if (nextIndex < _stageDatas.Length)
         {
             LoadStage(nextIndex);

@@ -28,6 +28,11 @@ public class ProgressManager : Singleton<ProgressManager>
         _tutorialCompleted = false;
     }
 
+    public void SkipTutorial()
+    {
+        _tutorialCompleted = true;
+    }
+
     private void OnEnable()
     {
         if (EventBus.Instance == null) return;

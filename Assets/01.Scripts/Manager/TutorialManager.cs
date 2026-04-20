@@ -971,7 +971,20 @@ public class TutorialManager : Singleton<TutorialManager>
         if (_placementProgressText != null)
             _placementProgressText.gameObject.SetActive(show);
     }
+    public void SkipTutorial()
+    {
+        // 1. 진행 중인 모든 튜토리얼 로직 중단
+        StopAllCoroutines();
 
+        // 2. 튜토리얼 UI 정리 및 상태 복구 (중요!)
+        CleanupTutorial();
+
+        // 3. 완료 이벤트 발행 (RewardStageIndex는 일반 클리어와 동일하게 설정)
+        // 튜토리얼 시퀀스 마지막과 동일한 인덱스(0)를 사용하거나 프로젝트 규칙에 맞춥니다.
+        EventBus.Instance?.Publish(new TutorialCompletedEvent { RewardStageIndex = 0 });
+
+        Debug.Log("[Tutorial] Skip Process Completed.");
+    }
     private void UpdatePlacementProgressUI()
     {
         if (_placementProgressText == null) return;

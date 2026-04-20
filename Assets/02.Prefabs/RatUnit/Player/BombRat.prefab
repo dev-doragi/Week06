@@ -137,6 +137,7 @@ MonoBehaviour:
   _arcAttackPerformerComponent: {fileID: 4217286610560266333}
   _directAttackPerformerComponent: {fileID: 0}
   anim: {fileID: 1876355847648641555}
+  amount: 2
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0

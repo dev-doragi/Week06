@@ -20,13 +20,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00.Scenes/Build/04.InGameScene.unity
     guid: 62242931b7f73374db8ef43ec14069e3
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Scenes/Jaein/InGameScene_Jaein.unity
-    guid: 6f1a3c8707107a0468573887f0de4e6a
-  - enabled: 1
+    guid: f78a7ef4898a16c4fbd3e0d563986f1a
+  - enabled: 0
     path: Assets/00.Scenes/Jaein/LobbyScene_Jaein.unity
     guid: 3567e25ed9544e84e8c33088c4d09bd1
-  - enabled: 1
+  - enabled: 0
     path: Assets/00.Scenes/Jaein/StageSelectScene_Jaein.unity
     guid: c122a471dc48e3d4ea6e76e0be3f53c7
   m_configObjects:

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using VHierarchy.Libs;
-using static UnityEngine.LowLevelPhysics2D.PhysicsShape;
 
 public class EnemyMove : MonoBehaviour
 {

@@ -22,6 +22,8 @@ public class RifleDirectAttackPerformer : BaseAttackPerformer
         Vector3 startPosition = _spawnPoint != null ? _spawnPoint.position : transform.position;
         Vector3 targetPosition = target.transform.position;
 
+        Debug.Log($"startPosition: {startPosition}, targetPosition: {targetPosition}");
+
         GameObject bulletObject = PoolManager.Instance.Spawn(
             _bulletPoolName,
             startPosition,

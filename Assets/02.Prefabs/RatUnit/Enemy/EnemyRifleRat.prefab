@@ -135,7 +135,7 @@ MonoBehaviour:
   _attackPerformerComponent: {fileID: -1060541625467356928}
   _arcAttackPerformerComponent: {fileID: 0}
   _directAttackPerformerComponent: {fileID: -1060541625467356928}
-  anim: {fileID: 7060826574197365913}
+  anim: {fileID: 0}
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9724a4f459a3204da49de698c8c0796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RifleDirectAttackPerformer
-  _bulletPoolName: EnemyBomb
+  _bulletPoolName: EnemyRifle
   _spawnPoint: {fileID: 3887884342779039399}
-  _travelTime: 0.2
+  _travelTime: 0.3
 --- !u!61 &7889095822756387493
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -220,7 +220,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4571249116488789809}
   - component: {fileID: 5705709815536790131}
-  - component: {fileID: 7060826574197365913}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -302,25 +301,3 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &7060826574197365913
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3656004365845845777}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78e0c945edee88649a50976531354055, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

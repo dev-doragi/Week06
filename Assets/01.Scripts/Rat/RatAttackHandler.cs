@@ -15,6 +15,8 @@ public class RatAttackHandler : MonoBehaviour
     [Header("Animator")]
     [SerializeField] private Animator anim;
 
+    [SerializeField] private int amount;
+
     private RatController _ratController;
     private RatTargetFinder _ratTargetFinder;
     private RatController _currentTarget;
@@ -50,12 +52,15 @@ public class RatAttackHandler : MonoBehaviour
 
             if(Time.time >= _lastAttackTime + GetAttackInterval(attackStat.AttackSpeed))
             {
-                anim.SetBool("OnAttack", true);
+                if(anim != null)
+                    anim.SetBool("OnAttack", true);
+
                 return true;
             }
             else
             {
-                anim.SetBool("OnAttack", false);
+                if (anim != null)
+                    anim.SetBool("OnAttack", false);
                 return false;
             }
         }
@@ -211,8 +216,21 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
 
         }
-        if(anim.GetBool("OnAttack") && PlacementManager.Instance.CurrentMouse == 0)
-            anim.SetBool("OnAttack", false);
+        if (anim != null)
+        {
+            if (anim.GetBool("OnAttack") && PlacementManager.Instance.CurrentMouse == 0)
+                anim.SetBool("OnAttack", false);
+        }
+        else
+        {
+
+            bool launched = attackPerformer.TryPerformAttack(_ratController, _currentTarget);
+            if (!launched)
+            {
+                return false;
+            }
+            _lastAttackTime = Time.time;
+        }
 
 
         return true;
@@ -221,7 +239,7 @@ public class RatAttackHandler : MonoBehaviour
     {
         if (_ratController.TeamType == TeamType.Player)
         {
-            if (!PlacementManager.Instance.SubtractMouseCount(1))
+            if (!PlacementManager.Instance.SubtractMouseCount(amount))
             {
                 anim.SetBool("OnAttack", false);
                 return;
