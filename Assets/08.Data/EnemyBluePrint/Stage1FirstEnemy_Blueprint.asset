@@ -23,27 +23,27 @@ MonoBehaviour:
   - partKey: 101
     origin: {x: 2, y: 1}
     rotation: 0
-  - partKey: 101
+  - partKey: 20002
     origin: {x: 3, y: 1}
-    rotation: 0
-  - partKey: 101
-    origin: {x: 4, y: 1}
     rotation: 0
   - partKey: 101
     origin: {x: 2, y: 2}
     rotation: 0
-  - partKey: 20002
+  - partKey: 101
     origin: {x: 3, y: 2}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 4, y: 2}
     rotation: 0
   - partKey: 101
     origin: {x: 2, y: 3}
     rotation: 0
-  - partKey: 101
+  - partKey: 104
     origin: {x: 3, y: 3}
     rotation: 0
   - partKey: 101
     origin: {x: 4, y: 3}
     rotation: 0
-  - partKey: 104
+  - partKey: 101
     origin: {x: 3, y: 4}
     rotation: 0

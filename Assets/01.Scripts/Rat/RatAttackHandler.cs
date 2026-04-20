@@ -48,7 +48,16 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
             }
 
-            return Time.time >= _lastAttackTime + GetAttackInterval(attackStat.AttackSpeed);
+            if(Time.time >= _lastAttackTime + GetAttackInterval(attackStat.AttackSpeed))
+            {
+                anim.SetBool("OnAttack", true);
+                return true;
+            }
+            else
+            {
+                anim.SetBool("OnAttack", false);
+                return false;
+            }
         }
     }
 
@@ -202,7 +211,8 @@ public class RatAttackHandler : MonoBehaviour
                 return false;
 
         }
-        anim.SetBool("OnAttack", true);
+        if(anim.GetBool("OnAttack") && PlacementManager.Instance.CurrentMouse == 0)
+            anim.SetBool("OnAttack", false);
 
 
         return true;
@@ -212,7 +222,10 @@ public class RatAttackHandler : MonoBehaviour
         if (_ratController.TeamType == TeamType.Player)
         {
             if (!PlacementManager.Instance.SubtractMouseCount(1))
+            {
+                anim.SetBool("OnAttack", false);
                 return;
+            }
         }
 
         bool launched = attackPerformer.TryPerformAttack(_ratController, _currentTarget);
@@ -223,6 +236,11 @@ public class RatAttackHandler : MonoBehaviour
         anim.SetBool("OnAttack", false);
         _lastAttackTime = Time.time;
     }
+    public void AnimStop()
+    {
+        anim.SetBool("OnAttack", false);
+    }
+
     public bool HasValidCurrentTarget()
     {
         if (_currentTarget == null)

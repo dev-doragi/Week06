@@ -52,7 +52,7 @@ public class PlacementManager : Singleton<PlacementManager>
 
     [Header("Rates")]
     [SerializeField] private int subPerSpell = 0;
-    [SerializeField] private float _mouseGenTime = 0.3f;
+    [SerializeField] private float _mouseGenTime = 0.2f;
     [SerializeField] private float _mouseSubTime = 0.2f;
     [SerializeField] private float _addGaugeProgress = 0f;
     [SerializeField] private float _subGaugeProgress = 0f;

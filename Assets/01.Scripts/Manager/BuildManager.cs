@@ -77,6 +77,10 @@ public class BuildManager : MonoBehaviour
             TryRemovePart();
         }
     }
+    public void SelectPartTemp(int key)
+    {
+        SelectPart(key);
+    }
 
     public void SelectPart(int key, RunShopItemData _itemData = null, bool clickShop = false)
     {
