@@ -83,6 +83,7 @@ Assets/01.Scripts/
   InputReader.cs
   PauseManager.cs
   PoolManager.cs
+  ProgressManager.cs
   SceneLoader.cs
   SoundManager.cs
   StageManager.cs
@@ -118,6 +119,7 @@ Assets/01.Scripts/
   MouseAgent.cs
   MouseUIMovement.cs
   PlacementManager.cs
+  ShowPlaceAble.cs
  Projectile/
   ProjectileBase.cs
   TestProjectile.cs
@@ -143,6 +145,7 @@ Assets/01.Scripts/
  Sound/SoundPlayer.cs
  Stage/
   PoolSetupData.cs
+  StageButtonUnlocker.cs
   StageDataSO.cs
   StageLayout.cs
   StageLoadContext.cs
