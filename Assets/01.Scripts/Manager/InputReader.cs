@@ -19,6 +19,9 @@ public class InputReader : Singleton<InputReader>
 
     public bool IsPointerOverUI { get; private set; }
 
+    // 튜토리얼/모달용 입력 차단 플래그
+    private bool _isTutorialBlocked = false;
+
     protected override void Init()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -63,16 +66,37 @@ public class InputReader : Singleton<InputReader>
 
     private void BindEvents()
     {
-        _clickAction.started += _ => EventBus.Instance.Publish(new ClickEvent { IsStarted = true });
-        _clickAction.canceled += _ => EventBus.Instance.Publish(new ClickEvent { IsStarted = false });
+        _clickAction.started += _ =>
+        {
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new ClickEvent { IsStarted = true });
+        };
+        _clickAction.canceled += _ =>
+        {
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new ClickEvent { IsStarted = false });
+        };
 
-        _rightClickAction.started += _ => EventBus.Instance.Publish(new RightClickEvent { IsStarted = true });
-        _rightClickAction.canceled += _ => EventBus.Instance.Publish(new RightClickEvent { IsStarted = false });
+        _rightClickAction.started += _ =>
+        {
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new RightClickEvent { IsStarted = true });
+        };
+        _rightClickAction.canceled += _ =>
+        {
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new RightClickEvent { IsStarted = false });
+        };
 
-        _rotateAction.performed += _ => EventBus.Instance.Publish(new RotateEvent());
+        _rotateAction.performed += _ =>
+        {
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new RotateEvent());
+        };
 
         _scrollAction.performed += ctx =>
         {
+            if (_isTutorialBlocked) return;
             float scrollValue = ctx.ReadValue<Vector2>().y;
             if (Mathf.Abs(scrollValue) > 0.01f)
             {
@@ -80,7 +104,12 @@ public class InputReader : Singleton<InputReader>
             }
         };
 
-        _pauseAction.performed += _ => EventBus.Instance.Publish(new PausePressedEvent());
+        _pauseAction.performed += _ =>
+        {
+            // Pause는 튜토리얼 중에도 허용하지 않으려면 아래 검사 추가 가능
+            if (_isTutorialBlocked) return;
+            EventBus.Instance.Publish(new PausePressedEvent());
+        };
     }
 
     private void OnGameStateChanged(GameStateChangedEvent evt)
@@ -88,13 +117,32 @@ public class InputReader : Singleton<InputReader>
         switch (evt.NewState)
         {
             case GameState.Playing:
-                _playerMap.Enable();
+                // 튜토리얼/모달이 활성화된 동안에는 맵을 활성화하지 않음
+                if (!_isTutorialBlocked)
+                    _playerMap.Enable();
                 break;
             case GameState.Paused:
             case GameState.GameOver:
             case GameState.GameClear:
                 _playerMap.Disable();
                 break;
+        }
+    }
+
+    public void SetInputBlocked(bool blocked)
+    {
+        _isTutorialBlocked = blocked;
+
+        if (_playerMap == null) return;
+
+        if (blocked)
+        {
+            _playerMap.Disable();
+        }
+        else
+        {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Playing)
+                _playerMap.Enable();
         }
     }
 

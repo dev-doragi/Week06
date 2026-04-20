@@ -184,6 +184,9 @@ public class BuildManager : MonoBehaviour
         TrySpawnRuntimePrefab(partData, placedPart);
 
         ShowPlaceableCells();
+
+        EventBus.Instance.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos }); // Jaein 추가
+
         return true;
     }
 
