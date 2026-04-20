@@ -160,6 +160,7 @@ public struct PartPlacedEvent
 {
     public int PartKey;
     public UnityEngine.Vector2Int GridPos;
+    public bool costUp;
 }
 
 // 튜토리얼: 공격 유닛 배치 설명 요청

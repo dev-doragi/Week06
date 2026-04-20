@@ -86,7 +86,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 100
     - Name: DefenseRate
       Entry: 4
       Data: 0.3
@@ -184,7 +184,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 200
+      Data: 150
     - Name: DefenseRate
       Entry: 4
       Data: 0.45
@@ -282,7 +282,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 300
+      Data: 200
     - Name: DefenseRate
       Entry: 4
       Data: 0.6
@@ -588,7 +588,7 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 25
+      Data: 20
     - Name: AttackSpeed
       Entry: 4
       Data: 0.4
@@ -1444,7 +1444,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 150
+      Data: 100
     - Name: DefenseRate
       Entry: 4
       Data: 0.3
@@ -1541,7 +1541,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 200
+      Data: 150
     - Name: DefenseRate
       Entry: 4
       Data: 0.45
@@ -1638,7 +1638,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 300
+      Data: 200
     - Name: DefenseRate
       Entry: 4
       Data: 0.6
@@ -1941,7 +1941,7 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 24
+      Data: 20
     - Name: AttackSpeed
       Entry: 4
       Data: 0.4

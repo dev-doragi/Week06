@@ -124,7 +124,7 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void OnPartPlaced(PartPlacedEvent e)
     {
-        if(e.PartKey == 10001 && e.PartKey == _itemData.partKey)
+        if(e.PartKey == 10001 && e.PartKey == _itemData.partKey && e.costUp)
         {
             _itemData.cost += 90;
             RefreshUI();

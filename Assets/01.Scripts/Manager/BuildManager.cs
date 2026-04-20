@@ -41,6 +41,19 @@ public class BuildManager : MonoBehaviour
     private int cost;
     private RunShopItemData itemData;
 
+    private void OnEnable()
+    {
+        EventBus.Instance.Subscribe<InGameStateChangedEvent>(OnWaveClear);
+        EventBus.Instance.Subscribe<WaveStartedEvent>(OnWaveStart);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Instance.Unsubscribe<InGameStateChangedEvent>(OnWaveClear);
+        EventBus.Instance.Unsubscribe<WaveStartedEvent>(OnWaveStart);
+    }
+
+
     private void Start()
     {
         clickShopButton = false;
@@ -115,6 +128,18 @@ public class BuildManager : MonoBehaviour
         clickShopButton = clickShop;
         CreateGhost();
         ShowPlaceableCells();
+    }
+
+    private void OnWaveClear(InGameStateChangedEvent e)
+    {
+        clickShopButton = false;
+        ClearSelection();
+    }
+
+    private void OnWaveStart(WaveStartedEvent e)
+    {
+        clickShopButton = false;
+        ClearSelection();
     }
 
     private void CreateGhost()
@@ -200,7 +225,8 @@ public class BuildManager : MonoBehaviour
         }
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
         TrySpawnRuntimePrefab(partData, placedPart);
-        EventBus.Instance?.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos });
+        EventBus.Instance?.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos , costUp =  clickShopButton});
+
         ShowPlaceableCells();
         return true;
     }
