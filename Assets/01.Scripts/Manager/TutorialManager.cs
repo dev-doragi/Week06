@@ -755,24 +755,11 @@ public class TutorialManager : Singleton<TutorialManager>
         UpdatePlacementProgressUI();
         CheckCondition();
     }
-
     private void OnTutorialEnemyDefeated(TutorialEnemyDefeatedEvent e)
     {
-        // 1. 이벤트가 무사히 도착했는지 확인
-        Debug.Log("[Tutorial] 🎯 적 처치 이벤트 도착!");
+        if (!IsCurrentStepCondition(TutorialCondition.EnemyDefeated)) return;
 
-        // 2. 인스펙터 조건이 맞는지 확인
-        if (!IsCurrentStepCondition(TutorialCondition.EnemyDefeated))
-        {
-            var currentCondition = _steps[_currentStep].Condition;
-            Debug.Log($"[Tutorial] ❌ 카운트 무시됨: 현재 스텝의 Condition이 'EnemyDefeated'가 아닙니다! (현재 설정: {currentCondition})");
-            return;
-        }
-
-        // 3. 정상 통과 시 카운트 증가
         _currentProgress += 1.0f;
-        Debug.Log($"[Tutorial] ✅ 카운트 증가 성공! 진행도: {_currentProgress}");
-
         UpdatePlacementProgressUI();
         CheckCondition();
     }
@@ -837,7 +824,6 @@ public class TutorialManager : Singleton<TutorialManager>
         StageLayout layout = StageManager.Instance?.CurrentLayout;
         if (layout == null)
         {
-            Debug.LogWarning("[TutorialManager] TutorialWaveSpawn 시작 실패: CurrentLayout 없음");
             yield break;
         }
 
@@ -857,7 +843,6 @@ public class TutorialManager : Singleton<TutorialManager>
             GameObject enemy = layout.CurrentEnemySiege;
             if (enemy == null)
             {
-                Debug.LogWarning("[TutorialManager] 적이 스폰되지 않음. 다음으로 넘어갑니다.");
                 StageManager.Instance?.GoToNextWave();
                 continue;
             }
@@ -884,7 +869,6 @@ public class TutorialManager : Singleton<TutorialManager>
             }
             else
             {
-                Debug.LogWarning("[Tutorial] RatController가 끝내 생성되지 않았습니다! 무한루프 방지.");
                 StageManager.Instance?.GoToNextWave();
                 continue;
             }
