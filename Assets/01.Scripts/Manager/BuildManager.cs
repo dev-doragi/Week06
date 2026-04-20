@@ -189,6 +189,8 @@ public class BuildManager : MonoBehaviour
         placedPart.BuildVisual(gridRenderer, placedPart.transform, Color.white);
         TrySpawnRuntimePrefab(partData, placedPart);
 
+        EventBus.Instance?.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos }); // 이벤트 발행
+
         ShowPlaceableCells();
         return true;
     }

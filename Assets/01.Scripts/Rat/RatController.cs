@@ -13,6 +13,7 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     private RatTargetFinder _ratTargetFinder;
     private RatSupportHandler _ratSupportHandler;
     private RatStatModifierRuntime _ratStatModifierRuntime;
+    private bool _isTutorialEnemy = false;
 
     public PartData PartData
     {
@@ -36,6 +37,11 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
     public RatStatModifierRuntime RatStatModifierRuntime => _ratStatModifierRuntime;
     public TeamType TeamType => _teamType;
     public PlacedPart PlacedPart => _placedPart;
+    public bool IsTutorialEnemy
+    {
+        get => _isTutorialEnemy;
+        set => _isTutorialEnemy = value;
+    }
 
     private void Awake()
     {
@@ -318,6 +324,29 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
         _ratStatRuntime.RecoverHp(amount);
     }
 
+    // 튜토리얼 전용: 이벤트 발행 없이 객체 제거/비활성화를 수행
+    public void KillForTutorial()
+    {
+        // 기존 HandleDead()와 달리 EventBus 발행을 하지 않음
+        if (_placedPart != null)
+        {
+            _placedPart.Break();
+        }
+
+        if (_ratAttackHandler != null)
+            _ratAttackHandler.enabled = false;
+        if (_ratCollisionHandler != null)
+            _ratCollisionHandler.enabled = false;
+        if (_ratTargetFinder != null)
+            _ratTargetFinder.enabled = false;
+        if (_ratSupportHandler != null)
+            _ratSupportHandler.enabled = false;
+
+        // 안전하게 GameObject 제거 또는 비활성화
+        // 여기서는 즉시 제거: 튜토리얼 목적이므로 간결하게 Destroy
+        Destroy(gameObject);
+    }
+
     public bool IsEnemy(RatController other)
     {
         if (other == null)
@@ -373,6 +402,11 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
         _placedPart.Break();
         if(_ratAttackHandler != null)
             _ratAttackHandler.enabled = false;
+
+        // Tutorial enemies should not trigger normal game events
+        // IsTutorialEnemy 플래그 or 튜토리얼 씬 전체를 이중 방어
+        if (_isTutorialEnemy || StageLoadContext.IsTutorial) return;
+
         if (_partData.BuildingType == BuildingType.Core)
             EventBus.Instance.Publish(new BaseDestroyedEvent());
         if(_partData.BuildingType == BuildingType.EnemyCore)

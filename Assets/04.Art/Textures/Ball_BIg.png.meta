@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b73732357b194bd429b10a966dbc472f
+guid: 954f82d3df64ae0418e4ae90953bb238
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4832312923069039670
-    second: MouseBall_0
+      213: 4259407654471536969
+    second: MouseBall 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MouseBall_0
+      name: MouseBall 1_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 14
-        width: 40
-        height: 35
+        x: 8
+        y: 8
+        width: 49
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: acbb0f8cffc20fcb0800000000000000
-      internalID: -4832312923069039670
+      spriteID: 9411b56c1b47c1b30800000000000000
+      internalID: 4259407654471536969
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MouseBall_0: -4832312923069039670
+      MouseBall 1_0: 4259407654471536969
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

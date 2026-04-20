@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
 // 실습 종류 정의
-public enum TutorialCondition { None, CameraMove, PartPlacement }
+public enum TutorialCondition { None, CameraMove, PartPlacement, EnemyDefeated }
 
 public enum RequiredPartGroup { Any, Defense, Attack, Custom }
 
@@ -42,6 +43,12 @@ public class TutorialStep
     public float PortraitMoveOffset = 150f; // 왼쪽으로 이동할 거리(px)
     public float PortraitMoveDuration = 0.5f; // 이동 애니메이션 시간(초)
     public RectTransform PortraitTarget; // optional: 이동할 RectTransform 위치를 지정하면 그 좌표로 이동
+
+    [Header("Tutorial Enemy Spawn (optional)")]
+    public bool SpawnEnemyForStep = false; // 이 스텝에서 튜토리얼 적을 소환할지
+    public int EnemySpawnCycles = 1; // 몇 번 스폰하고 공격을 반복할지 (1 이상) — 여기서는 웨이브 사이클 수로 사용
+    public float EnemyAttackInterval = 1.0f; // (unused in this wave-driven implementation, 보존 가능)
+    public GameObject EnemyPrefabOverride; // 스텝별로 사용할 적 프리팹을 덮어쓸 수 있음 (optional)
 }
 
 [DefaultExecutionOrder(-90)]
@@ -80,6 +87,11 @@ public class TutorialManager : Singleton<TutorialManager>
     [Header("Debug & Manual Start")]
     [SerializeField] private bool _startOnAwake = true;
 
+    [Header("Tutorial Enemy (optional global defaults)")]
+    [SerializeField] private GameObject _tutorialEnemyPrefab; // optional: 글로벌 기본 프리팹
+    [SerializeField] private float _tutorialEnemyAttackInterval = 1.0f;
+    [SerializeField] private float _tutorialEnemyRespawnDelay = 1.5f;
+
     private int _currentStep = 0;
     private bool _isTyping = false;
     private bool _cancelTyping = false;
@@ -105,6 +117,9 @@ public class TutorialManager : Singleton<TutorialManager>
     private int _currentStepRequiredCount = 0;
     private string _currentPlacementLabel = "";
 
+    // 튜토리얼 적 제어용 (웨이브 트리거 방식)
+    private Coroutine _tutorialEnemyRoutine = null;
+
     private void OnEnable()
     {
         if (EventBus.Instance != null)
@@ -115,6 +130,8 @@ public class TutorialManager : Singleton<TutorialManager>
             EventBus.Instance.Subscribe<PartPlacedEvent>(OnPartPlaced);
             // 튜토리얼: 공격 배치 모드 진입 요청 구독
             EventBus.Instance.Subscribe<AttackPlacementTutorialRequestedEvent>(OnAttackPlacementTutorialRequested);
+            // 튜토리얼 적 처치 이벤트 구독
+            EventBus.Instance.Subscribe<TutorialEnemyDefeatedEvent>(OnTutorialEnemyDefeated);
         }
     }
 
@@ -166,6 +183,8 @@ public class TutorialManager : Singleton<TutorialManager>
             EventBus.Instance.Unsubscribe<RightClickEvent>(OnCameraDragged);
             EventBus.Instance.Unsubscribe<PartPlacedEvent>(OnPartPlaced);
             EventBus.Instance.Unsubscribe<AttackPlacementTutorialRequestedEvent>(OnAttackPlacementTutorialRequested);
+            // 튜토리얼 적 처치 이벤트 구독 해제
+            EventBus.Instance.Unsubscribe<TutorialEnemyDefeatedEvent>(OnTutorialEnemyDefeated);
         }
     }
 
@@ -402,6 +421,23 @@ public class TutorialManager : Singleton<TutorialManager>
             UpdatePlacementProgressUI();
         }
 
+        // EnemyDefeated 전용: 처치 진행도 UI 초기화 및 표시
+        if (step.Condition == TutorialCondition.EnemyDefeated)
+        {
+            _currentStepRequiredCount = Mathf.Max(1, Mathf.CeilToInt(step.RequiredAmount));
+            _currentPlacementLabel = !string.IsNullOrWhiteSpace(step.PlacementLabel) ? step.PlacementLabel : "적 처치";
+
+            ShowPlacementProgressPanel(true);
+            UpdatePlacementProgressUI();
+        }
+
+        // ---- 웨이브 트리거 방식으로 튜토리얼 적 소환 시작(옵션) ----
+        if (step.SpawnEnemyForStep)
+        {
+            // 스텝의 사이클 수만큼 (각 사이클이 하나의 웨이브 시작/적 삭제 대기)
+            StartTutorialWaveSpawnCycle(Mathf.Max(1, step.EnemySpawnCycles), step.EnemyPrefabOverride);
+        }
+
         // 실습 조건 처리
         if (step.Condition != TutorialCondition.None)
         {
@@ -452,6 +488,12 @@ public class TutorialManager : Singleton<TutorialManager>
 
         // PartPlacement UI 숨김
         ShowPlacementProgressPanel(false);
+
+        // ---- 튜토리얼 적 정리(스텝 종료 시 반드시 멈춤) ----
+        if (step.SpawnEnemyForStep)
+        {
+            StopTutorialEnemyCycle();
+        }
 
         if (step.MoveDialogUp && _dialogPanel != null)
         {
@@ -571,8 +613,13 @@ public class TutorialManager : Singleton<TutorialManager>
                 StartCoroutine(MovePortraitBackRoutine(portraitRt, 0.25f));
             }
         }
+        // 튜토리얼 적 정리
+        StopTutorialEnemyCycle();
         InputReader.Instance?.SetInputBlocked(false);
         Time.timeScale = 1f;
+
+        // 튜토리얼 컨텍스트 정리
+        StageLoadContext.Clear();
     }
 
     private IEnumerator MoveDialogUpRoutine(float offset, float duration)
@@ -668,6 +715,15 @@ public class TutorialManager : Singleton<TutorialManager>
         CheckCondition();
     }
 
+    private void OnTutorialEnemyDefeated(TutorialEnemyDefeatedEvent e)
+    {
+        if (!IsCurrentStepCondition(TutorialCondition.EnemyDefeated)) return;
+
+        _currentProgress += 1.0f;
+        UpdatePlacementProgressUI();
+        CheckCondition();
+    }
+
     private bool IsCurrentStepCondition(TutorialCondition condition)
     {
         if (!_isShowing || _isResettingCamera) return false;
@@ -705,6 +761,148 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         if (_steps == null || _currentStep < 0 || _currentStep >= _steps.Length) return;
         if (_currentProgress >= _steps[_currentStep].RequiredAmount) _conditionMet = true;
+    }
+
+    // 튜토리얼 전용: 현재 StageLayout에 스폰된 튜토리얼 적을 찾아 제거
+    public void KillTutorialEnemy()
+    {
+        StageLayout layout = StageManager.Instance?.CurrentLayout;
+        if (layout == null)
+        {
+            Debug.LogWarning("[TutorialManager] CurrentLayout이 없습니다. 튜토리얼 적을 찾을 수 없습니다.");
+            return;
+        }
+
+        GameObject enemyObj = layout.CurrentEnemySiege;
+        if (enemyObj == null)
+        {
+            Debug.LogWarning("[TutorialManager] CurrentEnemySiege가 없습니다.");
+            return;
+        }
+
+        RatController rc = enemyObj.GetComponentInChildren<RatController>();
+        if (rc == null)
+        {
+            Debug.LogWarning("[TutorialManager] 적에서 RatController를 찾을 수 없습니다.");
+            Destroy(enemyObj); // 안전 장치: 그래도 제거
+            EventBus.Instance?.Publish(new TutorialEnemyDefeatedEvent());
+            return;
+        }
+
+        rc.KillForTutorial();
+        EventBus.Instance?.Publish(new TutorialEnemyDefeatedEvent());
+    }
+
+    // --- 웨이브 트리거 방식: StageManager.PlayWave() 호출 후 스폰된 적의 OnDead 대기 ---
+    public void StartTutorialWaveSpawnCycle(int cycles = 1, GameObject prefabOverride = null)
+    {
+        if (_tutorialEnemyRoutine != null) StopCoroutine(_tutorialEnemyRoutine);
+        _tutorialEnemyRoutine = StartCoroutine(TutorialWaveSpawnRoutine(Mathf.Max(1, cycles), prefabOverride));
+    }
+
+    public void StopTutorialEnemyCycle()
+    {
+        if (_tutorialEnemyRoutine != null)
+        {
+            StopCoroutine(_tutorialEnemyRoutine);
+            _tutorialEnemyRoutine = null;
+        }
+
+        // 현재 Layout에 스폰된 적 정리
+        KillTutorialEnemy();
+    }
+
+    private IEnumerator TutorialWaveSpawnRoutine(int cycles, GameObject prefabOverride)
+    {
+        StageLayout layout = StageManager.Instance?.CurrentLayout;
+        if (layout == null)
+        {
+            Debug.LogWarning("[TutorialManager] TutorialWaveSpawn 시작 실패: CurrentLayout 없음");
+            yield break;
+        }
+
+        for (int i = 0; i < cycles; i++)
+        {
+            // 필요하면 StageManager의 현재 WaveIndex를 조정하는 로직을 넣을 수 있음.
+            // 여기서는 현재 WaveIndex를 그대로 사용하고 PlayWave() 호출로 스폰을 트리거한다.
+            StageManager.Instance?.PlayWave();
+
+            // wait for spawn (CurrentEnemySiege set by StageLayout.OnWaveStarted -> SpawnEnemy)
+            float wait = 0f;
+            const float spawnTimeout = 3f;
+            while (layout.CurrentEnemySiege == null && wait < spawnTimeout)
+            {
+                wait += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            GameObject enemy = layout.CurrentEnemySiege;
+            if (enemy == null)
+            {
+                Debug.LogWarning("[TutorialManager] 웨이브 트리거했으나 적이 스폰되지 않음. 다음 사이클로 이동합니다.");
+                // 안전하게 다음 웨이브 인덱스 증가
+                StageManager.Instance?.GoToNextWave();
+                continue;
+            }
+
+            // 특정 적 인스턴스의 죽음을 대기
+            RatController rc = enemy.GetComponentInChildren<RatController>();
+
+            // Mark this enemy as a tutorial enemy to prevent normal game events
+            if (rc != null)
+                rc.IsTutorialEnemy = true;
+
+            bool isDead = false;
+            Action onDead = () => { isDead = true; };
+
+            if (rc != null && rc.RatStatRuntime != null)
+            {
+                rc.RatStatRuntime.OnDead += onDead;
+            }
+            else
+            {
+                // 만약 RatController나 StatRuntime이 없으면, 적 객체 파괴 감시
+                UnityAction destroyWatcher = null;
+                destroyWatcher = () =>
+                {
+                    isDead = true;
+                };
+            }
+
+            // 대기: 적이 죽을 때까지
+            while (!isDead)
+            {
+                // 타임스케일과 관계없이 동작하도록 unscaled 사용
+                yield return null;
+            }
+
+            // 구독 해제
+            if (rc != null && rc.RatStatRuntime != null)
+            {
+                rc.RatStatRuntime.OnDead -= onDead;
+            }
+
+            // 이벤트 통지 — 튜토리얼 전용 이벤트
+            EventBus.Instance?.Publish(new TutorialEnemyDefeatedEvent());
+
+            // 웨이브 인덱스 전진 (다음 사이클을 위해)
+            StageManager.Instance?.GoToNextWave();
+
+            // 짧은 딜레이(언스케일드)
+            float elapsed = 0f;
+            while (elapsed < 0.2f)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+        }
+
+        _tutorialEnemyRoutine = null;
+    }
+
+    private static bool stageIdxIsValid(StageDataSO stageData, int waveIdx)
+    {
+        return stageData != null && stageData.Waves != null && waveIdx >= 0 && waveIdx < stageData.Waves.Count;
     }
 
     private IEnumerator ResetCameraRoutine(float duration)
