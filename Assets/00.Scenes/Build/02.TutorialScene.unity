@@ -969,6 +969,10 @@ PrefabInstance:
       propertyPath: _buildManager
       value: 
       objectReference: {fileID: 884370198}
+    - target: {fileID: 4941476563560855187, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: _partRuntimeSpawner
+      value: 
+      objectReference: {fileID: 606322906}
     - target: {fileID: 5168028654738699743, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
