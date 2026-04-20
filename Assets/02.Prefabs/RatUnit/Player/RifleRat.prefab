@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5503263500117318811}
   - component: {fileID: -1060541625467356928}
   - component: {fileID: 7889095822756387493}
+  - component: {fileID: 9092384891928700503}
   m_Layer: 0
   m_Name: RifleRat
   m_TagString: Untagged
@@ -135,7 +136,7 @@ MonoBehaviour:
   _attackPerformerComponent: {fileID: -1060541625467356928}
   _arcAttackPerformerComponent: {fileID: 0}
   _directAttackPerformerComponent: {fileID: -1060541625467356928}
-  anim: {fileID: 0}
+  anim: {fileID: 9092384891928700503}
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,15 +202,37 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &9092384891928700503
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370892442198955768}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa97278ed45ccab4eb0cc64807798cd3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3656004365845845777
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +314,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7810328370443580990, guid: f7e79f34cf04d7c4f9a314cff88497a0, type: 3}
+  m_Sprite: {fileID: 2559823041087691283, guid: 3c10b82be9005154b9add047946a1126, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
