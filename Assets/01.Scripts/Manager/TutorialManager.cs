@@ -237,6 +237,14 @@ public class TutorialManager : Singleton<TutorialManager>
     private void TryStartTutorial()
     {
         if (_isShowing) return;
+
+        // 튜토리얼 시작 시 기존 진행 정보를 초기화하여
+        // 튜토리얼 보상(스테이지 0 해금) 동작이 일관되게 동작하도록 함
+        if (ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.ClearAllProgress();
+        }
+
         _isShowing = true;
         StartCoroutine(TutorialSequenceRoutine());
     }
@@ -262,6 +270,8 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             _postPanel.SetActive(true);
         }
+
+        EventBus.Instance?.Publish(new TutorialCompletedEvent { RewardStageIndex = 0 });
     }
 
     private IEnumerator ShowDialogRoutine(TutorialStep step)

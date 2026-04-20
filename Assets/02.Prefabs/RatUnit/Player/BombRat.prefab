@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4331743997008145003}
   - component: {fileID: 5503263500117318811}
   - component: {fileID: 4217286610560266333}
-  - component: {fileID: 6495656712612192629}
   - component: {fileID: 7565554077847821101}
   - component: {fileID: 1876355847648641555}
   m_Layer: 0
@@ -136,7 +135,7 @@ MonoBehaviour:
   _useAutoAttack: 1
   _attackPerformerComponent: {fileID: 0}
   _arcAttackPerformerComponent: {fileID: 4217286610560266333}
-  _directAttackPerformerComponent: {fileID: 6495656712612192629}
+  _directAttackPerformerComponent: {fileID: 0}
   anim: {fileID: 1876355847648641555}
 --- !u!114 &5503263500117318811
 MonoBehaviour:
@@ -167,21 +166,6 @@ MonoBehaviour:
   _spawnPoint: {fileID: 3887884342779039399}
   _arcHeight: 2.5
   _travelTime: 0.6
---- !u!114 &6495656712612192629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7555f3c3033b342b7f78db18dd1db9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BombDirectAttackPerformer
-  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
-  _spawnPoint: {fileID: 3887884342779039399}
-  _travelTime: 0.35
 --- !u!61 &7565554077847821101
 BoxCollider2D:
   m_ObjectHideFlags: 0

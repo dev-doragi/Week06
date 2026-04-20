@@ -2038,6 +2038,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.00022315979
       objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 230.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 135.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325474427074284081, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -146.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601783023475821322, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5601783023475821322, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5637866789007754591, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -2077,6 +2109,30 @@ PrefabInstance:
     - target: {fileID: 5901519671066707640, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_Viewport
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 108.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 74.005005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136641763307278220, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -29.8
       objectReference: {fileID: 0}
     - target: {fileID: 6153597109529488230, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2209,6 +2265,30 @@ PrefabInstance:
     - target: {fileID: 8633438913320725994, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 21.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 30.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8804439956986696002, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -262.59998
       objectReference: {fileID: 0}
     - target: {fileID: 8886875131526447831, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_IsActive
@@ -2657,7 +2737,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 884370198}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectPart
+        m_MethodName: SelectPartTemp
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2746,7 +2826,7 @@ MonoBehaviour:
   _partRuntimeSpawner: {fileID: 606322906}
   _teamType: 1
   _partPrefabCatalog: {fileID: 11400000, guid: 5454b68abc720bf4cb40a67c5ab9e78d, type: 2}
-  supportRangeHighlightRoot: {fileID: 0}
+  supportRangeHighlightRoot: {fileID: 1096041577}
   supportRangeHighlightSprite: {fileID: 0}
   supportRangeHighlightColor: {r: 0.2, g: 0.6, b: 1, a: 0.2}
 --- !u!114 &884370199
@@ -2791,7 +2871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c523a8b5093226247bcb8a99ca46418a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlueprintExporter
-  board: {fileID: 0}
+  board: {fileID: 991634544}
   exportFileName: NewEnemyBlueprint
 --- !u!1 &952383451
 GameObject:
@@ -3015,7 +3095,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 884370198}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectPart
+        m_MethodName: SelectPartTemp
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3153,7 +3233,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 884370198}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectPart
+        m_MethodName: SelectPartTemp
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4381,7 +4461,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 884370198}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
-        m_MethodName: SelectPart
+        m_MethodName: SelectPartTemp
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
