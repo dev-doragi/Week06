@@ -54,6 +54,13 @@ public class PoolManager : Singleton<PoolManager>
 
         // 1. UI 여부 판별 및 타겟 루트 결정
         bool isUI = prefab.GetComponent<RectTransform>() != null;
+
+        if (isUI && _uiPoolRoot == null)
+        {
+            Debug.LogWarning($"[PoolManager] '{prefab.name}'은 UI 프리팹이지만 _uiPoolRoot가 설정되지 않았습니다. 풀링을 스킵합니다.");
+            return;
+        }
+
         Transform targetRoot = isUI ? _uiPoolRoot : _poolRoot;
 
         IObjectPool<GameObject> pool = new ObjectPool<GameObject>(

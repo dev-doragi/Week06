@@ -99,9 +99,27 @@ public class CameraManager : MonoBehaviour
     {
         if (_inputReader != null && _inputReader.IsPointerOverUI) return;
 
+        // direction: -1 = zoom in (smaller size), +1 = zoom out (larger size)
         float direction = e.Delta > 0 ? -1f : 1f;
         float nextZoom = _targetZoom + direction * _zoomStep;
 
+        // Detect whether user is zooming out (increasing orthographicSize)
+        bool isZoomingOut = direction > 0f;
+
+        // Will cross initial zoom this tick?
+        bool willCrossInitial =
+            (_targetZoom < _initialZoom && nextZoom >= _initialZoom) ||
+            (_targetZoom > _initialZoom && nextZoom <= _initialZoom);
+
+        // If zooming out and we will cross the initial zoom, snap to initial once
+        if (isZoomingOut && willCrossInitial && Mathf.Abs(_targetZoom - _initialZoom) > 0.01f)
+        {
+            _targetZoom = _initialZoom;
+            ApplyZoomAtMousePosition(_targetZoom);
+            return;
+        }
+
+        // Existing behavior: handle crossing in other direction or normal clamping
         bool isCrossingInitial =
             (_targetZoom > _initialZoom && nextZoom < _initialZoom) ||
             (_targetZoom < _initialZoom && nextZoom > _initialZoom);

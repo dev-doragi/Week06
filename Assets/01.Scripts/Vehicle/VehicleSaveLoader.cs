@@ -17,7 +17,6 @@ public class VehicleSaveLoader : MonoBehaviour
     {
         if (EventBus.Instance != null)
         {
-            EventBus.Instance.Subscribe<StageClearedEvent>(OnStageCleared);
             EventBus.Instance.Subscribe<StageLoadedEvent>(OnStageLoaded);
         }
     }
@@ -26,17 +25,8 @@ public class VehicleSaveLoader : MonoBehaviour
     {
         if (EventBus.Instance != null)
         {
-            EventBus.Instance.Unsubscribe<StageClearedEvent>(OnStageCleared);
             EventBus.Instance.Unsubscribe<StageLoadedEvent>(OnStageLoaded);
         }
-    }
-
-    /// <summary>
-    /// [EventBus] 스테이지 클리어 시 차량 저장
-    /// </summary>
-    private void OnStageCleared(StageClearedEvent evt)
-    {
-        SaveCurrentVehicle(evt.StageIndex);
     }
 
     /// <summary>

@@ -19,6 +19,8 @@ public class StageManager : Singleton<StageManager>
     public StageDataSO CurrentStageData => _stageDatas[CurrentStageIndex];
     public StageLayout CurrentLayout => _currentLayout;
 
+    public bool IsFinalStage => _stageDatas != null && CurrentStageIndex >= _stageDatas.Length - 1;
+
     protected override void Init()
     {
         if (_stageParent == null)
@@ -88,6 +90,13 @@ public class StageManager : Singleton<StageManager>
         EventBus.Instance.Publish(new StageLoadedEvent { StageIndex = CurrentStageIndex });
 
         Debug.Log($"[StageManager] Stage {stageIndex} 로드 완료 (총 {CurrentStageData.Waves.Count}개 웨이브).");
+    }
+
+    // 스테이지 다시 로드 (스테이지만!)
+    public void ReloadCurrentStage()
+    {
+        VehicleCache.Clear();
+        LoadStage(CurrentStageIndex);
     }
 
     /// <summary>
