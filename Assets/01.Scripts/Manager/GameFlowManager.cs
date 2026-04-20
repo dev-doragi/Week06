@@ -44,7 +44,14 @@ public class GameFlowManager : Singleton<GameFlowManager>
     }
 
     private void OnStageLoaded(StageLoadedEvent evt) => ChangeFlowState(InGameState.Prepare);
-    private void OnWaveStarted(WaveStartedEvent evt) => ChangeFlowState(InGameState.WavePlaying);
+
+    private void OnWaveStarted(WaveStartedEvent evt)
+    {
+        // 튜토리얼 모드에서는 웨이브 시작 이벤트가 전역 흐름 상태를 변경하지 않도록 함
+        if (StageLoadContext.IsTutorial) return;
+        ChangeFlowState(InGameState.WavePlaying);
+    }
+
     private void OnEnemyDefeated(EnemyDefeatedEvent evt) => CheckWinLossCondition(false);
     private void OnBaseDestroyed(BaseDestroyedEvent evt) => CheckWinLossCondition(true);
 
@@ -123,6 +130,9 @@ public class GameFlowManager : Singleton<GameFlowManager>
 
     public void CheckWinLossCondition(bool isBaseDestroyed)
     {
+        // 튜토리얼 모드에서는 전역 흐름(웨이브 클리어/스테이지 실패)을 변경하지 않음
+        if (StageLoadContext.IsTutorial) return;
+
         if (CurrentInGameState != InGameState.WavePlaying) return;
 
         // 적이 하나뿐이므로, 어떤 이벤트가 먼저 들어오느냐에 따라 바로 승패 결정

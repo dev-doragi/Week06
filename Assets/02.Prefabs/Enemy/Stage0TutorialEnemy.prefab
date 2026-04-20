@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: blueprint
       value: 
       objectReference: {fileID: 11400000, guid: 63c3b2645e51ab84e821038ec85fb546, type: 2}
+    - target: {fileID: 3404230611424503028, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3404230611424503028, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
+      propertyPath: returnSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3903103754015817967, guid: 3f72732ef4a80fd48ae64209444d9f8c, type: 3}
       propertyPath: m_Name
       value: Stage0TutorialEnemy

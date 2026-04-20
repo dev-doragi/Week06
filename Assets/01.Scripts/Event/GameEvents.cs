@@ -80,12 +80,23 @@ public struct InGameStateChangedEvent { public InGameState NewState; }
 public struct EnemyDefeatedEvent { }
 
 /// <summary>
+/// 튜토리얼 전용: 적 처치 알림 (튜토리얼 흐름에서만 사용)
+/// 튜토리얼 중에는 일반 EnemyDefeatedEvent를 발행하지 않고 이 이벤트를 사용하세요.
+/// </summary>
+public struct TutorialEnemyDefeatedEvent { }
+
+/// <summary>
 /// 아군 기지 파괴 시 발행
 /// [발행 위치] GridBoard 또는 Base 스크립트 (타 파트 작업 필요)
 /// [구독자] GameFlowManager (패배 판정)
 /// [사용법] EventBus.Instance.Publish(new BaseDestroyedEvent());
 /// </summary>
 public struct BaseDestroyedEvent { }
+
+/// <summary>
+/// 튜토리얼 전용: 기지 파괴 알림 (튜토리얼 내부 처리용)
+/// </summary>
+public struct TutorialBaseDestroyedEvent { }
 
 // ============================================================================
 // [오디오 및 이펙트 출력 이벤트]
