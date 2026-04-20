@@ -14,8 +14,6 @@ public class PartCell : MonoBehaviour
         Owner = transform.parent.GetComponentInChildren<RatController>();
         if (Owner == null)
             return;
-        Debug.Log(Owner.gameObject.name);
-        Debug.Log(Owner.PartData.CollisionPower);
         Owner.ApplyDirectDamage(Owner.PartData.CollisionPower);
     }
 }

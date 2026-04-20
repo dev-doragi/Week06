@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public enum BombProjectileMoveType
@@ -10,7 +10,8 @@ public enum BombProjectileMoveType
 public class BombProjectile : ProjectileBase
 {
     [SerializeField] private bool _explodeOnTriggerEnter = true;
-
+    [SerializeField] GameObject _bullet;
+    [SerializeField] int _bulletCount;
     private RatController _attacker;
     private RatController _primaryTarget;
     private RatController _impactTarget;
@@ -149,6 +150,10 @@ public class BombProjectile : ProjectileBase
         }
 
         // 주요 라인: ProjectileBase의 회수 로직을 사용한다.
+        for (int i = 0; i < _bulletCount; i++)
+        {
+            SpawnBullet(_bullet.name);
+        }
         Despawn();
     }
 

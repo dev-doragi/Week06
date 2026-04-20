@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum ItemTier
 {
@@ -16,6 +16,8 @@ public class ShopItemData : ScriptableObject
     public string displayName;
     public int partKey;
     public ShopItemCategory category;
+    [TextArea]
+    public string description;
     
 
     [Header("Economic Info")]
