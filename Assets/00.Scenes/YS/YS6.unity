@@ -639,7 +639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _currentMouseCount
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 545757215374449810, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1897,6 +1897,22 @@ PrefabInstance:
       propertyPath: _uiPoolRoot
       value: 
       objectReference: {fileID: 962719246}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[6].Prefab
+      value: 
+      objectReference: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[6].MaxSize
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
+      propertyPath: _globalPools.Array.data[6].InitialSize
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4034118272206485099, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

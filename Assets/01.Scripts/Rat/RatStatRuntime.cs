@@ -293,6 +293,6 @@ public class RatStatRuntime : MonoBehaviour
             return;
         }
 
-        _partData.IsValid();
+        //_partData.IsValid();
     }
 }

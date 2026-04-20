@@ -177,7 +177,7 @@ public class PlacedPart : SerializedMonoBehaviour
         }
 
         data = foundData;
-        data.IsValid();
+        //data.IsValid();
     }
 
     public void RebuildOccupiedCells()

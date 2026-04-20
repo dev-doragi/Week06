@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3899579562711796405}
   - component: {fileID: 2438022243780515580}
   - component: {fileID: 7809714235974383455}
+  - component: {fileID: 839064446560830136}
   m_Layer: 0
   m_Name: Altar
   m_TagString: Untagged
@@ -71,6 +72,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
   _placedPart: {fileID: 0}
   _teamType: 1
 --- !u!114 &7190570916434124814
@@ -105,6 +107,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +204,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775c7218befb87a49bbfc00acb4ad7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AltarConnector
+--- !u!114 &839064446560830136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370892442198955768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85840652b4e06b047918a00097fd9c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpellmapConnector
+  addCount: 9
 --- !u!1 &3656004365845845777
 GameObject:
   m_ObjectHideFlags: 0
