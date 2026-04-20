@@ -7,6 +7,7 @@ public class SceneLoader : Singleton<SceneLoader>
 {
     [Header("Scene Settings")]
     [SerializeField] private string _lobbySceneName = "01.LobbyScene";
+    [SerializeField] private string _tutorialSceneName = "02.TutorialScene";
     [SerializeField] private string _stageSelectSceneName = "03.StageSelectScene";
     [SerializeField] private string _inGameSceneName = "04.InGameScene";
 
@@ -23,6 +24,20 @@ public class SceneLoader : Singleton<SceneLoader>
     public void GoToStageSelect()
     {
         SceneManager.LoadScene(_stageSelectSceneName);
+    }
+
+    public void EnterTutorial()
+    {
+        // 튜토리얼 플래그 설정
+        StageLoadContext.SetStageTutorial();
+        SceneManager.LoadScene(_tutorialSceneName);
+    }
+
+    public void EnterInGameFromTutorial(int stageIndex)
+    {
+        // 튜토리얼에서 게임 진행
+        StageLoadContext.SetStageIndex(stageIndex);
+        SceneManager.LoadScene(_inGameSceneName);
     }
 
     public void EnterInGame(int stageIndex)

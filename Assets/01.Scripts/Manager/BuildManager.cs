@@ -146,6 +146,9 @@ public class BuildManager : MonoBehaviour
 
     public void TryPlaceCurrentPart()
     {
+        // 차단 상태일 때는 설치 불가
+        if (InputReader.Instance != null && InputReader.Instance.IsInputBlocked) return;
+
         if (currentPartData == null)
             return;
 
@@ -155,6 +158,10 @@ public class BuildManager : MonoBehaviour
 
     private bool PlacePartInternal(PartData partData, Vector2Int gridPos, int rotation)
     {
+        // 입력/튜토리얼 차단 상태가 걸려 있으면 설치 불가
+        if (InputReader.Instance != null && InputReader.Instance.IsInputBlocked)
+            return false;
+
         if (partData == null)
         {
             Debug.LogError($"{name}: PlacePartInternal 실패 - partData가 Null입니다.");
@@ -185,6 +192,9 @@ public class BuildManager : MonoBehaviour
         TrySpawnRuntimePrefab(partData, placedPart);
 
         ShowPlaceableCells();
+
+        EventBus.Instance.Publish(new PartPlacedEvent { PartKey = partData.Key, GridPos = gridPos }); // Jaein 추가
+
         return true;
     }
 
@@ -211,6 +221,9 @@ public class BuildManager : MonoBehaviour
 
     private void TryRemovePart()
     {
+        // 차단 상태일 때는 제거 불가
+        if (InputReader.Instance != null && InputReader.Instance.IsInputBlocked) return;
+
         Vector2Int gridPos = GetMouseGridPosition();
 
         if (!board.IsInside(gridPos)) return;

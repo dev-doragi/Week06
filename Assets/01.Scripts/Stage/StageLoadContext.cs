@@ -6,17 +6,28 @@
 public static class StageLoadContext
 {
     private static int _stageIndex = -1;
+    private static bool _isTutorial = false;
+
     public static bool HasValue => _stageIndex != -1;
+    public static bool IsTutorial => _isTutorial;
+
+    public static void SetStageTutorial()
+    {
+        _stageIndex = -1;
+        _isTutorial = true;
+    }
 
     public static void SetStageIndex(int index)
     {
         _stageIndex = index;
+        _isTutorial = false;
     }
 
     public static int GetStageIndex()
     {
         int value = HasValue ? _stageIndex : 0;
         _stageIndex = -1;
+        _isTutorial = false;
         return value;
     }
 }
