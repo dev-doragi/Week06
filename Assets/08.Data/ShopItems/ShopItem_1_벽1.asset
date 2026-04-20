@@ -15,6 +15,6 @@ MonoBehaviour:
   displayName: "\uBCBD1"
   partKey: 1
   category: 1
-  cost: 0
+  cost: 1
   tier: 0
   isLocked: 1

@@ -9,6 +9,10 @@ public class VehicleSaveLoader : MonoBehaviour
     [SerializeField] private GridRenderer _gridRenderer;
     [SerializeField] private Transform _placedPartsRoot;
 
+    [Header("Runtime Spawning")]
+    [SerializeField] private PartRuntimeSpawner _partRuntimeSpawner;
+    [SerializeField] private TeamType _teamType = TeamType.Player;
+
     private void OnEnable()
     {
         if (EventBus.Instance != null)
@@ -66,10 +70,21 @@ public class VehicleSaveLoader : MonoBehaviour
                 Origin = part.origin,
                 Rotation = part.rotation
             });
+
+            // RatStatRuntime HP 저장
+            RatStatRuntime ratStat = part.GetComponentInChildren<RatStatRuntime>();
+            if (ratStat != null)
+            {
+                VehicleCache.SavedRatStats[part.origin] = new RatStatSaveData
+                {
+                    Origin = part.origin,
+                    CurrentHp = ratStat.CurrentHp
+                };
+            }
         }
 
         VehicleCache.HasSavedData = VehicleCache.SavedParts.Count > 0;
-        Debug.Log($"Success: {VehicleCache.SavedParts.Count}개 캐싱 완료");
+        Debug.Log($"Success: {VehicleCache.SavedParts.Count}개 캐싱 완료 (HP 캐싱: {VehicleCache.SavedRatStats.Count}개)");
     }
 
     public void LoadSavedVehicle(int stageIndex)
@@ -78,6 +93,14 @@ public class VehicleSaveLoader : MonoBehaviour
         {
             Debug.Log("Skip: 복구할 데이터 없음");
             return;
+        }
+
+        // PartRuntimeSpawner 자동 탐색 (인스펙터 미연결 대비)
+        if (_partRuntimeSpawner == null)
+        {
+            _partRuntimeSpawner = FindAnyObjectByType<PartRuntimeSpawner>();
+            if (_partRuntimeSpawner == null)
+                Debug.LogError("[VehicleSaveLoader] PartRuntimeSpawner를 씬에서 찾을 수 없습니다. 쥐 프리팹이 생성되지 않습니다.");
         }
 
         Debug.Log($"[Vehicle] Stage {stageIndex} 복구 시작");
@@ -94,6 +117,7 @@ public class VehicleSaveLoader : MonoBehaviour
             // 오브젝트 생성 및 초기화
             GameObject partObj = new GameObject($"Placed_{data.PartName}");
             partObj.transform.SetParent(_placedPartsRoot);
+            partObj.transform.position = _gridRenderer.GridToWorld(savedData.Origin);
             PlacedPart placedPart = partObj.AddComponent<PlacedPart>();
 
             // 보드 데이터 등록
@@ -107,6 +131,26 @@ public class VehicleSaveLoader : MonoBehaviour
 
             // 비주얼 생성
             placedPart.BuildVisual(_gridRenderer, placedPart.transform, Color.white);
+
+            // 런타임 프리팹 생성 (쥐 스프라이트/컴포넌트 포함)
+            if (_partRuntimeSpawner != null)
+            {
+                _partRuntimeSpawner.SpawnRuntime(data, placedPart, _teamType, _board);
+            }
+
+            // RatStatRuntime HP 복구
+            RatStatRuntime ratStat = placedPart.GetComponentInChildren<RatStatRuntime>();
+            if (ratStat != null && VehicleCache.TryGetRatStat(savedData.Origin, out RatStatSaveData statData))
+            {
+                ratStat.InitializeStat();
+                float damage = ratStat.MaxHp - statData.CurrentHp;
+                if (damage > 0f)
+                {
+                    ratStat.ApplyDirectDamage(damage);
+                }
+                Debug.Log($"[RatStat] {data.PartName} HP 복구: {statData.CurrentHp}/{ratStat.MaxHp}");
+            }
+
             count++;
         }
 
@@ -160,13 +204,8 @@ public class VehicleSaveLoader : MonoBehaviour
 
             if (StageManager.Instance != null)
             {
-                // 1. 현재 스테이지 인덱스 기억
                 int currentIndex = StageManager.Instance.CurrentStageIndex;
-
-                // 2. 현재 스테이지 제거 (이 내부에서 OnStageCleared가 호출되어 자동 저장됨)
                 StageManager.Instance.ClearCurrentStage();
-
-                // 3. 동일한 스테이지 다시 로드 (이 내부에서 OnStageLoaded가 호출되어 자동 복구됨)
                 StageManager.Instance.LoadStage(currentIndex);
 
                 Debug.Log("<color=cyan>[Test] 스테이지 전환 및 병기 복구 완료</color>");
