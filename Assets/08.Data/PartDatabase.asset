@@ -802,7 +802,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 5
     - Name: SupportRangeRadius
       Entry: 3
       Data: 1
@@ -912,7 +912,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 15
     - Name: SupportRangeRadius
       Entry: 3
       Data: 2
@@ -1096,7 +1096,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 40
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -1218,7 +1218,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 80
+      Data: 150
     - Name: Icon
       Entry: 6
       Data: 
@@ -1352,7 +1352,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 150
+      Data: 300
     - Name: Icon
       Entry: 6
       Data: 
@@ -2153,7 +2153,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 5
     - Name: SupportRangeRadius
       Entry: 3
       Data: 1
@@ -2262,7 +2262,7 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 10
+      Data: 15
     - Name: SupportRangeRadius
       Entry: 3
       Data: 2

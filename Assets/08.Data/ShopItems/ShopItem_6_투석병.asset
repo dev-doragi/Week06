@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: "\uD22C\uC11D\uBCD1"
   partKey: 6
   category: 0
-  cost: 4
+  description: 
+  cost: 50
   tier: 0
   isLocked: 1

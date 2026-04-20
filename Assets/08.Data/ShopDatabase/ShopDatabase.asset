@@ -23,7 +23,10 @@ MonoBehaviour:
   buildItems:
   - {fileID: 11400000, guid: fa27277f2b027274c9477e82bd3da1b2, type: 2}
   - {fileID: 11400000, guid: b47438a1af31d6e489460b3993e94edf, type: 2}
+  - {fileID: 11400000, guid: 62b46cab740f2254590e201d3f2d954e, type: 2}
+  - {fileID: 11400000, guid: 6497146fe05901a40b31d7185885b254, type: 2}
+  - {fileID: 11400000, guid: bf199bd9b1b70c4428096b359896e82b, type: 2}
   - {fileID: 11400000, guid: 10a32a92682693448aa995c3279ede27, type: 2}
   supportItems:
-  - {fileID: 11400000, guid: a991a154ad94b384c9306fbd87eb4ffe, type: 2}
+  - {fileID: 11400000, guid: f2ac534f915ab674a87c600eb6344e48, type: 2}
   - {fileID: 11400000, guid: affd58c2641ba8043ae0c0349f239c83, type: 2}

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6002609364542591854}
   - component: {fileID: 7190570916434124814}
   - component: {fileID: 5503263500117318811}
-  - component: {fileID: 9029515404691480970}
   m_Layer: 0
   m_Name: EnemyWheel
   m_TagString: Untagged
@@ -115,18 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RatStatModifierRuntime
   _useAutoRecalculate: 1
---- !u!114 &9029515404691480970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3702fbea196eefa4fbc61757299492f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatCollisionHandler
 --- !u!1 &3656004365845845777
 GameObject:
   m_ObjectHideFlags: 0
