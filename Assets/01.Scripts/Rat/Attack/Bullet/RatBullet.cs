@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class RatBullet : MonoBehaviour
 {
-    public string name;
-
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Sprite _alive;
