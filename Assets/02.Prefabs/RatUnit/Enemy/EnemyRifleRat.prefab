@@ -71,6 +71,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
   _placedPart: {fileID: 0}
   _teamType: 1
 --- !u!114 &7190570916434124814
@@ -105,6 +106,7 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
+    Description: 
 --- !u!114 &708847909670867676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9724a4f459a3204da49de698c8c0796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RifleDirectAttackPerformer
-  _bulletPoolName: RifleBullet
+  _bulletPoolName: EnemyBomb
   _spawnPoint: {fileID: 3887884342779039399}
   _travelTime: 0.2
 --- !u!61 &7889095822756387493
@@ -290,7 +292,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7810328370443580990, guid: f7e79f34cf04d7c4f9a314cff88497a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fcb4b7ab413ff2f408c382b449f1fdd9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
