@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 617657012964432329}
   - component: {fileID: 6573814761933286817}
-  - component: {fileID: -7708694676424458868}
   - component: {fileID: 4596549371046596757}
   - component: {fileID: 7406544543650734979}
-  m_Layer: 16
-  m_Name: RatBullet
+  m_Layer: 17
+  m_Name: DropRat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,24 +61,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-7708694676424458868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3864161175262882670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db1d2fc0debaba4ba03260da591ab42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatBullet
-  name: RatBullet
-  rigid: {fileID: 6573814761933286817}
-  sr: {fileID: 4596549371046596757}
-  _alive: {fileID: 21300000, guid: 9d473c58fcd3ae043b98c91829e4767d, type: 3}
-  _dead: {fileID: 21300000, guid: ad2cc3f13557c0d4b9643a1aad2c1df3, type: 3}
-  _knockBackPower: 3
 --- !u!212 &4596549371046596757
 SpriteRenderer:
   serializedVersion: 2
