@@ -377,7 +377,10 @@ public class RatController : MonoBehaviour, IPartRuntimeBindable
             EventBus.Instance.Publish(new BaseDestroyedEvent());
         if(_partData.BuildingType == BuildingType.EnemyCore)
         {
-            PlacementManager.Instance.AddMouseCount(100);
+            for (int i = 0; i < 50; i++)
+            {
+                GameObject spawned = PoolManager.Instance.Spawn("DropRat", transform.position, Quaternion.identity);
+            }
             EventBus.Instance.Publish(new EnemyDefeatedEvent());
         }
     }
