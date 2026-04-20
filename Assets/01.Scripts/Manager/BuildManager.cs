@@ -21,7 +21,6 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private TeamType _teamType = TeamType.Player;
 
     [SerializeField] private PartPrefabCatalog _partPrefabCatalog;
-    [SerializeField] private bool _spawnRuntimePrefab = true;
 
     [SerializeField] private Transform supportRangeHighlightRoot;
     [SerializeField] private Sprite supportRangeHighlightSprite;
@@ -34,6 +33,7 @@ public class BuildManager : MonoBehaviour
     private PartData currentPartData;
     private int currentRotation;
     private PlacedPart ghostPart;
+    private Sprite _ghostSprite;
 
     private bool haveMouse;
 
@@ -88,7 +88,7 @@ public class BuildManager : MonoBehaviour
             ClearPlaceableHighlights();
             return;
         }
-
+        _ghostSprite = _partRuntimeSpawner.RatImage(key);
         haveMouse = true;
         currentRotation = 0;
 
@@ -108,7 +108,7 @@ public class BuildManager : MonoBehaviour
 
         GameObject ghostObj = new GameObject("GhostPart");
         ghostObj.transform.SetParent(ghostRoot);
-
+        
         ghostPart = ghostObj.AddComponent<PlacedPart>();
     }
 
@@ -136,11 +136,10 @@ public class BuildManager : MonoBehaviour
         List<Vector2Int> targetCells = board.GetRotatedCells(currentPartData, gridPos, currentRotation);
 
         ghostPart.Initialize(currentPartData, gridPos, currentRotation, targetCells);
-        ghostPart.BuildVisual(gridRenderer, ghostPart.transform, new Color(1f, 1f, 1f, 0.45f), true);
-
+        ghostPart.BuildVisual(gridRenderer, ghostPart.transform, new Color(1f, 1f, 1f, 0.45f), true, _ghostSprite);
+        
         bool canPlace = board.CanPlacePartByRules(currentPartData, gridPos, currentRotation);
         ghostPart.SetColor(canPlace ? new Color(0f, 1f, 0f, 0.45f) : new Color(1f, 0f, 0f, 0.45f));
-
         UpdateSupportRangePreview();
     }
 

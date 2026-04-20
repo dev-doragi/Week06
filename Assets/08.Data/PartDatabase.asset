@@ -34,7 +34,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 16
+      Data: 20
     - Name: 
       Entry: 7
       Data: 
@@ -331,7 +331,7 @@ MonoBehaviour:
       Data: 4
     - Name: PartName
       Entry: 1
-      Data: "\uD3ED\uD0C4\uBCD1"
+      Data: "\uC18C\uCD1D\uBCD1"
     - Name: PartCategory
       Entry: 3
       Data: 1
@@ -380,22 +380,22 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 3
     - Name: AttackSpeed
       Entry: 4
       Data: 2
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: AttackDistance
       Entry: 4
-      Data: 3
+      Data: 5
     - Name: TrajectoryType
       Entry: 3
       Data: 1
     - Name: PenetrationRate
       Entry: 4
-      Data: 0
+      Data: 0.5
     - Name: CollisionPower
       Entry: 4
       Data: 10
@@ -462,7 +462,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 100
+      Data: 90
     - Name: DefenseRate
       Entry: 4
       Data: 0.1
@@ -474,16 +474,16 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 3
     - Name: AttackSpeed
       Entry: 4
       Data: 2
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: AttackDistance
       Entry: 4
-      Data: 3
+      Data: 4
     - Name: TrajectoryType
       Entry: 3
       Data: 2
@@ -519,6 +519,100 @@ MonoBehaviour:
       Data: 6
     - Name: PartName
       Entry: 1
+      Data: "\uD22C\uC11D\uBCD1"
+    - Name: PartCategory
+      Entry: 3
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
+    - Name: BuildingType
+      Entry: 3
+      Data: 0
+    - Name: Shape
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Hp
+      Entry: 4
+      Data: 150
+    - Name: DefenseRate
+      Entry: 4
+      Data: 0.2
+    - Name: Cost
+      Entry: 3
+      Data: 4
+    - Name: Icon
+      Entry: 6
+      Data: 
+    - Name: AttackDamage
+      Entry: 4
+      Data: 15
+    - Name: AttackSpeed
+      Entry: 4
+      Data: 0.4
+    - Name: AttackRangeRadius
+      Entry: 3
+      Data: 2
+    - Name: AttackDistance
+      Entry: 4
+      Data: 8
+    - Name: TrajectoryType
+      Entry: 3
+      Data: 2
+    - Name: PenetrationRate
+      Entry: 4
+      Data: 0
+    - Name: CollisionPower
+      Entry: 4
+      Data: 10
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 14|PartData, Assembly-CSharp
+    - Name: Key
+      Entry: 3
+      Data: 7
+    - Name: PartName
+      Entry: 1
       Data: "\uCC45\uC950"
     - Name: PartCategory
       Entry: 3
@@ -531,7 +625,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 15|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -586,13 +680,13 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2
+      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:10
     - Name: 
       Entry: 8
       Data: 
@@ -604,13 +698,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 7
+      Data: 8
     - Name: $v
       Entry: 7
-      Data: 14|PartData, Assembly-CSharp
+      Data: 16|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 7
+      Data: 8
     - Name: PartName
       Entry: 1
       Data: "\uC131\uC951\uC790"
@@ -625,7 +719,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 17|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -680,13 +774,13 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 1
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Defense:Hp:Flat:30
+      Data: Defense:DefenseRate:Precent:2
     - Name: 
       Entry: 8
       Data: 
@@ -698,13 +792,13 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: $v
       Entry: 7
-      Data: 16|PartData, Assembly-CSharp
+      Data: 18|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 8
+      Data: 9
     - Name: PartName
       Entry: 1
       Data: "\uC81C\uB2E8"
@@ -713,13 +807,13 @@ MonoBehaviour:
       Data: 2
     - Name: UnitRoleType
       Entry: 3
-      Data: 3
+      Data: 0
     - Name: BuildingType
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: Shape
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 19|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -774,13 +868,107 @@ MonoBehaviour:
       Data: 0
     - Name: CollisionPower
       Entry: 4
-      Data: 0
+      Data: 10
     - Name: SupportRangeRadius
       Entry: 3
       Data: 2
     - Name: SupportEffectsRaw
       Entry: 1
-      Data: Attack:AttackDamage:Percent:0.2
+      Data: Attack:AttackDamage:Percent:0.2|Attack:AttackSpeed:Flat:10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: 20|PartData, Assembly-CSharp
+    - Name: Key
+      Entry: 3
+      Data: 10
+    - Name: PartName
+      Entry: 1
+      Data: "\uC0DD\uC0B0\uC2DC\uC124Lv1"
+    - Name: PartCategory
+      Entry: 3
+      Data: 2
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 0
+    - Name: BuildingType
+      Entry: 3
+      Data: 3
+    - Name: Shape
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Hp
+      Entry: 4
+      Data: 100
+    - Name: DefenseRate
+      Entry: 4
+      Data: 0.1
+    - Name: Cost
+      Entry: 3
+      Data: 4
+    - Name: Icon
+      Entry: 6
+      Data: 
+    - Name: AttackDamage
+      Entry: 4
+      Data: 0
+    - Name: AttackSpeed
+      Entry: 4
+      Data: 0
+    - Name: AttackRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: AttackDistance
+      Entry: 4
+      Data: 0
+    - Name: TrajectoryType
+      Entry: 3
+      Data: 0
+    - Name: PenetrationRate
+      Entry: 4
+      Data: 0
+    - Name: CollisionPower
+      Entry: 4
+      Data: 10
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -795,7 +983,7 @@ MonoBehaviour:
       Data: 101
     - Name: $v
       Entry: 7
-      Data: 18|PartData, Assembly-CSharp
+      Data: 22|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 101
@@ -813,7 +1001,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 19|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 23|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -889,7 +1077,7 @@ MonoBehaviour:
       Data: 102
     - Name: $v
       Entry: 7
-      Data: 20|PartData, Assembly-CSharp
+      Data: 24|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 102
@@ -907,7 +1095,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 21|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 25|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -983,7 +1171,7 @@ MonoBehaviour:
       Data: 103
     - Name: $v
       Entry: 7
-      Data: 22|PartData, Assembly-CSharp
+      Data: 26|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 103
@@ -1001,7 +1189,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 23|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 27|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1077,13 +1265,13 @@ MonoBehaviour:
       Data: 104
     - Name: $v
       Entry: 7
-      Data: 24|PartData, Assembly-CSharp
+      Data: 28|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
       Data: 104
     - Name: PartName
       Entry: 1
-      Data: "\uC801\uD3ED\uD0C4\uBCD1"
+      Data: "\uC18C\uCD1D\uBCD1"
     - Name: PartCategory
       Entry: 3
       Data: 1
@@ -1095,7 +1283,7 @@ MonoBehaviour:
       Data: 0
     - Name: Shape
       Entry: 7
-      Data: 25|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 29|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1132,19 +1320,113 @@ MonoBehaviour:
       Data: 
     - Name: AttackDamage
       Entry: 4
-      Data: 10
+      Data: 3
     - Name: AttackSpeed
       Entry: 4
       Data: 2
     - Name: AttackRangeRadius
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: AttackDistance
       Entry: 4
-      Data: 3
+      Data: 5
     - Name: TrajectoryType
       Entry: 3
       Data: 1
+    - Name: PenetrationRate
+      Entry: 4
+      Data: 0.5
+    - Name: CollisionPower
+      Entry: 4
+      Data: 10
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 105
+    - Name: $v
+      Entry: 7
+      Data: 30|PartData, Assembly-CSharp
+    - Name: Key
+      Entry: 3
+      Data: 105
+    - Name: PartName
+      Entry: 1
+      Data: "\uD3ED\uD0C4\uBCD1"
+    - Name: PartCategory
+      Entry: 3
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
+    - Name: BuildingType
+      Entry: 3
+      Data: 0
+    - Name: Shape
+      Entry: 7
+      Data: 31|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Hp
+      Entry: 4
+      Data: 90
+    - Name: DefenseRate
+      Entry: 4
+      Data: 0.1
+    - Name: Cost
+      Entry: 3
+      Data: 2
+    - Name: Icon
+      Entry: 6
+      Data: 
+    - Name: AttackDamage
+      Entry: 4
+      Data: 3
+    - Name: AttackSpeed
+      Entry: 4
+      Data: 2
+    - Name: AttackRangeRadius
+      Entry: 3
+      Data: 1
+    - Name: AttackDistance
+      Entry: 4
+      Data: 4
+    - Name: TrajectoryType
+      Entry: 3
+      Data: 2
     - Name: PenetrationRate
       Entry: 4
       Data: 0
@@ -1168,16 +1450,110 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 20001
+      Data: 106
     - Name: $v
       Entry: 7
-      Data: 26|PartData, Assembly-CSharp
+      Data: 32|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 20001
+      Data: 106
     - Name: PartName
       Entry: 1
-      Data: "\uC801\uBC14\uD034"
+      Data: "\uD22C\uC11D\uBCD1"
+    - Name: PartCategory
+      Entry: 3
+      Data: 1
+    - Name: UnitRoleType
+      Entry: 3
+      Data: 1
+    - Name: BuildingType
+      Entry: 3
+      Data: 0
+    - Name: Shape
+      Entry: 7
+      Data: 33|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Hp
+      Entry: 4
+      Data: 150
+    - Name: DefenseRate
+      Entry: 4
+      Data: 0.2
+    - Name: Cost
+      Entry: 3
+      Data: 4
+    - Name: Icon
+      Entry: 6
+      Data: 
+    - Name: AttackDamage
+      Entry: 4
+      Data: 15
+    - Name: AttackSpeed
+      Entry: 4
+      Data: 0.4
+    - Name: AttackRangeRadius
+      Entry: 3
+      Data: 2
+    - Name: AttackDistance
+      Entry: 4
+      Data: 8
+    - Name: TrajectoryType
+      Entry: 3
+      Data: 2
+    - Name: PenetrationRate
+      Entry: 4
+      Data: 0
+    - Name: CollisionPower
+      Entry: 4
+      Data: 10
+    - Name: SupportRangeRadius
+      Entry: 3
+      Data: 0
+    - Name: SupportEffectsRaw
+      Entry: 1
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10001
+    - Name: $v
+      Entry: 7
+      Data: 34|PartData, Assembly-CSharp
+    - Name: Key
+      Entry: 3
+      Data: 10001
+    - Name: PartName
+      Entry: 1
+      Data: "\uBC14\uD034"
     - Name: PartCategory
       Entry: 3
       Data: 2
@@ -1189,7 +1565,7 @@ MonoBehaviour:
       Data: 1
     - Name: Shape
       Entry: 7
-      Data: 27|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 35|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1262,16 +1638,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 20002
+      Data: 10002
     - Name: $v
       Entry: 7
-      Data: 28|PartData, Assembly-CSharp
+      Data: 36|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 20002
+      Data: 10002
     - Name: PartName
       Entry: 1
-      Data: "\uC801 \uCF54\uC5B4"
+      Data: "\uCF54\uC5B4"
     - Name: PartCategory
       Entry: 3
       Data: 2
@@ -1280,10 +1656,10 @@ MonoBehaviour:
       Data: 0
     - Name: BuildingType
       Entry: 3
-      Data: 5
+      Data: 2
     - Name: Shape
       Entry: 7
-      Data: 29|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 37|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1368,16 +1744,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 10001
+      Data: 20001
     - Name: $v
       Entry: 7
-      Data: 30|PartData, Assembly-CSharp
+      Data: 38|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 10001
+      Data: 20001
     - Name: PartName
       Entry: 1
-      Data: "\uBC14\uD034"
+      Data: "\uC801\uBC14\uD034"
     - Name: PartCategory
       Entry: 3
       Data: 2
@@ -1389,7 +1765,7 @@ MonoBehaviour:
       Data: 1
     - Name: Shape
       Entry: 7
-      Data: 31|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 39|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12
@@ -1462,16 +1838,16 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 10002
+      Data: 20002
     - Name: $v
       Entry: 7
-      Data: 32|PartData, Assembly-CSharp
+      Data: 40|PartData, Assembly-CSharp
     - Name: Key
       Entry: 3
-      Data: 10002
+      Data: 20002
     - Name: PartName
       Entry: 1
-      Data: "\uCF54\uC5B4"
+      Data: "\uC801 \uCF54\uC5B4"
     - Name: PartCategory
       Entry: 3
       Data: 2
@@ -1480,10 +1856,10 @@ MonoBehaviour:
       Data: 0
     - Name: BuildingType
       Entry: 3
-      Data: 2
+      Data: 5
     - Name: Shape
       Entry: 7
-      Data: 33|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
+      Data: 41|System.Collections.Generic.List`1[[UnityEngine.Vector2Int, UnityEngine.CoreModule]],
         mscorlib
     - Name: 
       Entry: 12

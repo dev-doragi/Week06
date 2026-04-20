@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a644091615131e3409a2355cedc82ada, type: 3}
-  m_Name: "ShopItem_4_\uD3ED\uD0C4\uBCD1"
+  m_Name: "ShopItem_9_\uC81C\uB2E8"
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
-  displayName: "\uD3ED\uD0C4\uBCD1"
-  partKey: 4
-  category: 0
-  cost: 2
+  displayName: "\uC81C\uB2E8"
+  partKey: 9
+  category: 3
+  cost: 5
   tier: 0
   isLocked: 1
