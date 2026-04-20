@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5503263500117318811}
   - component: {fileID: 9029515404691480970}
   - component: {fileID: 3899579562711796405}
-  - component: {fileID: 1413420527097615588}
   - component: {fileID: 2438022243780515580}
+  - component: {fileID: 7809714235974383455}
   m_Layer: 0
   m_Name: Altar
   m_TagString: Untagged
@@ -143,19 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RatSupportHandler
   _useAutoSupport: 1
---- !u!114 &1413420527097615588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85840652b4e06b047918a00097fd9c3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpellmapConnector
-  addCount: 1
 --- !u!61 &2438022243780515580
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -202,6 +189,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7809714235974383455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370892442198955768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775c7218befb87a49bbfc00acb4ad7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AltarConnector
 --- !u!1 &3656004365845845777
 GameObject:
   m_ObjectHideFlags: 0

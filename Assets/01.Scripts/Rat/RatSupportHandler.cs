@@ -58,6 +58,11 @@ public class RatSupportHandler : MonoBehaviour
             return false;
         }
 
+        if (!IsAltarSupportAvailable())
+        {
+            return false;
+        }
+
         if (_ratController.RatStatRuntime == null)
         {
             Debug.LogError($"{name}: CanProvideSupport 실패 - RatStatRuntime이 없습니다.");
@@ -89,6 +94,39 @@ public class RatSupportHandler : MonoBehaviour
         }
 
         return _ratController.TryGetSupportStat(out supportStat);
+    }
+
+    private bool IsAltarSupportAvailable()
+    {
+        if (_ratController == null)
+        {
+            return false;
+        }
+
+        if (!_ratController.IsBuilding())
+        {
+            return true;
+        }
+
+        PartData partData = _ratController.PartData;
+        if (partData == null)
+        {
+            return false;
+        }
+
+        if (!partData.IsAltar)
+        {
+            return true;
+        }
+
+        AltarConnector altarConnector = GetComponent<AltarConnector>();
+        if (altarConnector == null)
+        {
+            Debug.LogWarning($"{name}: 제단인데 AltarConnector가 없습니다.");
+            return false;
+        }
+
+        return altarConnector.IsAltarActive;
     }
 
     public bool CanSupportTarget(RatController target)
