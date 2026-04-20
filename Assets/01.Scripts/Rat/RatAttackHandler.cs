@@ -200,13 +200,11 @@ public class RatAttackHandler : MonoBehaviour
         if(_ratController.TeamType == TeamType.Player)
         {
             if (!IsTargetInAttackDistance(target, attackStat.AttackDistance))
-            {
                 return false;
-            }
+            if (!PlacementManager.Instance.SubtractMouseCount(1))
+                return false;
         }
-
-        if (!PlacementManager.Instance.SubtractMouseCount(1))
-            return false;
+        
 
         bool launched = attackPerformer.TryPerformAttack(_ratController, target);
         if (!launched)

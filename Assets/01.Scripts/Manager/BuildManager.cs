@@ -254,6 +254,7 @@ public class BuildManager : MonoBehaviour
             targetBoard.RemovePart(part);
             part.DestroyAnim();
         }
+        ShowPlaceableCells();
     }
 
     private void ClearSelection()
