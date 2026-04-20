@@ -126,7 +126,7 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if(e.PartKey == 10001 && e.PartKey == _itemData.partKey)
         {
-            _itemData.cost *= 2;
+            _itemData.cost += 50;
             RefreshUI();
         }
 

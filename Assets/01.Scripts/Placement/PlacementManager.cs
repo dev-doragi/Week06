@@ -46,6 +46,8 @@ public class PlacementManager : Singleton<PlacementManager>
     private float _mouseDrainTimer;
     private bool _altarSupportEnabled = true;
 
+    private bool _isWavePlaying;
+
     public int SpellMapCount => _spellmapCount;
     public bool IsAltarSupportEnabled => _altarSupportEnabled;
     public int TotalAltarMouseDrainPerSecond => _altarCount * _alterMouseCostPerSecond;
@@ -85,10 +87,19 @@ public class PlacementManager : Singleton<PlacementManager>
 
     private void Update()
     {
-        if(_generatorCount > 0)
+        if (_isWavePlaying && _generatorCount > 0)
         {
             HandleAdding();
         }
+        else
+        {
+            _addGaugeProgress = 0f;
+            if (_addGauge != null)
+            {
+                _addGauge.value = 0f;
+            }
+        }
+
         usedMouse = _spellmapCount + subPerSpell;
         if (usedMouse > 0)
             HandleSubtracting();
@@ -147,6 +158,36 @@ public class PlacementManager : Singleton<PlacementManager>
         }
         // 3. Update Visuals LAST so the UI reflects the logic above immediately
         _subGauge.value = _subGaugeProgress;
+    }
+
+    private void OnEnable()
+    {
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Subscribe<InGameStateChangedEvent>(OnInGameStateChanged);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (EventBus.Instance != null)
+        {
+            EventBus.Instance.Unsubscribe<InGameStateChangedEvent>(OnInGameStateChanged);
+        }
+    }
+
+    private void OnInGameStateChanged(InGameStateChangedEvent evt)
+    {
+        _isWavePlaying = evt.NewState == InGameState.WavePlaying;
+
+        if (!_isWavePlaying)
+        {
+            _addGaugeProgress = 0f;
+            if (_addGauge != null)
+            {
+                _addGauge.value = 0f;
+            }
+        }
     }
 
     #region Generator Add / Subtract

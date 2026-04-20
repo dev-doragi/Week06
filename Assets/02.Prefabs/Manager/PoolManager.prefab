@@ -52,14 +52,17 @@ MonoBehaviour:
     InitialSize: 30
     MaxSize: 30
   - Prefab: {fileID: 3864161175262882670, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
-    InitialSize: 30
-    MaxSize: 100
+    InitialSize: 100
+    MaxSize: 200
   - Prefab: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
-    InitialSize: 30
-    MaxSize: 100
+    InitialSize: 200
+    MaxSize: 3000
   - Prefab: {fileID: 3864161175262882670, guid: fdce04cb37ab7244187fc77818c0bebf, type: 3}
-    InitialSize: 30
-    MaxSize: 100
+    InitialSize: 100
+    MaxSize: 200
   - Prefab: {fileID: 3864161175262882670, guid: 6fe515c846348534a951d3149217c65b, type: 3}
-    InitialSize: 50
-    MaxSize: 150
+    InitialSize: 100
+    MaxSize: 200
+  - Prefab: {fileID: 3864161175262882670, guid: 505fb045b62793b4fbe5a353aa61bc1a, type: 3}
+    InitialSize: 100
+    MaxSize: 200
