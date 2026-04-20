@@ -53,10 +53,12 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 
 [sourceFiles]
 Assets/01.Scripts/Build/
+ AltarConnector.cs
  GeneratorConnector.cs
  SpellMapConnector.cs
 Assets/01.Scripts/Enemy/
  BlueprintExporter.cs
+ DropRat.cs
  EnemyBlueprintSO.cs
  EnemyBuilder.cs
  EnemyMove.cs
@@ -67,21 +69,24 @@ Assets/01.Scripts/
   ManagerRegistry.cs
   Singleton.cs
  GridBuild/
-  BuildManager.cs
   GridBoard.cs
-  GridManager.cs
   GridRangeUtility.cs
   GridRenderer.cs
+  PartCell.cs
   Test/TestMouse.cs
  Manager/
+  BuildManager.cs
   CameraManager.cs
   GameFlowManager.cs
   GameManager.cs
+  GridManager.cs
   InputReader.cs
+  PauseManager.cs
   PoolManager.cs
   SceneLoader.cs
   SoundManager.cs
   StageManager.cs
+  TutorialManager.cs
  Part/PartData/Enum/
   AttackTrajectoryType.cs
   BuildingType.cs
@@ -122,7 +127,11 @@ Assets/01.Scripts/
    BombArcAttackPerformer.cs
    BombDirectAttackPerformer.cs
    BombProjectile.cs
+  Bullet/RatBullet.cs
   IAttackPerformer.cs
+  Rifle/
+   RifleBullet.cs
+   RifleDirectAttackPerformer.cs
  Rat/
   RatAttackHandler.cs
   RatCollisionHandler.cs
@@ -136,13 +145,17 @@ Assets/01.Scripts/
   PoolSetupData.cs
   StageDataSO.cs
   StageLayout.cs
+  StageLoadContext.cs
  Store/
   ButtonDataList.cs
+  DescriptionText.cs
   ShopButton.cs
   ShopDataBase.cs
   ShopItemData.cs
   StoreManager.cs
   UIManager.cs
+ Tutorial/TutorialSkipButton.cs
+ Utils/ReBuildUI.cs
  Vehicle/
   VehicleCache.cs
   VehicleSaveLoader.cs

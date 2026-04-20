@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e335d714721704c8f7be74eb04bc6f, type: 3}
+  m_Name: Stage1SecondEnemy_Blueprint
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBlueprintSO
+  blueprintName: Stage1SecondEnemy
+  placements:
+  - partKey: 20001
+    origin: {x: 2, y: 0}
+    rotation: 0
+  - partKey: 20001
+    origin: {x: 4, y: 0}
+    rotation: 0
+  - partKey: 20001
+    origin: {x: 5, y: 0}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 2, y: 1}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 3, y: 1}
+    rotation: 0
+  - partKey: 20002
+    origin: {x: 4, y: 1}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 2, y: 2}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 3, y: 2}
+    rotation: 0
+  - partKey: 104
+    origin: {x: 4, y: 2}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 5, y: 2}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 2, y: 3}
+    rotation: 0
+  - partKey: 104
+    origin: {x: 3, y: 3}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 4, y: 3}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 5, y: 3}
+    rotation: 0
+  - partKey: 101
+    origin: {x: 2, y: 4}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 3, y: 4}
+    rotation: 0
+  - partKey: 102
+    origin: {x: 4, y: 4}
+    rotation: 0

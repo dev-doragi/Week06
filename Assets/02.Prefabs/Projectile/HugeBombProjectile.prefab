@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 72424632588780625}
   - component: {fileID: 6573814761933286817}
   m_Layer: 0
-  m_Name: BombProjectile
+  m_Name: HugeBombProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.9219, y: -0.14145, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1663197027144848900}
@@ -49,8 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombProjectile
   _lifeTime: 5
   _explodeOnTriggerEnter: 1
-  _bullet: {fileID: 3864161175262882670, guid: b9df1ffe7765efd4d94363a9046aa802, type: 3}
-  _bulletCount: 0
 --- !u!58 &72424632588780625
 CircleCollider2D:
   m_ObjectHideFlags: 0

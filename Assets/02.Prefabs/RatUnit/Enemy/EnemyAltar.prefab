@@ -11,14 +11,13 @@ GameObject:
   - component: {fileID: 3887884342779039399}
   - component: {fileID: 6002609364542591854}
   - component: {fileID: 7190570916434124814}
-  - component: {fileID: 708847909670867676}
-  - component: {fileID: 4331743997008145003}
   - component: {fileID: 5503263500117318811}
-  - component: {fileID: 4217286610560266333}
-  - component: {fileID: 6495656712612192629}
-  - component: {fileID: 7565554077847821101}
+  - component: {fileID: 9029515404691480970}
+  - component: {fileID: 3899579562711796405}
+  - component: {fileID: 2438022243780515580}
+  - component: {fileID: 7809714235974383455}
   m_Layer: 0
-  m_Name: BombRat
+  m_Name: EnemyAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,35 +105,6 @@ MonoBehaviour:
     CollisionPower: 0
     SupportRangeRadius: 0
     SupportEffectsRaw: 
---- !u!114 &708847909670867676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f433b38daf3e8dc48b6cd4ab47d2d66e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatTargetFinder
---- !u!114 &4331743997008145003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370892442198955768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a9bd06450933a4a9cb47218fe7c8dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RatAttackHandler
-  _useAutoAttack: 1
-  _attackPerformerComponent: {fileID: 0}
-  _arcAttackPerformerComponent: {fileID: 4217286610560266333}
-  _directAttackPerformerComponent: {fileID: 6495656712612192629}
-  anim: {fileID: 7060826574197365913}
 --- !u!114 &5503263500117318811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RatStatModifierRuntime
   _useAutoRecalculate: 1
---- !u!114 &4217286610560266333
+--- !u!114 &9029515404691480970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,14 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 370892442198955768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94192004054344545b38516c90c5af25, type: 3}
+  m_Script: {fileID: 11500000, guid: 3702fbea196eefa4fbc61757299492f9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BombArcAttackPerformer
-  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
-  _spawnPoint: {fileID: 3887884342779039399}
-  _arcHeight: 2.5
-  _travelTime: 0.6
---- !u!114 &6495656712612192629
+  m_EditorClassIdentifier: Assembly-CSharp::RatCollisionHandler
+--- !u!114 &3899579562711796405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,13 +139,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 370892442198955768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7555f3c3033b342b7f78db18dd1db9, type: 3}
+  m_Script: {fileID: 11500000, guid: ac161fff3808fbc439bb6c85c19b4c0e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BombDirectAttackPerformer
-  _bombProjectilePrefab: {fileID: 5379687539267333834, guid: ca6203be8f46f3b4893ca78a116a03b4, type: 3}
-  _spawnPoint: {fileID: 3887884342779039399}
-  _travelTime: 0.35
---- !u!61 &7565554077847821101
+  m_EditorClassIdentifier: Assembly-CSharp::RatSupportHandler
+  _useAutoSupport: 1
+--- !u!61 &2438022243780515580
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,6 +189,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7809714235974383455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370892442198955768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775c7218befb87a49bbfc00acb4ad7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AltarConnector
 --- !u!1 &3656004365845845777
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4571249116488789809}
   - component: {fileID: 5705709815536790131}
-  - component: {fileID: 7060826574197365913}
+  - component: {fileID: 830606800655966558}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -307,7 +283,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -7810328370443580990, guid: f7e79f34cf04d7c4f9a314cff88497a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cdd33ff01eb0524468f81335b8bacc46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -317,7 +293,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &7060826574197365913
+--- !u!95 &830606800655966558
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -327,7 +303,7 @@ Animator:
   m_GameObject: {fileID: 3656004365845845777}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 78e0c945edee88649a50976531354055, type: 2}
+  m_Controller: {fileID: 9100000, guid: f36bcb76400a19d44a80946c3abeddcf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
