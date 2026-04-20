@@ -93,7 +93,7 @@ public class PlacementManager : Singleton<PlacementManager>
         if (usedMouse > 0)
             HandleSubtracting();
 
-        ProcessAltarMouseDrain();
+        //ProcessAltarMouseDrain();
     }
 
     private void HandleAdding()
@@ -167,12 +167,12 @@ public class PlacementManager : Singleton<PlacementManager>
 
     public void SubtractSpellGenerator(int count)
     {
-        _spellmapCount -= count;
+        _spellmapCount = Mathf.Max(0, _spellmapCount - 1);
     }
 
     #endregion
 
-
+    /*
     #region Altar
     public void AddAltar()
     {
@@ -219,6 +219,7 @@ public class PlacementManager : Singleton<PlacementManager>
         _altarSupportEnabled = true;
     }
     #endregion
+    */
 
 
     public void AddMouseCount(int amount)

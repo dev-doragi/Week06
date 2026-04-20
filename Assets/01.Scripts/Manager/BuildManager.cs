@@ -25,6 +25,7 @@ public class BuildManager : MonoBehaviour
     [SerializeField] private Transform supportRangeHighlightRoot;
     [SerializeField] private Sprite supportRangeHighlightSprite;
     [SerializeField] private Color supportRangeHighlightColor = new Color(0.2f, 0.6f, 1f, 0.2f);
+    
 
     private readonly List<GameObject> supportRangeHighlights = new();
 
@@ -36,6 +37,7 @@ public class BuildManager : MonoBehaviour
     private Sprite _ghostSprite;
 
     private bool haveMouse;
+    private int cost;
 
     private void Start()
     {
@@ -71,7 +73,7 @@ public class BuildManager : MonoBehaviour
         }
     }
 
-    public void SelectPart(int key)
+    public void SelectPart(int key, RunShopItemData _itemData = null)
     {
         ClearSupportRangeHighlights();
 
@@ -97,7 +99,10 @@ public class BuildManager : MonoBehaviour
             Destroy(ghostPart.gameObject);
             ghostPart = null;
         }
-
+        if (_itemData == null)
+            cost = 0;
+        else
+            cost = _itemData.cost;
         CreateGhost();
         ShowPlaceableCells();
     }
@@ -172,7 +177,7 @@ public class BuildManager : MonoBehaviour
             return false;
         }
 
-        if (!PlacementManager.Instance.SubtractMouseCount(partData.Cost))
+        if (!PlacementManager.Instance.SubtractMouseCount(cost))
             return false;
 
         GameObject partObj = CreatePlacedPartObject(partData, gridPos);
@@ -229,6 +234,7 @@ public class BuildManager : MonoBehaviour
         if (board.boardOwner != GridBoard.BoardOwnerType.Player)
             return;
         PlacedPart targetPart = board.GetCell(gridPos);
+        if(targetPart == null) return;
         if (targetPart.PartKey == 10001 || targetPart.PartKey == 10002)
             return;
         if (targetPart == null) return;
@@ -258,7 +264,7 @@ public class BuildManager : MonoBehaviour
 
         targetBoard.RemovePart(targetPart);
         targetPart.DestroyAnim();
-
+        PlacementManager.Instance.AddMouseCount(targetPart.data.Cost / 2 + 1);
         List<PlacedPart> disconnectedParts = targetBoard.GetDisconnectedParts();
         foreach (var part in disconnectedParts)
         {
