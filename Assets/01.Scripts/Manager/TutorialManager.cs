@@ -385,6 +385,23 @@ public class TutorialManager : Singleton<TutorialManager>
             UpdatePlacementProgressUI();
         }
 
+        // CameraMove 전용: PartPlacement과 동일한 방식으로 진행도 UI 표시
+        if (step.Condition == TutorialCondition.CameraMove)
+        {
+            _currentStepRequiredCount = Mathf.Max(1, Mathf.CeilToInt(step.RequiredAmount));
+            if (!string.IsNullOrWhiteSpace(step.PlacementLabel))
+            {
+                _currentPlacementLabel = step.PlacementLabel;
+            }
+            else
+            {
+                _currentPlacementLabel = "카메라 이동";
+            }
+
+            ShowPlacementProgressPanel(true);
+            UpdatePlacementProgressUI();
+        }
+
         // 실습 조건 처리
         if (step.Condition != TutorialCondition.None)
         {
@@ -421,15 +438,15 @@ public class TutorialManager : Singleton<TutorialManager>
         StopHighlighterPulse();
         StopDialogCameraCoroutine();
 
-        // Portrait가 이동해있다면 스텝 종료 시 원위치로 복귀시키고 다음 다이얼로그가 뜨기 전에 완료 대기
+        // Portrait가 이동해있다면 스텝 종료 시 원위치로 복귀시키되 **대기하지 않음**
         if (_portraitImage != null && _portraitOriginalCached)
         {
             var portraitRt = _portraitImage.GetComponent<RectTransform>();
             if (portraitRt != null)
             {
                 StopPortraitMove();
-                // Use current step's portrait duration for return
-                yield return StartCoroutine(MovePortraitBackRoutine(portraitRt, step.PortraitMoveDuration));
+                // 비동기 복귀: 완료를 기다리지 않음 -> 입력으로 즉시 다음 스텝 진행 가능
+                StartCoroutine(MovePortraitBackRoutine(portraitRt, step.PortraitMoveDuration));
             }
         }
 
@@ -626,6 +643,7 @@ public class TutorialManager : Singleton<TutorialManager>
         if (!IsCurrentStepCondition(TutorialCondition.CameraMove)) return;
 
         _currentProgress += 0.2f;
+        UpdatePlacementProgressUI();
         CheckCondition();
     }
 
@@ -634,6 +652,7 @@ public class TutorialManager : Singleton<TutorialManager>
         if (!IsCurrentStepCondition(TutorialCondition.CameraMove) || !e.IsStarted) return;
 
         _currentProgress += 0.1f;
+        UpdatePlacementProgressUI();
         CheckCondition();
     }
 
@@ -753,6 +772,17 @@ public class TutorialManager : Singleton<TutorialManager>
     private void UpdatePlacementProgressUI()
     {
         if (_placementProgressText == null) return;
+
+        // 현재 스텝이 CameraMove이면 (0/n) 형식의 진행도는 표시하지 않음 — 라벨만 표시
+        if (_steps != null && _currentStep >= 0 && _currentStep < _steps.Length && _steps[_currentStep].Condition == TutorialCondition.CameraMove)
+        {
+            if (!string.IsNullOrWhiteSpace(_currentPlacementLabel))
+                _placementProgressText.text = _currentPlacementLabel;
+            else
+                _placementProgressText.text = "";
+            return;
+        }
+
         int current = Mathf.FloorToInt(_currentProgress);
         int required = Mathf.Max(1, _currentStepRequiredCount);
         if (!string.IsNullOrWhiteSpace(_currentPlacementLabel))
