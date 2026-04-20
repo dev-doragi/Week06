@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RatBullet : MonoBehaviour
@@ -8,6 +9,9 @@ public class RatBullet : MonoBehaviour
     [SerializeField] private Sprite _alive;
     [SerializeField] private Sprite _dead;
     [SerializeField] private float _knockBackPower = 2f;
+    [SerializeField] private float _moveSpeed = 3f;
+
+    private bool move = false;
 
     private void OnEnable()
     {
@@ -21,9 +25,16 @@ public class RatBullet : MonoBehaviour
         if (collision.gameObject.layer == 15)
         {
             sr.sprite = _dead;
+            move = true;
             StartCoroutine(Despawn());
         }
     }
+    private void Update()
+    {
+        if (move)
+            rigid.linearVelocity = Vector2.left * _moveSpeed;
+    }
+
 
     IEnumerator Despawn()
     {
@@ -42,6 +53,7 @@ public class RatBullet : MonoBehaviour
         color.a = 1;
         sr.color = color;
         sr.sprite = _alive;
+        move = false;
         // 이미 비활성화된 상태에서 중복 호출되는 것을 방지
         if (gameObject.activeInHierarchy)
         {
