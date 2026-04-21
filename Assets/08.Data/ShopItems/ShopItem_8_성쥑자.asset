@@ -16,6 +16,6 @@ MonoBehaviour:
   partKey: 8
   category: 3
   description: 
-  cost: 50
+  cost: 80
   tier: 0
   isLocked: 1

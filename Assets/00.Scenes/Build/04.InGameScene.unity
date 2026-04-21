@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _mousePrefab
       value: 
-      objectReference: {fileID: 1377566797}
+      objectReference: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
     - target: {fileID: 384943484901163070, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
       propertyPath: _maxSpawnCount
       value: 3000
@@ -1317,8 +1317,8 @@ Camera:
   m_GameObject: {fileID: 1225145020}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.30980393, g: 0.59607846, b: 0.69411767, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1465,11 +1465,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1377566797 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5052435276292345144, guid: 188ad4f4587df4744a88d22b30821256, type: 3}
-  m_PrefabInstance: {fileID: 706314077}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1605670387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1918,7 +1913,7 @@ PrefabInstance:
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _globalPools.Array.data[2].Prefab
       value: 
-      objectReference: {fileID: 1377566797}
+      objectReference: {fileID: 7298148665369573008, guid: ea4a77c127fc0e14e8208200eea36bd6, type: 3}
     - target: {fileID: 2722075122325555394, guid: d2c17ae37694a05408b975ade01368a8, type: 3}
       propertyPath: _globalPools.Array.data[4].Prefab
       value: 

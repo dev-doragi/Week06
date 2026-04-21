@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 7926051274880598386}
   - component: {fileID: 7692762135819565366}
   m_Layer: 5
-  m_Name: GoToStageButton
+  m_Name: GameStartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,9 +247,9 @@ RectTransform:
   - {fileID: 5386302736405704101}
   m_Father: {fileID: 200397352298499964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 256.75, y: -66.4978}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6159004171885337661
@@ -335,9 +335,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: OnGoToStageSelectClicked
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: EnterInGame
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 6294340449811652324}
   - component: {fileID: 3370220855881518023}
   m_Layer: 5
-  m_Name: MainMenuButtonText
+  m_Name: GoToStageButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB85C\uBE44\uB85C \uB3CC\uC544\uAC00\uAE30"
+  m_text: "\uC2A4\uD14C\uC774\uC9C0 \uC120\uD0DD\uC73C\uB85C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
   m_sharedMaterial: {fileID: 517332483471463887, guid: e4dba54daa22213498a58638f5792dcd, type: 2}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 2296430045143781584}
   - component: {fileID: 3580506849236076436}
   m_Layer: 5
-  m_Name: GoToStageButtonText
+  m_Name: GameStartButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -835,7 +835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3080918144224367003
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1398,7 +1398,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0001, y: 440}
-  m_SizeDelta: {x: 597.0341, y: 66.9984}
+  m_SizeDelta: {x: 762.1616, y: 83.9968}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4495590776649191647
 CanvasRenderer:
@@ -1604,7 +1604,7 @@ GameObject:
   - component: {fileID: 5372853031960599966}
   - component: {fileID: 7998195916767502084}
   m_Layer: 5
-  m_Name: MainMenuButton
+  m_Name: GoToStageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1625,9 +1625,9 @@ RectTransform:
   - {fileID: 1409180084304102552}
   m_Father: {fileID: 200397352298499964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 770.25, y: -66.4978}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6273860214515565053
@@ -1714,7 +1714,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: OnGoToLobbyClicked
+        m_MethodName: OnGoToStageSelectClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1758,7 +1758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -679, y: 14}
+  m_AnchoredPosition: {x: -679, y: -201}
   m_SizeDelta: {x: 76.0089, y: 237.6973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2999623676053763616
@@ -2473,6 +2473,7 @@ MonoBehaviour:
   _portraitImage: {fileID: 7975207625282867106}
   _highlighter: {fileID: 2375346784971493985}
   _clickButton: {fileID: 4439620085233567736}
+  _skipButton: {fileID: 4126793753550891711}
   _postPanel: {fileID: 5926704351903602396}
   _placementProgressPanel: {fileID: 3555276280400176784}
   _placementProgressText: {fileID: 2119152732316717486}
@@ -2501,6 +2502,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uD720 \uC2A4\uD06C\uB864\uC744 \uC774\uC6A9\uD574 \uC804\uC7A5\uC744
       \uD655\uB300\uD558\uACE0, \uB9C8\uC6B0\uC2A4 \uC6B0\uD074\uB9AD \uB4DC\uB798\uADF8\uB85C
@@ -2522,6 +2526,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uD55C \uBC88 \uC790\uC720\uB86D\uAC8C \uCE74\uBA54\uB77C\uB97C \uC774\uB3D9\uD574\uBCF4\uC138\uC694.
       <br>\n(\uC2A4\uD06C\uB864: \uD655\uB300 / \uC6B0\uD074\uB9AD \uB4DC\uB798\uADF8:
@@ -2538,11 +2545,14 @@ MonoBehaviour:
     Condition: 1
     RequiredAmount: 4
     AutoAdvanceDelay: 0
-    PlacementLabel: 
+    PlacementLabel: "\uCE74\uBA54\uB77C \uD655\uB300\uD558\uC5EC \uC6C0\uC9C1\uC5EC\uBCF4\uAE30"
     MovePortraitLeft: 0
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC88C\uCE21 \uC0C1\uC810\uC5D0\uC11C \uD655\uBCF4\uD55C \uD3EC\uB85C
       \uC950\uB4E4\uC744 \uC18C\uBAA8\uD558\uC5EC \uC720\uB2DB\uC744 \uACF5\uC131\uBCD1\uAE30
@@ -2565,6 +2575,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC720\uB2DB\uC740 \uACF5\uACA9, \uBC29\uC5B4, \uC9C0\uC6D0\uC758 \uC138
       \uAC00\uC9C0 \uC5ED\uD560\uC744 \uC218\uD589\uD569\uB2C8\uB2E4. \uBC29\uC5B4
@@ -2588,6 +2601,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uAE30 \uC704\uD574 \uBC29\uC5B4
       \uC720\uB2DB\uC744 \uC124\uCE58\uD574 \uBCF4\uC138\uC694."
@@ -2608,6 +2624,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 1
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC801\uC758 \uACF5\uACA9\uC744 \uB9C9\uC558\uC9C0\uB9CC, \uC774\uB294
       \uC77C\uC2DC\uC801\uC778 \uC218\uB2E8\uC77C \uBFD0\uC785\uB2C8\uB2E4. \uC801\uC758
@@ -2630,6 +2649,9 @@ MonoBehaviour:
     PortraitMoveOffset: -1000
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uACF5\uACA9 \uC720\uB2DB\uC740 \uD654\uB825 \uAC04\uC12D\uC744 \uB9C9\uAE30
       \uC704\uD574 \uC11C\uB85C \uBD99\uC5EC\uC11C \uBC30\uCE58\uD560 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
@@ -2650,6 +2672,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC774\uC81C \uACF5\uACA9 \uC720\uB2DB\uC744 \uC120\uD0DD\uD574 \uBCF4\uB4DC
       \uC704\uC5D0 \uC9C1\uC811 \uBC30\uCE58\uD574 \uBCF4\uC138\uC694."
@@ -2670,6 +2695,9 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC804\uD22C \uC911 \uC720\uB2DB\uB4E4\uC740 \uC790\uB3D9\uC73C\uB85C
       \uACF5\uACA9\uD558\uBA70, \uACF5\uACA9 \uC2DC\uB9C8\uB2E4 \uC950\uB97C \uC18C\uBAA8\uD569\uB2C8\uB2E4.
@@ -2690,12 +2718,15 @@ MonoBehaviour:
     AutoAdvanceDelay: 3
     PlacementLabel: 
     MovePortraitLeft: 0
-    PortraitMoveOffset: 150
+    PortraitMoveOffset: 0
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC548\uC815\uC801\uC778 \uBCF4\uAE09\uC744 \uC704\uD574 \uC0DD\uC131\uAE30\uB97C
-      \uBC30\uCE58\uD574 \uBD05\uC2DC\uB2E4."
+      \uD558\uB098 \uBC30\uCE58\uD574 \uBD05\uC2DC\uB2E4."
     PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
     TargetUI: {fileID: 405224111575878242}
     RequiredPartKeys: 0a0000000b0000000c0000000d000000
@@ -2713,6 +2744,31 @@ MonoBehaviour:
     PortraitMoveOffset: 150
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
+  - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
+    Message: "\uC774\uC81C \uC801\uC744 \uCC98\uCE58\uD574 \uBD05\uC2DC\uB2E4."
+    PortraitSprite: {fileID: 21300000, guid: c0e411521309f804eaa2bbd84b5daf4f, type: 3}
+    TargetUI: {fileID: 0}
+    RequiredPartKeys: 
+    RequiredGroup: 0
+    MoveDialogUp: 0
+    MoveOffset: 300
+    MoveDuration: 0.5
+    ShouldPause: 0
+    BlockInput: 1
+    Condition: 3
+    RequiredAmount: 1
+    AutoAdvanceDelay: 0
+    PlacementLabel: 
+    MovePortraitLeft: 1
+    PortraitMoveOffset: -1200
+    PortraitMoveDuration: 0.5
+    PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC804\uD22C\uB97C \uB9C8\uCE58\uBA74 \uACF5\uC131\uBCD1\uAE30\uB294
       \uB2E4\uC74C \uC2A4\uD14C\uC774\uC9C0\uC5D0\uC11C\uB3C4 \uADF8\uB300\uB85C
@@ -2724,16 +2780,19 @@ MonoBehaviour:
     MoveDialogUp: 0
     MoveOffset: 300
     MoveDuration: 0.5
-    ShouldPause: 1
+    ShouldPause: 0
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
     AutoAdvanceDelay: 3
     PlacementLabel: 
-    MovePortraitLeft: 0
-    PortraitMoveOffset: 150
+    MovePortraitLeft: 1
+    PortraitMoveOffset: -1000
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   - SpeakerName: "\uC950\uC2E0\uAD00\uCA29"
     Message: "\uC544\uAD70\uC758 \uCF54\uC5B4\uB97C \uC9C0\uD0A4\uBA70 \uB3D9\uC2DC\uC5D0
       \uC801\uC758 \uCF54\uC5B4\uB97C \uD30C\uAD34\uD558\uC5EC \uD3EC\uB85C\uB85C
@@ -2749,12 +2808,15 @@ MonoBehaviour:
     BlockInput: 1
     Condition: 0
     RequiredAmount: 1
-    AutoAdvanceDelay: 3
+    AutoAdvanceDelay: 0
     PlacementLabel: 
-    MovePortraitLeft: 0
-    PortraitMoveOffset: 150
+    MovePortraitLeft: 1
+    PortraitMoveOffset: -1000
     PortraitMoveDuration: 0.5
     PortraitTarget: {fileID: 0}
+    SpawnEnemyForStep: 0
+    EnemySpawnCycles: 1
+    EnemyAttackInterval: 1
   _pulseScale: 1.05
   _pulseSpeed: 4
   _startOnAwake: 1

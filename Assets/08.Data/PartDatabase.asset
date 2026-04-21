@@ -680,7 +680,7 @@ MonoBehaviour:
       Data: 0.1
     - Name: Cost
       Entry: 3
-      Data: 30
+      Data: 50
     - Name: Icon
       Entry: 6
       Data: 
@@ -778,7 +778,7 @@ MonoBehaviour:
       Data: 0.05
     - Name: Cost
       Entry: 3
-      Data: 50
+      Data: 80
     - Name: Icon
       Entry: 6
       Data: 
@@ -888,7 +888,7 @@ MonoBehaviour:
       Data: 0.15
     - Name: Cost
       Entry: 3
-      Data: 100
+      Data: 130
     - Name: Icon
       Entry: 6
       Data: 
@@ -2839,7 +2839,7 @@ MonoBehaviour:
       Data: 
     - Name: Hp
       Entry: 4
-      Data: 300
+      Data: 250
     - Name: DefenseRate
       Entry: 4
       Data: 0
